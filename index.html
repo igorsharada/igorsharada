@@ -869,7 +869,7 @@
       });
     }
 
-    // Animate on scroll (reset when leaving, replay when entering)
+    // Animate on scroll: count when enters, reset when fully leaves, recount when re-enters
     const counterObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -878,13 +878,10 @@
           resetCounters(entry.target);
         }
       });
-    }, { threshold: 0.3 });
+    }, { threshold: 0.2 });
 
     document.querySelectorAll('.case-card').forEach(card => {
       counterObserver.observe(card);
-      // Also animate on hover
-      card.addEventListener('mouseenter', () => animateCounters(card));
-      card.addEventListener('mouseleave', () => resetCounters(card));
     });
   </script>
 
