@@ -835,31 +835,44 @@
     // Scroll reveal
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          // Counter animation
-          entry.target.querySelectorAll('.stat-number[data-target]').forEach(counter => {
-            if (counter.classList.contains('counted')) return;
-            counter.classList.add('counted', 'counting');
-            const target = parseInt(counter.dataset.target);
-            const prefix = counter.dataset.prefix || '';
-            const suffix = counter.dataset.suffix || '';
-            const duration = 1500;
-            const start = performance.now();
-            const animate = (now) => {
-              const progress = Math.min((now - start) / duration, 1);
-              const eased = 1 - Math.pow(1 - progress, 3);
-              counter.textContent = prefix + Math.floor(target * eased) + suffix;
-              if (progress < 1) requestAnimationFrame(animate);
-              else counter.classList.remove('counting');
-            };
-            requestAnimationFrame(animate);
-          });
-        }
+        if (entry.isIntersecting) entry.target.classList.add('visible');
       });
     }, { threshold: 0.15 });
 
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Counter on hover
+    function animateCounters(card) {
+      card.querySelectorAll('.stat-number[data-target]').forEach(counter => {
+        counter.classList.add('counting');
+        const target = parseInt(counter.dataset.target);
+        const prefix = counter.dataset.prefix || '';
+        const suffix = counter.dataset.suffix || '';
+        const duration = 1200;
+        const start = performance.now();
+        const animate = (now) => {
+          const progress = Math.min((now - start) / duration, 1);
+          const eased = 1 - Math.pow(1 - progress, 3);
+          counter.textContent = prefix + Math.floor(target * eased) + suffix;
+          if (progress < 1) requestAnimationFrame(animate);
+          else counter.classList.remove('counting');
+        };
+        requestAnimationFrame(animate);
+      });
+    }
+
+    function resetCounters(card) {
+      card.querySelectorAll('.stat-number[data-target]').forEach(counter => {
+        const prefix = counter.dataset.prefix || '';
+        counter.textContent = prefix + '0';
+        counter.classList.remove('counting');
+      });
+    }
+
+    document.querySelectorAll('.case-card').forEach(card => {
+      card.addEventListener('mouseenter', () => animateCounters(card));
+      card.addEventListener('mouseleave', () => resetCounters(card));
+    });
   </script>
 
 </body>
