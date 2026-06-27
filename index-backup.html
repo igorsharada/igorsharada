@@ -10,6 +10,8 @@
   <meta name="robots" content="index, follow">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="canonical" href="https://igorsharada.com.br/">
+
+  <!-- Open Graph (WhatsApp, Facebook, LinkedIn) -->
   <meta property="og:title" content="Igor SHarada — Direção Criativa para Marcas Premium">
   <meta property="og:description" content="Fotografia, vídeo, conteúdo e tráfego pago para negócios premium. Cases com +66x em views e contratos acima de R$60k.">
   <meta property="og:type" content="website">
@@ -17,10 +19,14 @@
   <meta property="og:image" content="https://igorsharada.com.br/img/igor-hero.jpg">
   <meta property="og:locale" content="pt_BR">
   <meta property="og:site_name" content="Igor SHarada">
+
+  <!-- Twitter/X -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Igor SHarada — Direção Criativa para Marcas Premium">
   <meta name="twitter:description" content="Fotografia, vídeo, conteúdo e tráfego pago para negócios premium de gastronomia, saúde e serviços.">
   <meta name="twitter:image" content="https://igorsharada.com.br/img/igor-hero.jpg">
+
+  <!-- Schema.org -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -29,13 +35,26 @@
     "description": "Direção criativa, fotografia, vídeo, conteúdo e tráfego pago para negócios premium de gastronomia, saúde e serviços.",
     "url": "https://igorsharada.com.br",
     "image": "https://igorsharada.com.br/img/igor-hero.jpg",
-    "address": {"@type": "PostalAddress", "addressLocality": "Mairiporã", "addressRegion": "SP", "addressCountry": "BR"},
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Mairiporã",
+      "addressRegion": "SP",
+      "addressCountry": "BR"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": -23.3186,
+      "longitude": -46.5872
+    },
     "areaServed": ["São Paulo", "Mairiporã", "Atibaia", "Campinas", "Jundiaí"],
     "serviceType": ["Direção Criativa", "Fotografia", "Vídeo", "Social Media", "Tráfego Pago", "Criação de Sites", "Landing Pages"],
-    "sameAs": ["https://instagram.com/IgorSHarada"],
+    "sameAs": [
+      "https://instagram.com/IgorSHarada"
+    ],
     "email": "haradaigor@gmail.com"
   }
   </script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Sora:wght@300;400;600;700;800&display=swap" rel="stylesheet">
   <style>
@@ -43,12 +62,12 @@
 
     :root {
       --bg: #0A0A0A;
-      --bg-card: #111111;
+      --bg-card: #141414;
       --bg-hover: #1A1A1A;
       --text: #F5F0EB;
-      --text-muted: #5A5A5A;
+      --text-muted: #6B6B6B;
       --accent: #2ECC71;
-      --accent-glow: rgba(46, 204, 113, 0.12);
+      --accent-glow: rgba(46, 204, 113, 0.15);
       --heading: 'Sora', sans-serif;
       --body: 'Space Grotesk', sans-serif;
     }
@@ -62,107 +81,43 @@
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
       overflow-x: hidden;
-      cursor: none;
     }
 
-    /* ── CUSTOM CURSOR ── */
-    .cursor {
-      width: 20px;
-      height: 20px;
-      border: 2px solid var(--accent);
-      border-radius: 50%;
-      position: fixed;
-      pointer-events: none;
-      z-index: 9999;
-      transition: transform 0.15s ease, background 0.2s, width 0.2s, height 0.2s, margin 0.2s;
-      margin-left: -10px;
-      margin-top: -10px;
-    }
-
-    .cursor.hover {
-      width: 48px;
-      height: 48px;
-      margin-left: -24px;
-      margin-top: -24px;
-      background: var(--accent-glow);
-      border-color: transparent;
-    }
-
-    .cursor-dot {
-      width: 5px;
-      height: 5px;
-      background: var(--accent);
-      border-radius: 50%;
-      position: fixed;
-      pointer-events: none;
-      z-index: 9999;
-      margin-left: -2.5px;
-      margin-top: -2.5px;
-      transition: opacity 0.2s;
-    }
-
-    /* ── SCROLL PROGRESS ── */
-    .scroll-progress {
-      position: fixed;
-      top: 0;
-      left: 0;
-      height: 3px;
-      background: var(--accent);
-      z-index: 200;
-      width: 0%;
-      transition: none;
-    }
-
-    /* ── GRAIN OVERLAY ── */
-    .grain {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 150;
-      opacity: 0.03;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-      background-repeat: repeat;
-    }
-
-    /* ── REVEAL ── */
+    /* ── ANIMATIONS ── */
     .reveal {
       opacity: 0;
-      transform: translateY(60px);
-      transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+      transform: translateY(40px);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
     }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
-    .reveal-delay-1 { transition-delay: 0.12s; }
-    .reveal-delay-2 { transition-delay: 0.24s; }
-    .reveal-delay-3 { transition-delay: 0.36s; }
-    .reveal-delay-4 { transition-delay: 0.48s; }
-    .reveal-delay-5 { transition-delay: 0.6s; }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
 
     /* ── NAV ── */
     nav {
       position: fixed;
       top: 0;
       width: 100%;
-      padding: 20px 40px;
+      padding: 20px 32px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       z-index: 100;
-      background: transparent;
-      transition: background 0.4s, padding 0.4s;
-    }
-
-    nav.scrolled {
-      background: rgba(10, 10, 10, 0.85);
-      backdrop-filter: blur(24px);
-      padding: 14px 40px;
-      border-bottom: 1px solid rgba(255,255,255,0.04);
+      background: rgba(10, 10, 10, 0.8);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
     }
 
     .nav-name {
       font-family: var(--heading);
-      font-size: 15px;
+      font-size: 16px;
       font-weight: 700;
-      letter-spacing: 3px;
+      letter-spacing: 2px;
       text-transform: uppercase;
     }
 
@@ -171,15 +126,14 @@
     .nav-cta {
       color: var(--text);
       text-decoration: none;
-      font-size: 12px;
+      font-size: 13px;
       font-weight: 600;
-      letter-spacing: 1.5px;
+      letter-spacing: 1px;
       text-transform: uppercase;
-      padding: 12px 28px;
-      border: 1px solid rgba(255,255,255,0.15);
+      padding: 10px 24px;
+      border: 1px solid rgba(255,255,255,0.2);
       border-radius: 100px;
-      transition: all 0.4s;
-      cursor: none;
+      transition: all 0.3s;
     }
 
     .nav-cta:hover {
@@ -192,91 +146,98 @@
     .hero {
       min-height: 100vh;
       display: flex;
-      align-items: center;
-      padding: 0 40px;
-      max-width: 1300px;
+      flex-direction: column;
+      justify-content: center;
+      padding: 120px 32px 80px;
+      max-width: 1200px;
       margin: 0 auto;
     }
 
-    .hero-grid {
+    .hero-top {
       display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
+      grid-template-columns: 1fr 1fr;
       align-items: center;
-      gap: 64px;
-      width: 100%;
+      gap: 48px;
     }
 
     .hero-label {
-      font-size: 12px;
+      font-size: 13px;
       font-weight: 600;
-      letter-spacing: 5px;
+      letter-spacing: 4px;
       text-transform: uppercase;
       color: var(--accent);
-      margin-bottom: 28px;
-      opacity: 0;
-      animation: fadeIn 0.8s ease 0.2s forwards;
+      margin-bottom: 24px;
     }
 
     .hero h1 {
       font-family: var(--heading);
-      font-size: clamp(38px, 4.2vw, 62px);
+      font-size: clamp(36px, 4.5vw, 64px);
       font-weight: 800;
-      line-height: 1.08;
+      line-height: 1.1;
       letter-spacing: -2px;
-      margin-bottom: 28px;
+      margin-bottom: 32px;
     }
 
-    .hero h1 .line { display: block; overflow: hidden; }
+    .hero h1 .line {
+      display: block;
+      overflow: hidden;
+    }
+
     .hero h1 .line-inner {
       display: inline-block;
-      transform: translateY(110%);
-      animation: slideUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      transform: translateY(100%);
+      animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
-    .hero h1 .line:nth-child(2) .line-inner { animation-delay: 0.18s; }
-    .hero h1 .line:nth-child(3) .line-inner { animation-delay: 0.36s; }
 
-    @keyframes slideUp { to { transform: translateY(0); } }
-    @keyframes fadeIn { to { opacity: 1; } }
+    .hero h1 .line:nth-child(2) .line-inner { animation-delay: 0.15s; }
+    .hero h1 .line:nth-child(3) .line-inner { animation-delay: 0.3s; }
+
+    @keyframes slideUp {
+      to { transform: translateY(0); }
+    }
 
     .hero h1 .outline {
       -webkit-text-stroke: 1.5px var(--text);
       color: transparent;
-      transition: color 0.5s;
+      transition: color 0.4s;
     }
-    .hero h1 .outline:hover { color: var(--text); }
+
+    .hero h1 .outline:hover {
+      color: var(--text);
+    }
 
     .hero h1 .highlight {
       color: var(--accent);
       position: relative;
-      display: inline-block;
     }
 
     .hero h1 .highlight::after {
       content: '';
       position: absolute;
-      bottom: 2px;
+      bottom: 4px;
       left: 0;
       width: 0;
       height: 3px;
       background: var(--accent);
-      animation: grow 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.9s forwards;
+      animation: underline 1s cubic-bezier(0.16, 1, 0.3, 1) 0.8s forwards;
     }
 
-    @keyframes grow { to { width: 100%; } }
+    @keyframes underline {
+      to { width: 100%; }
+    }
 
     .hero-sub {
-      font-size: 17px;
+      font-size: 18px;
       color: var(--text-muted);
-      max-width: 440px;
-      line-height: 1.8;
-      margin-bottom: 44px;
+      max-width: 480px;
+      line-height: 1.7;
+      margin-bottom: 48px;
       opacity: 0;
-      animation: fadeSlide 0.8s ease 0.6s forwards;
+      animation: fadeIn 0.8s ease 0.6s forwards;
     }
 
-    @keyframes fadeSlide {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
+    @keyframes fadeIn {
+      to { opacity: 1; }
     }
 
     .hero-cta {
@@ -286,76 +247,103 @@
       background: var(--accent);
       color: var(--bg);
       text-decoration: none;
-      padding: 18px 40px;
+      padding: 18px 36px;
       border-radius: 100px;
-      font-size: 13px;
+      font-size: 14px;
       font-weight: 700;
-      letter-spacing: 1.5px;
+      letter-spacing: 1px;
       text-transform: uppercase;
-      transition: transform 0.4s, box-shadow 0.4s;
+      transition: transform 0.3s, box-shadow 0.3s;
       opacity: 0;
-      animation: fadeSlide 0.8s ease 0.8s forwards;
-      cursor: none;
+      animation: fadeIn 0.8s ease 0.8s forwards;
     }
 
     .hero-cta:hover {
-      transform: translateY(-4px) scale(1.02);
-      box-shadow: 0 20px 60px var(--accent-glow);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 40px var(--accent-glow);
     }
 
-    .hero-img-wrap {
+    .hero-img-container {
       position: relative;
-      border-radius: 20px;
+      width: 100%;
+      height: 520px;
+      border-radius: 16px;
       overflow: hidden;
       opacity: 0;
-      animation: imgReveal 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
+      animation: fadeScale 1s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
     }
 
-    @keyframes imgReveal {
-      from { opacity: 0; clip-path: inset(100% 0 0 0); }
-      to { opacity: 1; clip-path: inset(0 0 0 0); }
+    @keyframes fadeScale {
+      from { opacity: 0; transform: scale(1.05); }
+      to { opacity: 1; transform: scale(1); }
     }
 
-    .hero-img-wrap img {
+    .hero-img-container img {
       width: 100%;
-      height: 560px;
+      height: 100%;
       object-fit: cover;
-      filter: grayscale(40%) contrast(1.1);
-      transition: filter 0.6s, transform 0.6s;
+      filter: grayscale(30%);
+      transition: filter 0.5s, transform 0.5s;
     }
 
-    .hero-img-wrap:hover img {
-      filter: grayscale(0%) contrast(1);
-      transform: scale(1.04);
+    .hero-img-container:hover img {
+      filter: grayscale(0%);
+      transform: scale(1.03);
     }
 
-    .hero-img-wrap::after {
+    .hero-img-container::after {
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(transparent 50%, var(--bg));
-      pointer-events: none;
+      background: linear-gradient(transparent 60%, var(--bg));
     }
 
-    .hero-img-tag {
-      position: absolute;
-      bottom: 24px;
-      left: 24px;
-      font-size: 11px;
+    /* ── MARQUEE ── */
+    .marquee {
+      overflow: hidden;
+      padding: 32px 0;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .marquee-track {
+      display: flex;
+      gap: 64px;
+      animation: scroll 20s linear infinite;
+      width: max-content;
+    }
+
+    .marquee-item {
+      font-family: var(--heading);
+      font-size: 14px;
       font-weight: 600;
-      letter-spacing: 2px;
+      letter-spacing: 3px;
       text-transform: uppercase;
       color: var(--text-muted);
-      z-index: 2;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 64px;
+    }
+
+    .marquee-item::after {
+      content: '◆';
+      color: var(--accent);
+      font-size: 8px;
+    }
+
+    @keyframes scroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
     }
 
     /* ── SECTIONS ── */
-    section { padding: 140px 40px; }
+    section { padding: 120px 32px; }
 
     .section-label {
-      font-size: 11px;
+      font-size: 12px;
       font-weight: 700;
-      letter-spacing: 5px;
+      letter-spacing: 4px;
       text-transform: uppercase;
       color: var(--accent);
       margin-bottom: 20px;
@@ -363,47 +351,35 @@
 
     .section-title {
       font-family: var(--heading);
-      font-size: clamp(30px, 4.5vw, 50px);
+      font-size: clamp(32px, 5vw, 52px);
       font-weight: 800;
       letter-spacing: -2px;
       line-height: 1.1;
-      margin-bottom: 64px;
+      margin-bottom: 60px;
     }
 
     /* ── CASES ── */
-    .cases { max-width: 1300px; margin: 0 auto; }
+    .cases { max-width: 1200px; margin: 0 auto; }
 
-    .case-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
+    .case-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
 
     .case-card {
       background: var(--bg-card);
-      border: 1px solid rgba(255,255,255,0.04);
-      border-radius: 24px;
-      padding: 52px 44px;
-      transition: border-color 0.5s, transform 0.5s, box-shadow 0.5s;
-      cursor: none;
-      position: relative;
-      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 20px;
+      padding: 48px 40px;
+      transition: border-color 0.4s, transform 0.4s, box-shadow 0.4s;
+      cursor: default;
     }
-
-    .case-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--accent), transparent);
-      opacity: 0;
-      transition: opacity 0.5s;
-    }
-
-    .case-card:hover::before { opacity: 1; }
 
     .case-card:hover {
-      border-color: rgba(46, 204, 113, 0.2);
-      transform: translateY(-6px);
-      box-shadow: 0 24px 80px rgba(0,0,0,0.5);
+      border-color: var(--accent);
+      transform: translateY(-4px);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
     }
 
     .case-top {
@@ -414,13 +390,13 @@
     }
 
     .case-badge {
-      font-size: 10px;
+      font-size: 11px;
       font-weight: 700;
-      letter-spacing: 2.5px;
+      letter-spacing: 2px;
       text-transform: uppercase;
       color: var(--accent);
       background: var(--accent-glow);
-      padding: 8px 18px;
+      padding: 6px 16px;
       border-radius: 100px;
     }
 
@@ -432,31 +408,30 @@
 
     .case-name {
       font-family: var(--heading);
-      font-size: 30px;
+      font-size: 28px;
       font-weight: 700;
-      margin-bottom: 10px;
-      letter-spacing: -0.5px;
+      margin-bottom: 8px;
     }
 
     .case-desc {
       font-size: 15px;
       color: var(--text-muted);
       line-height: 1.7;
-      margin-bottom: 36px;
-      max-width: 520px;
+      margin-bottom: 32px;
+      max-width: 560px;
     }
 
     .case-stats {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 28px;
-      padding-top: 32px;
-      border-top: 1px solid rgba(255,255,255,0.04);
+      gap: 24px;
+      padding-top: 28px;
+      border-top: 1px solid rgba(255,255,255,0.06);
     }
 
     .stat-number {
       font-family: var(--heading);
-      font-size: 40px;
+      font-size: 36px;
       font-weight: 800;
       letter-spacing: -1px;
     }
@@ -464,67 +439,62 @@
     .stat-number.done { color: var(--accent); transition: color 0.3s; }
 
     .stat-label {
-      font-size: 11px;
+      font-size: 12px;
       color: var(--text-muted);
-      margin-top: 6px;
-      letter-spacing: 0.5px;
+      margin-top: 4px;
     }
 
     /* ── SERVICES ── */
-    .services { max-width: 1300px; margin: 0 auto; }
+    .services { max-width: 1200px; margin: 0 auto; }
 
     .service-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 16px;
     }
 
     .service-card {
       background: var(--bg-card);
-      border: 1px solid rgba(255,255,255,0.04);
-      border-radius: 20px;
-      padding: 40px 28px;
-      transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-      cursor: none;
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 16px;
+      padding: 36px 28px;
+      transition: all 0.4s;
     }
 
     .service-card:hover {
       background: var(--bg-hover);
-      border-color: rgba(255,255,255,0.08);
-      transform: translateY(-8px);
+      border-color: rgba(255,255,255,0.1);
+      transform: translateY(-2px);
     }
 
     .service-icon {
-      width: 52px;
-      height: 52px;
-      border-radius: 14px;
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
       background: var(--accent-glow);
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-bottom: 24px;
-      font-size: 22px;
-      transition: transform 0.3s;
+      margin-bottom: 20px;
+      font-size: 20px;
     }
-
-    .service-card:hover .service-icon { transform: scale(1.1) rotate(-5deg); }
 
     .service-name {
       font-family: var(--heading);
-      font-size: 17px;
+      font-size: 18px;
       font-weight: 700;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
 
     .service-desc {
       font-size: 14px;
       color: var(--text-muted);
-      line-height: 1.7;
+      line-height: 1.6;
     }
 
     /* ── FUNIL ── */
     .funil-section {
-      max-width: 1300px;
+      max-width: 1200px;
       margin: 0 auto;
       text-align: center;
     }
@@ -534,8 +504,8 @@
       align-items: center;
       justify-content: center;
       flex-wrap: wrap;
-      gap: 14px;
-      margin-top: 56px;
+      gap: 12px;
+      margin-top: 48px;
     }
 
     .funil-step {
@@ -545,59 +515,40 @@
       border-radius: 100px;
       font-size: 14px;
       font-weight: 600;
-      transition: all 0.4s;
-      cursor: none;
+      transition: all 0.3s;
     }
 
     .funil-step:hover {
       border-color: var(--accent);
       background: var(--accent-glow);
-      transform: translateY(-4px);
     }
 
-    .funil-arrow { color: var(--accent); font-size: 18px; }
+    .funil-arrow {
+      color: var(--accent);
+      font-size: 20px;
+    }
 
     .funil-step.final {
       background: var(--accent);
       color: var(--bg);
       border-color: var(--accent);
-      font-weight: 700;
-    }
-
-    .funil-step.final:hover {
-      transform: translateY(-4px) scale(1.05);
-      box-shadow: 0 12px 40px var(--accent-glow);
     }
 
     /* ── QUOTE ── */
     .quote-section {
-      max-width: 900px;
+      max-width: 800px;
       margin: 0 auto;
       text-align: center;
-      padding: 160px 40px;
-      position: relative;
-    }
-
-    .quote-section::before {
-      content: '"';
-      font-family: var(--heading);
-      font-size: 200px;
-      color: rgba(46, 204, 113, 0.06);
-      position: absolute;
-      top: 60px;
-      left: 50%;
-      transform: translateX(-50%);
-      line-height: 1;
+      padding: 120px 32px;
     }
 
     .quote-text {
       font-family: var(--heading);
-      font-size: clamp(24px, 3.5vw, 38px);
-      font-weight: 600;
-      line-height: 1.4;
-      letter-spacing: -0.5px;
-      margin-bottom: 28px;
-      position: relative;
+      font-size: clamp(24px, 4vw, 40px);
+      font-weight: 700;
+      line-height: 1.3;
+      letter-spacing: -1px;
+      margin-bottom: 24px;
     }
 
     .quote-text .accent { color: var(--accent); }
@@ -605,41 +556,33 @@
     .quote-sub {
       font-size: 16px;
       color: var(--text-muted);
-      line-height: 1.8;
-      max-width: 540px;
+      line-height: 1.7;
+      max-width: 520px;
       margin: 0 auto;
-      position: relative;
     }
 
     /* ── CTA ── */
     .cta-section {
       text-align: center;
-      padding: 160px 40px;
+      padding: 120px 32px;
       position: relative;
-      overflow: visible;
     }
 
     .cta-section::before {
       content: '';
       position: absolute;
-      top: 50%;
+      top: 0;
       left: 50%;
-      transform: translate(-50%, -50%);
-      width: 900px;
-      height: 900px;
-      background: radial-gradient(ellipse, var(--accent-glow) 0%, transparent 60%);
+      transform: translateX(-50%);
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
       pointer-events: none;
-      animation: breathe 4s ease-in-out infinite;
-    }
-
-    @keyframes breathe {
-      0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
-      50% { transform: translate(-50%, -50%) scale(1.15); opacity: 1; }
     }
 
     .cta-title {
       font-family: var(--heading);
-      font-size: clamp(34px, 5.5vw, 60px);
+      font-size: clamp(36px, 6vw, 64px);
       font-weight: 800;
       letter-spacing: -2px;
       line-height: 1.1;
@@ -650,7 +593,7 @@
     .cta-sub {
       font-size: 16px;
       color: var(--text-muted);
-      margin-bottom: 48px;
+      margin-bottom: 40px;
       position: relative;
     }
 
@@ -661,34 +604,40 @@
       background: var(--accent);
       color: var(--bg);
       text-decoration: none;
-      padding: 22px 48px;
+      padding: 20px 40px;
       border-radius: 100px;
-      font-size: 14px;
+      font-size: 15px;
       font-weight: 700;
-      letter-spacing: 1.5px;
+      letter-spacing: 1px;
       text-transform: uppercase;
-      transition: transform 0.4s, box-shadow 0.4s;
+      transition: transform 0.3s, box-shadow 0.3s;
       position: relative;
-      cursor: none;
+      animation: pulse 2s ease-in-out infinite;
     }
 
     .cta-whatsapp:hover {
-      transform: translateY(-4px) scale(1.03);
-      box-shadow: 0 20px 60px rgba(46, 204, 113, 0.3);
+      transform: translateY(-3px);
+      box-shadow: 0 16px 48px var(--accent-glow);
+      animation: none;
+    }
+
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 0 var(--accent-glow); }
+      50% { box-shadow: 0 0 0 16px transparent; }
     }
 
     /* ── FOOTER ── */
     footer {
-      padding: 48px 40px;
+      padding: 40px 32px;
       text-align: center;
-      border-top: 1px solid rgba(255,255,255,0.04);
+      border-top: 1px solid rgba(255,255,255,0.05);
     }
 
     .footer-name {
       font-family: var(--heading);
-      font-size: 13px;
+      font-size: 14px;
       font-weight: 700;
-      letter-spacing: 3px;
+      letter-spacing: 2px;
       text-transform: uppercase;
       margin-bottom: 8px;
     }
@@ -702,30 +651,23 @@
       color: var(--text-muted);
       text-decoration: none;
       transition: color 0.3s;
-      cursor: none;
     }
 
     .footer-links a:hover { color: var(--accent); }
 
     /* ── MOBILE ── */
     @media (max-width: 768px) {
-      body { cursor: auto; }
-      .cursor, .cursor-dot { display: none; }
       .hero { min-height: auto; padding: 140px 20px 80px; }
-      .hero-grid { grid-template-columns: 1fr; gap: 40px; }
-      .hero h1 { font-size: clamp(34px, 9vw, 48px); }
-      .hero-img-wrap img { height: 400px; }
-      section { padding: 100px 20px; }
-      .case-card { padding: 36px 28px; }
-      .case-stats { gap: 16px; }
-      .stat-number { font-size: 28px; }
-      .case-name { font-size: 24px; }
+      .hero-top { grid-template-columns: 1fr; }
+      .hero h1 { font-size: clamp(36px, 9vw, 52px); letter-spacing: -1.5px; }
+      .hero-img-container { height: 400px; }
+      section { padding: 80px 20px; }
+      .case-card { padding: 32px 24px; }
+      .case-stats { grid-template-columns: repeat(3, 1fr); gap: 16px; }
+      .stat-number { font-size: 24px; }
+      .case-name { font-size: 22px; }
       .service-grid { grid-template-columns: 1fr; }
-      .photo-break-grid { grid-template-columns: 1fr !important; }
-      .photo-break-grid > div { height: 280px !important; }
       nav { padding: 16px 20px; }
-      .quote-section::before { font-size: 120px; }
-      a, button, .nav-cta, .hero-cta, .cta-whatsapp, .service-card, .case-card, .funil-step { cursor: auto; }
     }
 
     @media (min-width: 769px) {
@@ -735,16 +677,6 @@
 </head>
 <body>
 
-  <!-- CURSOR -->
-  <div class="cursor"></div>
-  <div class="cursor-dot"></div>
-
-  <!-- SCROLL PROGRESS -->
-  <div class="scroll-progress"></div>
-
-  <!-- GRAIN -->
-  <div class="grain"></div>
-
   <!-- NAV -->
   <nav>
     <div class="nav-name">Igor <span>SHarada</span></div>
@@ -753,7 +685,7 @@
 
   <!-- HERO -->
   <section class="hero">
-    <div class="hero-grid">
+    <div class="hero-top">
       <div>
         <div class="hero-label">Direção Criativa</div>
         <h1>
@@ -761,19 +693,20 @@
           <span class="line"><span class="line-inner"><span class="outline">melhor</span> do que</span></span>
           <span class="line"><span class="line-inner">parece na <span class="highlight">internet.</span></span></span>
         </h1>
-        <p class="hero-sub">Pra restaurantes, clínicas, hotéis e negócios premium que merecem aparecer do jeito certo, pro público certo. Foto, vídeo, conteúdo, anúncios e sites.</p>
+        <p class="hero-sub">Fotografia, vídeo, conteúdo e tráfego pago pra negócios premium de gastronomia, saúde e serviços.</p>
         <a href="#contato" class="hero-cta">Quero conversar →</a>
       </div>
-      <div class="hero-img-wrap">
+      <div class="hero-img-container">
         <img src="img/igor-hero.jpg" alt="Igor SHarada">
       </div>
     </div>
   </section>
 
+
   <!-- CASES -->
   <section class="cases">
     <div class="section-label reveal">Resultados</div>
-    <div class="section-title reveal">Se o seu produto é melhor do que<br>o que aparece nas redes, a gente<br>precisa conversar.</div>
+    <div class="section-title reveal">Resultado primeiro.<br>Discurso depois.</div>
 
     <div class="case-grid">
       <div class="case-card reveal">
@@ -824,20 +757,6 @@
     </div>
   </section>
 
-  <!-- PHOTO BREAK -->
-  <section style="padding:60px 40px;max-width:1300px;margin:0 auto;">
-    <div class="section-label reveal" style="text-align:center;">Bastidores</div>
-    <div class="section-title reveal" style="text-align:center;margin-bottom:40px;">Do bastidor ao resultado.</div>
-    <div class="reveal photo-break-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
-      <div style="border-radius:20px;overflow:hidden;height:400px;">
-        <img src="img/setup-studio.jpg" alt="Setup profissional" style="width:100%;height:100%;object-fit:cover;filter:grayscale(20%);transition:filter 0.5s,transform 0.5s;" onmouseover="this.style.filter='grayscale(0%)';this.style.transform='scale(1.03)'" onmouseout="this.style.filter='grayscale(20%)';this.style.transform='scale(1)'">
-      </div>
-      <div style="border-radius:20px;overflow:hidden;height:400px;">
-        <img src="img/igor-kitchen.jpg" alt="Igor SHarada filmando na cozinha" style="width:100%;height:100%;object-fit:cover;filter:grayscale(20%);transition:filter 0.5s,transform 0.5s;" onmouseover="this.style.filter='grayscale(0%)';this.style.transform='scale(1.03)'" onmouseout="this.style.filter='grayscale(20%)';this.style.transform='scale(1)'">
-      </div>
-    </div>
-  </section>
-
   <!-- SERVICES -->
   <section class="services">
     <div class="section-label reveal">O que eu faço</div>
@@ -845,29 +764,29 @@
 
     <div class="service-grid">
       <div class="service-card reveal">
-        <div class="service-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2ECC71" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></div>
+        <div class="service-icon">📸</div>
         <div class="service-name">Foto & Vídeo</div>
-        <div class="service-desc">Vou até seu negócio e capto o produto, o bastidor e a atmosfera como realmente são. Equipamento profissional, sem filtro forçado.</div>
+        <div class="service-desc">Capto o produto, o bastidor e a atmosfera do seu negócio. Equipamento profissional, direção criativa.</div>
       </div>
       <div class="service-card reveal reveal-delay-1">
-        <div class="service-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2ECC71" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg></div>
+        <div class="service-icon">🎬</div>
         <div class="service-name">Conteúdo</div>
-        <div class="service-desc">Reels, carrosséis e stories que mostram o que seu negócio realmente faz. Não é postagem genérica. É o que faz as pessoas quererem ir até você.</div>
+        <div class="service-desc">Reels, carrosséis e stories com narrativa de marca. Não é "postagem". É conteúdo que posiciona.</div>
       </div>
       <div class="service-card reveal reveal-delay-2">
-        <div class="service-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2ECC71" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
-        <div class="service-name">Anúncios Online</div>
-        <div class="service-desc">Coloco seu negócio na frente de quem realmente compra. Você sabe de onde veio cada cliente novo.</div>
+        <div class="service-icon">📊</div>
+        <div class="service-name">Tráfego Pago</div>
+        <div class="service-desc">Campanhas de Meta Ads que colocam seu conteúdo na frente de quem compra. Resultado rastreável.</div>
       </div>
       <div class="service-card reveal reveal-delay-3">
-        <div class="service-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2ECC71" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg></div>
+        <div class="service-icon">🧭</div>
         <div class="service-name">Estratégia</div>
-        <div class="service-desc">Planejo o que postar, quando postar e por quê. Cada conteúdo tem um objetivo claro. Nada é aleatório.</div>
+        <div class="service-desc">Calendário editorial, posicionamento digital e narrativa de marca. Nenhum post é aleatório.</div>
       </div>
       <div class="service-card reveal reveal-delay-4">
-        <div class="service-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2ECC71" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
-        <div class="service-name">Sites</div>
-        <div class="service-desc">Páginas profissionais pro seu negócio. Quando alguém clica no seu link, precisa chegar num lugar que convence. Não no Instagram de novo.</div>
+        <div class="service-icon">🖥️</div>
+        <div class="service-name">Sites & Landing Pages</div>
+        <div class="service-desc">Sites e páginas de lançamento pra cursos, produtos e eventos. Seu tráfego precisa de um destino que converte.</div>
       </div>
     </div>
   </section>
@@ -877,96 +796,57 @@
     <div class="section-label reveal">Do clique à venda</div>
     <div class="section-title reveal">Eu cuido do caminho inteiro.</div>
     <div class="funil-visual reveal">
-      <span class="funil-step">Conversa</span>
+      <span class="funil-step">Reunião</span>
       <span class="funil-arrow">→</span>
       <span class="funil-step">Estratégia</span>
       <span class="funil-arrow">→</span>
-      <span class="funil-step">Produção</span>
+      <span class="funil-step">Foto & Vídeo</span>
       <span class="funil-arrow">→</span>
       <span class="funil-step">Conteúdo</span>
       <span class="funil-arrow">→</span>
-      <span class="funil-step">Divulgação</span>
+      <span class="funil-step">Ads</span>
       <span class="funil-arrow">→</span>
-      <span class="funil-step">Site</span>
+      <span class="funil-step">Landing Page</span>
       <span class="funil-arrow">→</span>
-      <span class="funil-step final">Clientes</span>
+      <span class="funil-step final">Venda</span>
     </div>
   </section>
 
   <!-- QUOTE -->
-  <section class="quote-section" style="position:relative;">
+  <section class="quote-section">
     <div class="quote-text reveal">
-      Quem já é seu cliente sabe o quanto você é bom. O problema é que quem ainda não te conhece <span class="accent">não tem como saber.</span>
+      Seu produto é excelente. Seus clientes sabem disso. Mas quem ainda não te conhece <span class="accent">não tem como saber.</span>
     </div>
-    <p class="quote-sub reveal reveal-delay-1">O que aparece nas suas redes hoje não mostra nem metade do que você entrega. Eu cuido disso pra você. Não como mais um fornecedor. Como parceiro que faz sua marca aparecer do tamanho que ela é.</p>
+    <p class="quote-sub reveal reveal-delay-1">O que aparece nas redes não mostra nem metade do que você entrega. Eu resolvo esse gap. Não como fornecedor de conteúdo, como parceiro criativo que faz sua marca aparecer do tamanho que ela é.</p>
   </section>
 
   <!-- CTA -->
   <section class="cta-section" id="contato">
     <div class="cta-title reveal">Quer ver o que eu<br>faria com a <span style="color:var(--accent)">sua marca?</span></div>
     <p class="cta-sub reveal reveal-delay-1">Sem compromisso, sem formulário. Me manda uma mensagem.</p>
-    <a href="https://wa.me/5511947933300?text=Oi%20Igor%2C%20vi%20seu%20trabalho%20e%20quero%20conversar" class="cta-whatsapp reveal reveal-delay-2">Chamar no WhatsApp</a>
+    <a href="https://wa.me/5511999999999?text=Oi%20Igor%2C%20vi%20seu%20trabalho%20e%20quero%20conversar" class="cta-whatsapp reveal reveal-delay-2">Chamar no WhatsApp</a>
   </section>
 
   <!-- FOOTER -->
   <footer>
-    <div style="font-family:var(--heading);font-size:clamp(18px,3vw,28px);font-weight:700;letter-spacing:-0.5px;margin-bottom:24px;color:var(--text-muted);">Sua marca merece ser vista do tamanho que ela é.</div>
     <div class="footer-name">Igor SHarada</div>
     <div class="footer-links">
-      <a href="https://instagram.com/IgorSHarada">@IgorSHarada</a> · <a href="mailto:haradaigor@gmail.com">haradaigor@gmail.com</a> · <a href="https://wa.me/5511947933300">WhatsApp</a>
+      <a href="https://instagram.com/IgorSHarada">@IgorSHarada</a> · <a href="mailto:haradaigor@gmail.com">haradaigor@gmail.com</a>
     </div>
   </footer>
 
   <!-- SCRIPTS -->
   <script>
-    // Custom cursor
-    const cursor = document.querySelector('.cursor');
-    const cursorDot = document.querySelector('.cursor-dot');
-    let mouseX = 0, mouseY = 0, cursorX = 0, cursorY = 0;
-
-    document.addEventListener('mousemove', (e) => {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
-      cursorDot.style.left = mouseX + 'px';
-      cursorDot.style.top = mouseY + 'px';
-    });
-
-    function animateCursor() {
-      cursorX += (mouseX - cursorX) * 0.12;
-      cursorY += (mouseY - cursorY) * 0.12;
-      cursor.style.left = cursorX + 'px';
-      cursor.style.top = cursorY + 'px';
-      requestAnimationFrame(animateCursor);
-    }
-    animateCursor();
-
-    document.querySelectorAll('a, button, .case-card, .service-card, .funil-step').forEach(el => {
-      el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
-      el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
-    });
-
-    // Scroll progress
-    const progressBar = document.querySelector('.scroll-progress');
-
-    // Nav scroll
-    const nav = document.querySelector('nav');
-
-    window.addEventListener('scroll', () => {
-      const scrolled = window.scrollY / (document.body.scrollHeight - window.innerHeight);
-      progressBar.style.width = (scrolled * 100) + '%';
-      nav.classList.toggle('scrolled', window.scrollY > 60);
-    });
-
     // Scroll reveal
     const revealObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) entry.target.classList.add('visible');
       });
-    }, { threshold: 0.12 });
+    }, { threshold: 0.15 });
 
     document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
-    // Counter animation
+    // Color interpolation: branco → verde
     function lerpColor(progress) {
       const r = Math.round(245 - (245 - 46) * progress);
       const g = Math.round(240 - (240 - 204) * progress);
@@ -974,6 +854,7 @@
       return `rgb(${r},${g},${b})`;
     }
 
+    // Counter animation function
     function animateCounters(card) {
       card.querySelectorAll('.stat-number[data-target]').forEach(counter => {
         if (counter.animating) return;
@@ -1010,10 +891,14 @@
       });
     }
 
+    // Animate on scroll + hover
     const counterObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
-        if (entry.isIntersecting) animateCounters(entry.target);
-        else resetCounters(entry.target);
+        if (entry.isIntersecting) {
+          animateCounters(entry.target);
+        } else {
+          resetCounters(entry.target);
+        }
       });
     }, { threshold: 0.2 });
 
