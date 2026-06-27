@@ -833,15 +833,15 @@
   <!-- SCRIPTS -->
   <script>
     // Scroll reveal
-    const observer = new IntersectionObserver((entries) => {
+    const revealObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) entry.target.classList.add('visible');
       });
     }, { threshold: 0.15 });
 
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
-    // Counter on hover
+    // Counter animation function
     function animateCounters(card) {
       card.querySelectorAll('.stat-number[data-target]').forEach(counter => {
         counter.classList.add('counting');
@@ -869,7 +869,20 @@
       });
     }
 
+    // Animate on scroll (reset when leaving, replay when entering)
+    const counterObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          animateCounters(entry.target);
+        } else {
+          resetCounters(entry.target);
+        }
+      });
+    }, { threshold: 0.3 });
+
     document.querySelectorAll('.case-card').forEach(card => {
+      counterObserver.observe(card);
+      // Also animate on hover
       card.addEventListener('mouseenter', () => animateCounters(card));
       card.addEventListener('mouseleave', () => resetCounters(card));
     });
