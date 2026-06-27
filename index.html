@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Igor SHarada — Direção Criativa para Marcas Premium | Fotografia, Vídeo e Tráfego Pago</title>
   <meta name="description" content="Direção criativa, fotografia, vídeo, conteúdo e tráfego pago para negócios premium de gastronomia, saúde e serviços em São Paulo e interior. Cases com +66x em views e contratos acima de R$60k.">
-  <meta name="keywords" content="direção criativa, fotografia premium, vídeo para restaurantes, social media gastronomia, tráfego pago, Meta Ads, conteúdo para Instagram, filmmaker São Paulo, fotógrafo gastronômico, landing page, Igor SHarada">
+  <meta name="keywords" content="direção criativa, fotografia premium, vídeo para restaurantes, social media gastronomia, tráfego pago, Meta Ads, conteúdo para Instagram, filmmaker São Paulo, fotógrafo gastronômico, criação de sites, landing page, site para restaurante, site para clínica, Igor SHarada">
   <meta name="author" content="Igor SHarada">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://igorsharada.com.br/">
@@ -46,7 +46,7 @@
       "longitude": -46.5872
     },
     "areaServed": ["São Paulo", "Mairiporã", "Atibaia", "Campinas", "Jundiaí"],
-    "serviceType": ["Direção Criativa", "Fotografia", "Vídeo", "Social Media", "Tráfego Pago", "Landing Pages"],
+    "serviceType": ["Direção Criativa", "Fotografia", "Vídeo", "Social Media", "Tráfego Pago", "Criação de Sites", "Landing Pages"],
     "sameAs": [
       "https://instagram.com/IgorSHarada"
     ],
@@ -144,13 +144,13 @@
     /* ── HERO ── */
     .hero {
       min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      align-items: center;
       padding: 120px 32px 80px;
       max-width: 1200px;
       margin: 0 auto;
-      position: relative;
+      gap: 40px;
     }
 
     .hero-label {
@@ -164,10 +164,10 @@
 
     .hero h1 {
       font-family: var(--heading);
-      font-size: clamp(48px, 9vw, 96px);
+      font-size: clamp(40px, 5.5vw, 72px);
       font-weight: 800;
-      line-height: 1.0;
-      letter-spacing: -3px;
+      line-height: 1.05;
+      letter-spacing: -2px;
       margin-bottom: 32px;
     }
 
@@ -208,11 +208,9 @@
     }
 
     .hero-img-container {
-      position: absolute;
-      right: 32px;
-      bottom: 80px;
-      width: 380px;
-      height: 480px;
+      position: relative;
+      width: 100%;
+      height: 520px;
       border-radius: 16px;
       overflow: hidden;
     }
@@ -593,15 +591,11 @@
 
     /* ── MOBILE ── */
     @media (max-width: 768px) {
-      .hero { min-height: auto; padding: 140px 20px 80px; }
-      .hero h1 { font-size: clamp(40px, 10vw, 64px); letter-spacing: -2px; }
+      .hero { min-height: auto; padding: 140px 20px 80px; grid-template-columns: 1fr; }
+      .hero h1 { font-size: clamp(36px, 9vw, 52px); letter-spacing: -1.5px; }
       .hero-img-container {
-        position: relative;
-        right: auto;
-        bottom: auto;
         width: 100%;
         height: 400px;
-        margin-top: 40px;
       }
       section { padding: 80px 20px; }
       .case-card { padding: 32px 24px; }
@@ -627,15 +621,16 @@
 
   <!-- HERO -->
   <section class="hero">
-    <div class="hero-label reveal">Direção Criativa</div>
-    <h1>
-      <span class="line reveal reveal-delay-1">Sua marca é</span>
-      <span class="line reveal reveal-delay-2"><span class="outline">melhor</span> do que</span>
-      <span class="line reveal reveal-delay-3">parece na <span class="highlight">internet.</span></span>
-    </h1>
-    <p class="hero-sub reveal reveal-delay-3">Fotografia, vídeo, conteúdo e tráfego pago pra negócios premium de gastronomia, saúde e serviços.</p>
-    <a href="#contato" class="hero-cta reveal reveal-delay-4">Quero conversar →</a>
-
+    <div>
+      <div class="hero-label reveal">Direção Criativa</div>
+      <h1>
+        <span class="line reveal reveal-delay-1">Sua marca é</span>
+        <span class="line reveal reveal-delay-2"><span class="outline">melhor</span> do que</span>
+        <span class="line reveal reveal-delay-3">parece na <span class="highlight">internet.</span></span>
+      </h1>
+      <p class="hero-sub reveal reveal-delay-3">Fotografia, vídeo, conteúdo e tráfego pago pra negócios premium de gastronomia, saúde e serviços.</p>
+      <a href="#contato" class="hero-cta reveal reveal-delay-4">Quero conversar →</a>
+    </div>
     <div class="hero-img-container reveal reveal-delay-2">
       <img src="img/igor-hero.jpg" alt="Igor SHarada">
     </div>
@@ -724,8 +719,8 @@
       </div>
       <div class="service-card reveal reveal-delay-4">
         <div class="service-icon">🖥️</div>
-        <div class="service-name">Landing Pages</div>
-        <div class="service-desc">Páginas de lançamento pra cursos, produtos e eventos. Seu tráfego precisa de um destino que converte.</div>
+        <div class="service-name">Sites & Landing Pages</div>
+        <div class="service-desc">Sites e páginas de lançamento pra cursos, produtos e eventos. Seu tráfego precisa de um destino que converte.</div>
       </div>
     </div>
   </section>
