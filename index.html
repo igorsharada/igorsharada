@@ -436,7 +436,7 @@
       letter-spacing: -1px;
     }
 
-    .stat-number.counting { color: var(--accent); }
+    .stat-number.done { color: var(--accent); transition: color 0.3s; }
 
     .stat-label {
       font-size: 12px;
@@ -846,21 +846,36 @@
 
     document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
+    // Color interpolation: white → green
+    function lerpColor(progress) {
+      const r = Math.round(245 - (245 - 46) * progress);
+      const g = Math.round(240 - (240 - 204) * progress);
+      const b = Math.round(235 - (235 - 113) * progress);
+      return `rgb(${r},${g},${b})`;
+    }
+
     // Counter animation function
     function animateCounters(card) {
       card.querySelectorAll('.stat-number[data-target]').forEach(counter => {
-        counter.classList.add('counting');
+        if (counter.animating) return;
+        counter.animating = true;
+        counter.classList.remove('done');
         const target = parseInt(counter.dataset.target);
         const prefix = counter.dataset.prefix || '';
         const suffix = counter.dataset.suffix || '';
-        const duration = 1200;
+        const duration = 1400;
         const start = performance.now();
         const animate = (now) => {
           const progress = Math.min((now - start) / duration, 1);
           const eased = 1 - Math.pow(1 - progress, 3);
           counter.textContent = prefix + Math.floor(target * eased) + suffix;
-          if (progress < 1) requestAnimationFrame(animate);
-          else counter.classList.remove('counting');
+          counter.style.color = lerpColor(eased);
+          if (progress < 1) {
+            requestAnimationFrame(animate);
+          } else {
+            counter.classList.add('done');
+            counter.animating = false;
+          }
         };
         requestAnimationFrame(animate);
       });
@@ -870,11 +885,13 @@
       card.querySelectorAll('.stat-number[data-target]').forEach(counter => {
         const prefix = counter.dataset.prefix || '';
         counter.textContent = prefix + '0';
-        counter.classList.remove('counting');
+        counter.classList.remove('done');
+        counter.style.color = '';
+        counter.animating = false;
       });
     }
 
-    // Animate on scroll: count when enters, reset when fully leaves, recount when re-enters
+    // Animate on scroll + hover
     const counterObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -887,6 +904,10 @@
 
     document.querySelectorAll('.case-card').forEach(card => {
       counterObserver.observe(card);
+      card.addEventListener('mouseenter', () => {
+        resetCounters(card);
+        setTimeout(() => animateCounters(card), 50);
+      });
     });
   </script>
 
