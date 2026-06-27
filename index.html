@@ -144,13 +144,19 @@
     /* ── HERO ── */
     .hero {
       min-height: 100vh;
-      display: grid;
-      grid-template-columns: 1.2fr 1fr;
-      align-items: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
       padding: 120px 32px 80px;
       max-width: 1200px;
       margin: 0 auto;
-      gap: 40px;
+    }
+
+    .hero-top {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 48px;
     }
 
     .hero-label {
@@ -164,19 +170,60 @@
 
     .hero h1 {
       font-family: var(--heading);
-      font-size: clamp(40px, 5.5vw, 72px);
+      font-size: clamp(36px, 4.5vw, 64px);
       font-weight: 800;
-      line-height: 1.05;
+      line-height: 1.1;
       letter-spacing: -2px;
       margin-bottom: 32px;
     }
 
-    .hero h1 .line { display: block; }
+    .hero h1 .line {
+      display: block;
+      overflow: hidden;
+    }
+
+    .hero h1 .line-inner {
+      display: inline-block;
+      transform: translateY(100%);
+      animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .hero h1 .line:nth-child(2) .line-inner { animation-delay: 0.15s; }
+    .hero h1 .line:nth-child(3) .line-inner { animation-delay: 0.3s; }
+
+    @keyframes slideUp {
+      to { transform: translateY(0); }
+    }
+
     .hero h1 .outline {
       -webkit-text-stroke: 1.5px var(--text);
       color: transparent;
+      transition: color 0.4s;
     }
-    .hero h1 .highlight { color: var(--accent); }
+
+    .hero h1 .outline:hover {
+      color: var(--text);
+    }
+
+    .hero h1 .highlight {
+      color: var(--accent);
+      position: relative;
+    }
+
+    .hero h1 .highlight::after {
+      content: '';
+      position: absolute;
+      bottom: 4px;
+      left: 0;
+      width: 0;
+      height: 3px;
+      background: var(--accent);
+      animation: underline 1s cubic-bezier(0.16, 1, 0.3, 1) 0.8s forwards;
+    }
+
+    @keyframes underline {
+      to { width: 100%; }
+    }
 
     .hero-sub {
       font-size: 18px;
@@ -184,6 +231,12 @@
       max-width: 480px;
       line-height: 1.7;
       margin-bottom: 48px;
+      opacity: 0;
+      animation: fadeIn 0.8s ease 0.6s forwards;
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1; }
     }
 
     .hero-cta {
@@ -200,6 +253,8 @@
       letter-spacing: 1px;
       text-transform: uppercase;
       transition: transform 0.3s, box-shadow 0.3s;
+      opacity: 0;
+      animation: fadeIn 0.8s ease 0.8s forwards;
     }
 
     .hero-cta:hover {
@@ -213,6 +268,13 @@
       height: 520px;
       border-radius: 16px;
       overflow: hidden;
+      opacity: 0;
+      animation: fadeScale 1s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
+    }
+
+    @keyframes fadeScale {
+      from { opacity: 0; transform: scale(1.05); }
+      to { opacity: 1; transform: scale(1); }
     }
 
     .hero-img-container img {
@@ -220,10 +282,13 @@
       height: 100%;
       object-fit: cover;
       filter: grayscale(30%);
-      transition: filter 0.5s;
+      transition: filter 0.5s, transform 0.5s;
     }
 
-    .hero-img-container:hover img { filter: grayscale(0%); }
+    .hero-img-container:hover img {
+      filter: grayscale(0%);
+      transform: scale(1.03);
+    }
 
     .hero-img-container::after {
       content: '';
@@ -591,12 +656,10 @@
 
     /* ── MOBILE ── */
     @media (max-width: 768px) {
-      .hero { min-height: auto; padding: 140px 20px 80px; grid-template-columns: 1fr; }
+      .hero { min-height: auto; padding: 140px 20px 80px; }
+      .hero-top { grid-template-columns: 1fr; }
       .hero h1 { font-size: clamp(36px, 9vw, 52px); letter-spacing: -1.5px; }
-      .hero-img-container {
-        width: 100%;
-        height: 400px;
-      }
+      .hero-img-container { height: 400px; }
       section { padding: 80px 20px; }
       .case-card { padding: 32px 24px; }
       .case-stats { grid-template-columns: repeat(3, 1fr); gap: 16px; }
@@ -621,18 +684,20 @@
 
   <!-- HERO -->
   <section class="hero">
-    <div>
-      <div class="hero-label reveal">Direção Criativa</div>
-      <h1>
-        <span class="line reveal reveal-delay-1">Sua marca é</span>
-        <span class="line reveal reveal-delay-2"><span class="outline">melhor</span> do que</span>
-        <span class="line reveal reveal-delay-3">parece na <span class="highlight">internet.</span></span>
-      </h1>
-      <p class="hero-sub reveal reveal-delay-3">Fotografia, vídeo, conteúdo e tráfego pago pra negócios premium de gastronomia, saúde e serviços.</p>
-      <a href="#contato" class="hero-cta reveal reveal-delay-4">Quero conversar →</a>
-    </div>
-    <div class="hero-img-container reveal reveal-delay-2">
-      <img src="img/igor-hero.jpg" alt="Igor SHarada">
+    <div class="hero-top">
+      <div>
+        <div class="hero-label">Direção Criativa</div>
+        <h1>
+          <span class="line"><span class="line-inner">Sua marca é</span></span>
+          <span class="line"><span class="line-inner"><span class="outline">melhor</span> do que</span></span>
+          <span class="line"><span class="line-inner">parece na <span class="highlight">internet.</span></span></span>
+        </h1>
+        <p class="hero-sub">Fotografia, vídeo, conteúdo e tráfego pago pra negócios premium de gastronomia, saúde e serviços.</p>
+        <a href="#contato" class="hero-cta">Quero conversar →</a>
+      </div>
+      <div class="hero-img-container">
+        <img src="img/igor-hero.jpg" alt="Igor SHarada">
+      </div>
     </div>
   </section>
 
