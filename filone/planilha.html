@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Filone — Planilha de Vendas (Simulação)</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body { font-family: 'Inter', sans-serif; background: #0F0F0F; color: #F5F0EB; }
+
+  .topbar {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 14px 32px; background: #1A1A1A; border-bottom: 1px solid #2A2A2A;
+  }
+  .topbar .logo { font-size: 18px; font-weight: 800; }
+  .topbar .logo span { color: #2ECC71; }
+
+  /* TABS */
+  .tabs {
+    display: flex; gap: 0; padding: 0 32px; background: #1A1A1A;
+    border-bottom: 1px solid #2A2A2A;
+  }
+  .tab {
+    padding: 12px 24px; font-size: 13px; font-weight: 600; color: #555;
+    cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.2s;
+  }
+  .tab:hover { color: #AAA; }
+  .tab.active { color: #2ECC71; border-bottom-color: #2ECC71; }
+
+  /* DASHBOARD */
+  .dashboard { padding: 24px 32px; }
+
+  .dash-stats {
+    display: grid; grid-template-columns: repeat(6, 1fr); gap: 14px; margin-bottom: 28px;
+  }
+  .dash-stat {
+    background: #1A1A1A; padding: 20px 16px; text-align: center; border-top: 3px solid #333;
+  }
+  .dash-stat.highlight { border-top-color: #2ECC71; }
+  .dash-stat .ds-value { font-size: 28px; font-weight: 800; }
+  .dash-stat .ds-label { font-size: 10px; color: #555; text-transform: uppercase; letter-spacing: 1px; margin-top: 6px; }
+
+  .dash-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+
+  .dash-card { background: #1A1A1A; padding: 24px; }
+  .dash-card h3 {
+    font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+    color: #555; margin-bottom: 16px;
+  }
+
+  .dash-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 8px 0; border-bottom: 1px solid #222;
+  }
+  .dash-row:last-child { border-bottom: none; }
+  .dash-row .dr-label { font-size: 13px; color: #AAA; }
+  .dash-row .dr-value { font-size: 14px; font-weight: 700; }
+
+  .green { color: #2ECC71; }
+  .orange { color: #F39C12; }
+  .blue { color: #3498DB; }
+  .red { color: #E74C3C; }
+  .purple { color: #9B59B6; }
+
+  /* TABLE */
+  .table-section { padding: 24px 32px; }
+
+  .table-filters {
+    display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; align-items: center;
+  }
+  .filter-btn {
+    background: #1A1A1A; border: 1px solid #333; color: #888; padding: 7px 14px;
+    font-size: 12px; font-weight: 600; cursor: pointer; font-family: 'Inter', sans-serif;
+    transition: all 0.2s;
+  }
+  .filter-btn:hover, .filter-btn.active { background: #2ECC71; color: #1A1A1A; border-color: #2ECC71; }
+
+  .search-input {
+    background: #1A1A1A; border: 1px solid #333; color: #F5F0EB; padding: 7px 14px;
+    font-size: 12px; font-family: 'Inter', sans-serif; width: 250px; margin-left: auto;
+  }
+  .search-input::placeholder { color: #555; }
+  .search-input:focus { outline: 1px solid #2ECC71; }
+
+  table { width: 100%; border-collapse: collapse; }
+  th {
+    background: #1A1A1A; padding: 10px 12px; text-align: left; font-size: 11px;
+    font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: #555;
+    border-bottom: 2px solid #2ECC71; position: sticky; top: 0; cursor: pointer;
+  }
+  th:hover { color: #2ECC71; }
+  td { padding: 10px 12px; border-bottom: 1px solid #1A1A1A; font-size: 13px; color: #AAA; }
+  tr:hover td { background: #1A1A1A; }
+
+  .badge {
+    display: inline-block; padding: 3px 10px; font-size: 10px; font-weight: 700;
+    text-transform: uppercase; border-radius: 4px;
+  }
+  .badge-entregue { background: #2ECC7133; color: #2ECC71; }
+  .badge-novo { background: #F39C1233; color: #F39C12; }
+  .badge-preparando { background: #3498DB33; color: #3498DB; }
+  .badge-pronto { background: #9B59B633; color: #9B59B6; }
+
+  .canal-tag {
+    display: inline-block; padding: 3px 8px; font-size: 10px; font-weight: 600; border-radius: 4px;
+  }
+  .canal-promo { background: #E74C3C33; color: #E74C3C; }
+  .canal-ads-ig { background: #9B59B633; color: #9B59B6; }
+  .canal-ads-fb { background: #3498DB33; color: #3498DB; }
+  .canal-whatsapp { background: #2ECC7133; color: #2ECC71; }
+  .canal-qr { background: #F39C1233; color: #F39C12; }
+
+  .tipo-tag { font-size: 11px; font-weight: 600; }
+  .tipo-novo { color: #2ECC71; }
+  .tipo-recompra { color: #3498DB; }
+
+  .client-name { font-weight: 600; color: #F5F0EB; }
+  .client-phone { font-size: 11px; color: #555; }
+
+  .status-fiel { color: #2ECC71; font-weight: 700; font-size: 11px; }
+  .status-recorrente { color: #3498DB; font-weight: 700; font-size: 11px; }
+
+  /* LIVE ANIMATION */
+  .live-dot {
+    display: inline-block; width: 8px; height: 8px; background: #2ECC71;
+    border-radius: 50%; margin-right: 6px; animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  .new-row { animation: slideIn 0.5s ease; }
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateY(-10px); background: #2ECC7122; }
+    to { opacity: 1; transform: translateY(0); background: transparent; }
+  }
+
+  /* PAGES */
+  .page { display: none; }
+  .page.active { display: block; }
+
+  @media (max-width: 900px) {
+    .dash-stats { grid-template-columns: repeat(3, 1fr); }
+    .dash-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="logo">Filone <span>Vendas</span> <span class="live-dot"></span><span style="font-size:12px; color:#2ECC71; font-weight:600;">LIVE</span></div>
+  <div style="font-size:13px; color:#555;">Planilha de rastreamento — <strong style="color:#F5F0EB;">Exemplo simulado</strong></div>
+</div>
+
+<div class="tabs">
+  <div class="tab active" onclick="switchTab('dashboard', this)">📊 Dashboard</div>
+  <div class="tab" onclick="switchTab('pedidos', this)">📋 Pedidos</div>
+  <div class="tab" onclick="switchTab('clientes', this)">👥 Clientes</div>
+</div>
+
+<!-- DASHBOARD -->
+<div class="page active" id="page-dashboard">
+  <div class="dashboard">
+    <div class="dash-stats">
+      <div class="dash-stat highlight">
+        <div class="ds-value green" id="totalPedidos">32</div>
+        <div class="ds-label">Total pedidos</div>
+      </div>
+      <div class="dash-stat">
+        <div class="ds-value">R$ 2.225</div>
+        <div class="ds-label">Vendas totais</div>
+      </div>
+      <div class="dash-stat highlight">
+        <div class="ds-value green">R$ 333</div>
+        <div class="ds-label">Comissão (15%)</div>
+      </div>
+      <div class="dash-stat">
+        <div class="ds-value">8</div>
+        <div class="ds-label">Total clientes</div>
+      </div>
+      <div class="dash-stat">
+        <div class="ds-value">R$ 69</div>
+        <div class="ds-label">Ticket médio</div>
+      </div>
+      <div class="dash-stat">
+        <div class="ds-value blue">75%</div>
+        <div class="ds-label">Taxa recompra</div>
+      </div>
+    </div>
+
+    <div class="dash-grid">
+      <div class="dash-card">
+        <h3>📋 Por status</h3>
+        <div class="dash-row"><span class="dr-label">Novo</span><span class="dr-value orange">2</span></div>
+        <div class="dash-row"><span class="dr-label">Preparando</span><span class="dr-value blue">1</span></div>
+        <div class="dash-row"><span class="dr-label">Pronto</span><span class="dr-value purple">1</span></div>
+        <div class="dash-row"><span class="dr-label">Entregue</span><span class="dr-value green">27</span></div>
+        <div class="dash-row"><span class="dr-label">Cancelado</span><span class="dr-value red">1</span></div>
+      </div>
+
+      <div class="dash-card">
+        <h3>📡 Por origem</h3>
+        <div class="dash-row"><span class="dr-label">WhatsApp direto</span><span class="dr-value green">12</span></div>
+        <div class="dash-row"><span class="dr-label">Ads Instagram</span><span class="dr-value purple">7</span></div>
+        <div class="dash-row"><span class="dr-label">Ads Facebook</span><span class="dr-value blue">3</span></div>
+        <div class="dash-row"><span class="dr-label">QR Code loja</span><span class="dr-value orange">4</span></div>
+        <div class="dash-row"><span class="dr-label">Promo inauguração</span><span class="dr-value red">4</span></div>
+        <div class="dash-row"><span class="dr-label">Orgânico</span><span class="dr-value">2</span></div>
+      </div>
+
+      <div class="dash-card">
+        <h3>⭐ Top clientes</h3>
+        <div class="dash-row"><span class="dr-label">Maria Silva</span><span class="dr-value green">7 pedidos — R$ 597</span></div>
+        <div class="dash-row"><span class="dr-label">João Pereira</span><span class="dr-value">5 pedidos — R$ 306</span></div>
+        <div class="dash-row"><span class="dr-label">Ana Costa</span><span class="dr-value">4 pedidos — R$ 249</span></div>
+        <div class="dash-row"><span class="dr-label">Lucia Ferreira</span><span class="dr-value">4 pedidos — R$ 240</span></div>
+        <div class="dash-row"><span class="dr-label">Carlos Mendes</span><span class="dr-value">3 pedidos — R$ 243</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PEDIDOS -->
+<div class="page" id="page-pedidos">
+  <div class="table-section">
+    <div class="table-filters">
+      <button class="filter-btn active" onclick="filterPedidos('todos', this)">Todos</button>
+      <button class="filter-btn" onclick="filterPedidos('Novo', this)">Novo</button>
+      <button class="filter-btn" onclick="filterPedidos('Preparando', this)">Preparando</button>
+      <button class="filter-btn" onclick="filterPedidos('Entregue', this)">Entregue</button>
+      <button class="filter-btn" onclick="filterPedidos('1a compra', this)">1a compra</button>
+      <button class="filter-btn" onclick="filterPedidos('Recompra', this)">Recompra</button>
+      <input type="text" class="search-input" placeholder="🔍 Buscar por nome, telefone ou pedido..." oninput="searchPedidos(this.value)">
+    </div>
+
+    <table id="tabelaPedidos">
+      <tr>
+        <th>Data</th>
+        <th>Nº</th>
+        <th>Tipo</th>
+        <th>Cliente</th>
+        <th>Itens</th>
+        <th>Valor</th>
+        <th>Receber</th>
+        <th>Pagamento</th>
+        <th>Origem</th>
+        <th>Status</th>
+      </tr>
+      <tr data-status="Novo" data-tipo="1a compra" class="new-row"><td>28/06 14:32</td><td>#033</td><td><span class="tipo-tag tipo-novo">1a compra</span></td><td><div class="client-name">Roberto Filho</div><div class="client-phone">(11) 98765-4321</div></td><td>1x Pão de Forma Grãos, 1x Sourdough</td><td>R$ 93</td><td>Delivery</td><td>Pix</td><td><span class="canal-tag canal-ads-ig">Ads Instagram</span></td><td><span class="badge badge-novo">Novo</span></td></tr>
+      <tr data-status="Novo" data-tipo="Recompra" class="new-row"><td>28/06 14:15</td><td>#032</td><td><span class="tipo-tag tipo-recompra">Recompra</span></td><td><div class="client-name">Ana Costa</div><div class="client-phone">(11) 97777-8888</div></td><td>3x Pão de Abóbora</td><td>R$ 87</td><td>Retirada</td><td>Cartão</td><td><span class="canal-tag canal-whatsapp">WhatsApp</span></td><td><span class="badge badge-novo">Novo</span></td></tr>
+      <tr data-status="Preparando" data-tipo="1a compra"><td>28/06 13:20</td><td>#031</td><td><span class="tipo-tag tipo-novo">1a compra</span></td><td><div class="client-name">Carlos Mendes</div><div class="client-phone">(11) 95555-3333</div></td><td>1x LandBrot, 1x Focaccia</td><td>R$ 80</td><td>Delivery</td><td>Pix</td><td><span class="canal-tag canal-ads-ig">Ads Instagram</span></td><td><span class="badge badge-preparando">Preparando</span></td></tr>
+      <tr data-status="Entregue" data-tipo="Recompra"><td>28/06 12:45</td><td>#030</td><td><span class="tipo-tag tipo-recompra">Recompra</span></td><td><div class="client-name">Maria Silva</div><div class="client-phone">(11) 98765-4321</div></td><td>2x Sourdough, 1x Focaccia</td><td>R$ 119</td><td>Retirada</td><td>Pagar na hora</td><td><span class="canal-tag canal-whatsapp">WhatsApp</span></td><td><span class="badge badge-entregue">Entregue</span></td></tr>
+      <tr data-status="Entregue" data-tipo="1a compra"><td>28/06 12:10</td><td>#029</td><td><span class="tipo-tag tipo-novo">1a compra</span></td><td><div class="client-name">Pedro Alves</div><div class="client-phone">(11) 93456-7890</div></td><td>2x Demi Baguette, 1x Pão de Nozes</td><td>R$ 73</td><td>Delivery</td><td>Pix</td><td><span class="canal-tag canal-qr">QR Code</span></td><td><span class="badge badge-entregue">Entregue</span></td></tr>
+      <tr data-status="Entregue" data-tipo="Recompra"><td>28/06 11:30</td><td>#028</td><td><span class="tipo-tag tipo-recompra">Recompra</span></td><td><div class="client-name">Fernanda Lima</div><div class="client-phone">(11) 96666-4444</div></td><td>1x Pão Italiano, 1x Croissant (4un)</td><td>R$ 66</td><td>Retirada</td><td>Cartão</td><td><span class="canal-tag canal-whatsapp">WhatsApp</span></td><td><span class="badge badge-entregue">Entregue</span></td></tr>
+      <tr data-status="Entregue" data-tipo="Recompra"><td>27/06 16:00</td><td>#027</td><td><span class="tipo-tag tipo-recompra">Recompra</span></td><td><div class="client-name">Lucia Ferreira</div><div class="client-phone">(11) 94444-2222</div></td><td>2x Focaccia Ligure</td><td>R$ 62</td><td>Delivery</td><td>Pix</td><td><span class="canal-tag canal-ads-fb">Ads Facebook</span></td><td><span class="badge badge-entregue">Entregue</span></td></tr>
+      <tr data-status="Entregue" data-tipo="Recompra"><td>27/06 14:30</td><td>#026</td><td><span class="tipo-tag tipo-recompra">Recompra</span></td><td><div class="client-name">João Pereira</div><div class="client-phone">(11) 91234-5678</div></td><td>1x Filone, 1x Brioche</td><td>R$ 49</td><td>Retirada</td><td>Cartão</td><td><span class="canal-tag canal-whatsapp">WhatsApp</span></td><td><span class="badge badge-entregue">Entregue</span></td></tr>
+      <tr data-status="Entregue" data-tipo="1a compra"><td>27/06 10:15</td><td>#025</td><td><span class="tipo-tag tipo-novo">1a compra</span></td><td><div class="client-name">Camila Santos</div><div class="client-phone">(11) 93333-4444</div></td><td>2x Pão de Abóbora, 1x Integral Sementes</td><td>R$ 87</td><td>Retirada</td><td>Pagar na hora</td><td><span class="canal-tag canal-qr">QR Code</span></td><td><span class="badge badge-entregue">Entregue</span></td></tr>
+      <tr data-status="Entregue" data-tipo="Recompra"><td>26/06 15:20</td><td>#024</td><td><span class="tipo-tag tipo-recompra">Recompra</span></td><td><div class="client-name">Paulo Santos</div><div class="client-phone">(11) 92222-7777</div></td><td>1x Sourdough, 1x Pain au Chocolat (4un)</td><td>R$ 100</td><td>Delivery</td><td>Cartão</td><td><span class="canal-tag canal-ads-ig">Ads Instagram</span></td><td><span class="badge badge-entregue">Entregue</span></td></tr>
+      <tr data-status="Entregue" data-tipo="Recompra"><td>26/06 09:45</td><td>#023</td><td><span class="tipo-tag tipo-recompra">Recompra</span></td><td><div class="client-name">Maria Silva</div><div class="client-phone">(11) 98765-4321</div></td><td>3x Pão Italiano, 2x Croissant (4un)</td><td>R$ 151</td><td>Retirada</td><td>Pix</td><td><span class="canal-tag canal-whatsapp">WhatsApp</span></td><td><span class="badge badge-entregue">Entregue</span></td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- CLIENTES -->
+<div class="page" id="page-clientes">
+  <div class="table-section">
+    <div class="table-filters">
+      <button class="filter-btn active" onclick="filterClientes('todos', this)">Todos</button>
+      <button class="filter-btn" onclick="filterClientes('Fiel', this)">Fiéis (4+)</button>
+      <button class="filter-btn" onclick="filterClientes('Recorrente', this)">Recorrentes (2-3)</button>
+      <button class="filter-btn" onclick="filterClientes('Migrou', this)">iFood → WhatsApp</button>
+      <input type="text" class="search-input" placeholder="🔍 Buscar cliente..." oninput="searchClientes(this.value)">
+    </div>
+
+    <table id="tabelaClientes">
+      <tr>
+        <th>Cliente</th>
+        <th>Aniversário</th>
+        <th>Status</th>
+        <th>Primeiro contato</th>
+        <th>Pedidos</th>
+        <th>Total gasto</th>
+        <th>Ticket médio</th>
+        <th>Origem</th>
+        <th>Última compra</th>
+        <th>Migração</th>
+        <th>Comissão (15%)</th>
+      </tr>
+      <tr data-status="Fiel"><td><div class="client-name">Maria Silva</div><div class="client-phone">(11) 98765-4321</div></td><td>15/03</td><td><span class="status-fiel">Fiel</span></td><td>05/01/2026</td><td><strong>7</strong></td><td class="green"><strong>R$ 597</strong></td><td>R$ 85</td><td><span class="canal-tag canal-promo">Promo</span></td><td>24/06</td><td></td><td class="green">R$ 89,55</td></tr>
+      <tr data-status="Fiel" data-migrou="sim"><td><div class="client-name">João Pereira</div><div class="client-phone">(11) 91234-5678</div></td><td>22/08</td><td><span class="status-fiel">Fiel</span></td><td>08/01/2026</td><td><strong>5</strong></td><td><strong>R$ 306</strong></td><td>R$ 61</td><td><span class="canal-tag canal-ads-ig">Ads IG</span></td><td>26/06</td><td><span class="badge" style="background:#E74C3C33;color:#E74C3C;">iFood → WhatsApp</span></td><td class="green">R$ 45,90</td></tr>
+      <tr data-status="Fiel"><td><div class="client-name">Ana Costa</div><div class="client-phone">(11) 97777-8888</div></td><td>07/11</td><td><span class="status-fiel">Fiel</span></td><td>12/01/2026</td><td><strong>4</strong></td><td><strong>R$ 249</strong></td><td>R$ 62</td><td><span class="canal-tag canal-promo">Promo</span></td><td>30/05</td><td></td><td class="green">R$ 37,35</td></tr>
+      <tr data-status="Fiel" data-migrou="sim"><td><div class="client-name">Lucia Ferreira</div><div class="client-phone">(11) 94444-2222</div></td><td>12/06</td><td><span class="status-fiel">Fiel</span></td><td>25/01/2026</td><td><strong>4</strong></td><td><strong>R$ 240</strong></td><td>R$ 60</td><td><span class="canal-tag canal-ads-fb">Ads FB</span></td><td>25/06</td><td><span class="badge" style="background:#E74C3C33;color:#E74C3C;">iFood → WhatsApp</span></td><td class="green">R$ 36,00</td></tr>
+      <tr data-status="Recorrente"><td><div class="client-name">Carlos Mendes</div><div class="client-phone">(11) 95555-3333</div></td><td>30/01</td><td><span class="status-recorrente">Recorrente</span></td><td>18/01/2026</td><td><strong>3</strong></td><td><strong>R$ 243</strong></td><td>R$ 81</td><td><span class="canal-tag canal-qr">QR Code</span></td><td>25/05</td><td></td><td class="green">R$ 36,45</td></tr>
+      <tr data-status="Recorrente" data-migrou="sim"><td><div class="client-name">Roberto Almeida</div><div class="client-phone">(11) 93333-1111</div></td><td>25/09</td><td><span class="status-recorrente">Recorrente</span></td><td>08/02/2026</td><td><strong>3</strong></td><td><strong>R$ 214</strong></td><td>R$ 71</td><td><span class="canal-tag canal-promo">Promo</span></td><td>08/06</td><td><span class="badge" style="background:#E74C3C33;color:#E74C3C;">iFood → WhatsApp</span></td><td class="green">R$ 32,10</td></tr>
+      <tr data-status="Recorrente"><td><div class="client-name">Fernanda Lima</div><div class="client-phone">(11) 96666-4444</div></td><td>03/12</td><td><span class="status-recorrente">Recorrente</span></td><td>20/02/2026</td><td><strong>3</strong></td><td><strong>R$ 197</strong></td><td>R$ 65</td><td><span class="canal-tag canal-ads-ig">Ads IG</span></td><td>14/06</td><td></td><td class="green">R$ 29,55</td></tr>
+      <tr data-status="Recorrente"><td><div class="client-name">Paulo Santos</div><div class="client-phone">(11) 92222-7777</div></td><td>18/05</td><td><span class="status-recorrente">Recorrente</span></td><td>10/03/2026</td><td><strong>3</strong></td><td><strong>R$ 179</strong></td><td>R$ 59</td><td><span class="canal-tag canal-ads-ig">Ads IG</span></td><td>20/06</td><td></td><td class="green">R$ 26,85</td></tr>
+    </table>
+  </div>
+</div>
+
+<script>
+  function switchTab(tab, el) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('page-' + tab).classList.add('active');
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    el.classList.add('active');
+  }
+
+  function filterPedidos(val, btn) {
+    document.querySelectorAll('.table-filters .filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('#tabelaPedidos tr[data-status]').forEach(row => {
+      if (val === 'todos') { row.style.display = ''; }
+      else if (val === '1a compra' || val === 'Recompra') {
+        row.style.display = row.dataset.tipo === val ? '' : 'none';
+      } else {
+        row.style.display = row.dataset.status === val ? '' : 'none';
+      }
+    });
+  }
+
+  function searchPedidos(q) {
+    q = q.toLowerCase();
+    document.querySelectorAll('#tabelaPedidos tr[data-status]').forEach(row => {
+      row.style.display = row.textContent.toLowerCase().includes(q) ? '' : 'none';
+    });
+  }
+
+  function filterClientes(val, btn) {
+    document.querySelectorAll('#page-clientes .filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('#tabelaClientes tr[data-status]').forEach(row => {
+      if (val === 'todos') { row.style.display = ''; }
+      else if (val === 'Migrou') {
+        row.style.display = row.dataset.migrou === 'sim' ? '' : 'none';
+      } else {
+        row.style.display = row.dataset.status === val ? '' : 'none';
+      }
+    });
+  }
+
+  function searchClientes(q) {
+    q = q.toLowerCase();
+    document.querySelectorAll('#tabelaClientes tr[data-status]').forEach(row => {
+      row.style.display = row.textContent.toLowerCase().includes(q) ? '' : 'none';
+    });
+  }
+
+  // Simula pedido novo chegando a cada 30s
+  let pedidoNum = 34;
+  const nomes = ['Thiago Oliveira','Mariana Souza','Ricardo Costa','Beatriz Nunes','André Martins'];
+  const itens = ['2x Sourdough, 1x Brioche','1x LandBrot, 1x Pão de Abóbora','3x Focaccia Ligure','1x Pão de Forma Grãos','2x Croissant (4un), 1x Filone'];
+  const canais = [['canal-ads-ig','Ads Instagram'],['canal-whatsapp','WhatsApp'],['canal-qr','QR Code'],['canal-ads-fb','Ads Facebook']];
+  const valores = [87,93,105,49,119,80,73,66];
+
+  setInterval(() => {
+    const table = document.querySelector('#tabelaPedidos');
+    const firstDataRow = table.querySelector('tr[data-status]');
+    const nome = nomes[Math.floor(Math.random()*nomes.length)];
+    const item = itens[Math.floor(Math.random()*itens.length)];
+    const canal = canais[Math.floor(Math.random()*canais.length)];
+    const valor = valores[Math.floor(Math.random()*valores.length)];
+    const now = new Date();
+    const hora = now.getHours().toString().padStart(2,'0') + ':' + now.getMinutes().toString().padStart(2,'0');
+
+    const tr = document.createElement('tr');
+    tr.dataset.status = 'Novo';
+    tr.dataset.tipo = Math.random() > 0.5 ? '1a compra' : 'Recompra';
+    tr.className = 'new-row';
+    const tipo = tr.dataset.tipo;
+    tr.innerHTML = `<td>28/06 ${hora}</td><td>#${String(pedidoNum).padStart(3,'0')}</td><td><span class="tipo-tag ${tipo==='1a compra'?'tipo-novo':'tipo-recompra'}">${tipo}</span></td><td><div class="client-name">${nome}</div><div class="client-phone">(11) 9${Math.floor(Math.random()*9000+1000)}-${Math.floor(Math.random()*9000+1000)}</div></td><td>${item}</td><td>R$ ${valor}</td><td>${Math.random()>0.5?'Delivery':'Retirada'}</td><td>${Math.random()>0.5?'Pix':'Cartão'}</td><td><span class="canal-tag ${canal[0]}">${canal[1]}</span></td><td><span class="badge badge-novo">Novo</span></td>`;
+
+    firstDataRow ? table.insertBefore(tr, firstDataRow) : table.appendChild(tr);
+    pedidoNum++;
+
+    const counter = document.getElementById('totalPedidos');
+    counter.textContent = parseInt(counter.textContent) + 1;
+  }, 30000);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Filone — Como Funciona</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;500;600;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #1A1A1A;
+    color: #F5F0EB;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  .nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: #1A1A1A;
+    border-bottom: 1px solid #333;
+    padding: 16px 40px;
+    display: flex;
+    gap: 24px;
+    z-index: 100;
+    overflow-x: auto;
+  }
+
+  .nav a {
+    color: #888;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    white-space: nowrap;
+    transition: color 0.3s;
+    cursor: pointer;
+  }
+
+  .nav a:hover, .nav a.active {
+    color: #2ECC71;
+  }
+
+  /* HERO */
+  .hero {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 40px;
+    position: relative;
+  }
+
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 56px;
+    font-weight: 900;
+    margin-bottom: 16px;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeUp 0.8s ease forwards 0.3s;
+  }
+
+  .hero p {
+    font-size: 18px;
+    color: #888;
+    max-width: 500px;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeUp 0.8s ease forwards 0.6s;
+  }
+
+  .hero .scroll-hint {
+    position: absolute;
+    bottom: 40px;
+    font-size: 13px;
+    color: #555;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 1s;
+  }
+
+  .hero .scroll-hint span {
+    display: block;
+    margin-top: 8px;
+    font-size: 20px;
+    animation: bounce 2s infinite;
+  }
+
+  @keyframes fadeUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(8px); }
+  }
+
+  /* SECTIONS */
+  section {
+    min-height: 100vh;
+    padding: 120px 60px 80px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  section h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    font-weight: 900;
+    margin-bottom: 12px;
+  }
+
+  section .section-sub {
+    color: #2ECC71;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 40px;
+  }
+
+  section p {
+    color: #AAA;
+    font-size: 16px;
+    line-height: 1.8;
+    margin-bottom: 20px;
+    max-width: 650px;
+  }
+
+  /* FLOW */
+  .flow {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin: 40px 0;
+  }
+
+  .flow-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 24px;
+    opacity: 0;
+    transform: translateX(-30px);
+    transition: all 0.6s ease;
+  }
+
+  .flow-step.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .flow-step .step-line {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 48px;
+  }
+
+  .flow-step .step-dot {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: #2ECC71;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 18px;
+    color: #1A1A1A;
+    flex-shrink: 0;
+  }
+
+  .flow-step .step-connector {
+    width: 2px;
+    height: 40px;
+    background: #333;
+  }
+
+  .flow-step .step-content {
+    padding: 8px 0 40px;
+  }
+
+  .flow-step .step-content h3 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: #F5F0EB;
+  }
+
+  .flow-step .step-content p {
+    font-size: 14px;
+    color: #888;
+    margin: 0;
+    line-height: 1.6;
+  }
+
+  /* CARDS */
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin: 40px 0;
+  }
+
+  .card {
+    background: #222;
+    padding: 32px 24px;
+    border-top: 3px solid #2ECC71;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.5s ease;
+  }
+
+  .card.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .card .card-icon {
+    font-size: 32px;
+    margin-bottom: 16px;
+  }
+
+  .card h3 {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: #F5F0EB;
+  }
+
+  .card p {
+    font-size: 13px;
+    color: #888;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* ROLE TABLE */
+  .role-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin: 40px 0;
+  }
+
+  .role-col {
+    background: #222;
+    padding: 32px 24px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.5s ease;
+  }
+
+  .role-col.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .role-col h3 {
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #2ECC71;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #333;
+  }
+
+  .role-col ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .role-col li {
+    font-size: 14px;
+    color: #AAA;
+    padding: 8px 0;
+    border-bottom: 1px solid #2A2A2A;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .role-col li:last-child {
+    border-bottom: none;
+  }
+
+  .check {
+    color: #2ECC71;
+    font-weight: 700;
+  }
+
+  /* PLANILHA PREVIEW */
+  .preview-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 30px 0;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.6s ease;
+  }
+
+  .preview-table.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .preview-table th {
+    background: #2ECC71;
+    color: #1A1A1A;
+    padding: 12px 16px;
+    text-align: left;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .preview-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid #333;
+    font-size: 14px;
+    color: #AAA;
+  }
+
+  .preview-table tr:hover td {
+    background: #252525;
+  }
+
+  .status-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-radius: 20px;
+  }
+
+  .status-pendente { background: #F39C12; color: #1A1A1A; }
+  .status-preparando { background: #3498DB; color: #FFF; }
+  .status-enviado { background: #2ECC71; color: #1A1A1A; }
+
+  /* QR SECTION */
+  .qr-locations {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin: 40px 0;
+  }
+
+  .qr-item {
+    text-align: center;
+    padding: 32px 20px;
+    background: #222;
+    opacity: 0;
+    transform: scale(0.9);
+    transition: all 0.5s ease;
+  }
+
+  .qr-item.visible {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .qr-item .qr-icon {
+    font-size: 40px;
+    margin-bottom: 16px;
+  }
+
+  .qr-item h4 {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .qr-item p {
+    font-size: 13px;
+    color: #888;
+    margin: 0;
+    text-align: center;
+  }
+
+  /* FAQ */
+  .faq-item {
+    border-bottom: 1px solid #333;
+    padding: 20px 0;
+    cursor: pointer;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.4s ease;
+  }
+
+  .faq-item.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .faq-item .faq-q {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 16px;
+    font-weight: 600;
+    color: #F5F0EB;
+  }
+
+  .faq-item .faq-q .faq-toggle {
+    font-size: 24px;
+    color: #2ECC71;
+    transition: transform 0.3s;
+  }
+
+  .faq-item.open .faq-q .faq-toggle {
+    transform: rotate(45deg);
+  }
+
+  .faq-item .faq-a {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease, padding 0.4s ease;
+    font-size: 14px;
+    color: #888;
+    line-height: 1.7;
+  }
+
+  .faq-item.open .faq-a {
+    max-height: 200px;
+    padding-top: 16px;
+  }
+
+  /* FOOTER */
+  .footer {
+    text-align: center;
+    padding: 60px 40px;
+    border-top: 1px solid #333;
+    margin-top: 40px;
+  }
+
+  .footer .name {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    margin-bottom: 8px;
+  }
+
+  .footer p {
+    color: #555;
+    font-size: 13px;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    section { padding: 100px 24px 60px; }
+    .hero h1 { font-size: 36px; }
+    .cards, .role-grid, .qr-locations { grid-template-columns: 1fr; }
+    .nav { padding: 12px 20px; gap: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="#fluxo" onclick="scrollToSection('fluxo')">Fluxo</a>
+  <a href="#canais" onclick="scrollToSection('canais')">Canais</a>
+  <a href="#mota" onclick="scrollToSection('mota')">Mota</a>
+  <a href="#nilson" onclick="scrollToSection('nilson')">Nilson</a>
+  <a href="#planilha" onclick="scrollToSection('planilha')">Planilha</a>
+  <a href="#qrcode" onclick="scrollToSection('qrcode')">QR Code</a>
+  <a href="#duvidas" onclick="scrollToSection('duvidas')">Dúvidas</a>
+</nav>
+
+<div class="hero">
+  <h1>Como funciona</h1>
+  <p>O passo a passo da operação de vendas online da Filone. O que cada um faz, onde olhar, como o cliente chega.</p>
+  <div class="scroll-hint">
+    Role pra baixo
+    <span>↓</span>
+  </div>
+</div>
+
+<section id="fluxo">
+  <div class="section-sub">Visão geral</div>
+  <h2>O fluxo do pedido</h2>
+  <p>Do momento que o cliente encontra a Filone até o pão chegar na mão dele.</p>
+
+  <div class="flow">
+    <div class="flow-step" data-anim>
+      <div class="step-line">
+        <div class="step-dot">1</div>
+        <div class="step-connector"></div>
+      </div>
+      <div class="step-content">
+        <h3>Cliente encontra a Filone</h3>
+        <p>Pelo Instagram, anúncio, iFood, indicação ou QR code no balcão.</p>
+      </div>
+    </div>
+
+    <div class="flow-step" data-anim>
+      <div class="step-line">
+        <div class="step-dot">2</div>
+        <div class="step-connector"></div>
+      </div>
+      <div class="step-content">
+        <h3>Entra no WhatsApp da Filone</h3>
+        <p>O robô atende automaticamente. Dá boas-vindas, mostra o cardápio, coleta o pedido.</p>
+      </div>
+    </div>
+
+    <div class="flow-step" data-anim>
+      <div class="step-line">
+        <div class="step-dot">3</div>
+        <div class="step-connector"></div>
+      </div>
+      <div class="step-content">
+        <h3>Pedido registrado na planilha</h3>
+        <p>Nome, telefone, endereço, pedido, canal de origem. Tudo automático.</p>
+      </div>
+    </div>
+
+    <div class="flow-step" data-anim>
+      <div class="step-line">
+        <div class="step-dot">4</div>
+        <div class="step-connector"></div>
+      </div>
+      <div class="step-content">
+        <h3>Mota recebe notificação</h3>
+        <p>Pedido novo aparece no celular. Mota prepara e despacha.</p>
+      </div>
+    </div>
+
+    <div class="flow-step" data-anim>
+      <div class="step-line">
+        <div class="step-dot">5</div>
+        <div class="step-connector"></div>
+      </div>
+      <div class="step-content">
+        <h3>Cliente recebe o produto</h3>
+        <p>Fica na base pra futuras promoções, ações de aniversário e recompra.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="canais">
+  <div class="section-sub">Entrada de clientes</div>
+  <h2>3 formas de chegar</h2>
+  <p>Todo cliente novo entra por um desses caminhos. O destino é sempre o mesmo: WhatsApp da Filone.</p>
+
+  <div class="cards">
+    <div class="card" data-anim>
+      <div class="card-icon">📱</div>
+      <h3>Digital</h3>
+      <p>Ads no Instagram, link na bio, indicação. O cliente clica, cai no WhatsApp, o robô atende e coleta o pedido. Mota recebe pronto pra preparar.</p>
+    </div>
+
+    <div class="card" data-anim>
+      <div class="card-icon">🛵</div>
+      <h3>iFood</h3>
+      <p>Cliente pede pelo iFood normalmente. Dentro da embalagem vai um cartão com QR code. Se escanear, entra na base do WhatsApp pra próximos pedidos.</p>
+    </div>
+
+    <div class="card" data-anim>
+      <div class="card-icon">🏪</div>
+      <h3>Balcão</h3>
+      <p>QR code visível no balcão. Cliente escaneia, entra na lista do WhatsApp. Recebe promoções, novidades e ações especiais.</p>
+    </div>
+  </div>
+</section>
+
+<section id="mota">
+  <div class="section-sub">Dia a dia</div>
+  <h2>O que o Mota faz</h2>
+
+  <div class="role-grid">
+    <div class="role-col" data-anim>
+      <h3>Todo dia</h3>
+      <ul>
+        <li><span class="check">✓</span> Olhar a planilha de pedidos</li>
+        <li><span class="check">✓</span> Preparar os pedidos</li>
+        <li><span class="check">✓</span> Despachar (entrega ou retirada)</li>
+        <li><span class="check">✓</span> Atualizar status na planilha</li>
+      </ul>
+    </div>
+
+    <div class="role-col" data-anim>
+      <h3>No balcão</h3>
+      <ul>
+        <li><span class="check">✓</span> Indicar o QR code pro cliente</li>
+        <li><span class="check">✓</span> Se vier com promo: registrar telefone no formulário (10 seg)</li>
+      </ul>
+    </div>
+
+    <div class="role-col" data-anim>
+      <h3>Não precisa fazer</h3>
+      <ul>
+        <li>Responder WhatsApp (robô faz)</li>
+        <li>Mexer no Instagram ou ads</li>
+        <li>Atualizar planilha manualmente</li>
+        <li>Se preocupar com marketing</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="nilson">
+  <div class="section-sub">Gestão</div>
+  <h2>O que o Nilson faz</h2>
+
+  <div class="role-grid">
+    <div class="role-col" data-anim>
+      <h3>Semanal</h3>
+      <ul>
+        <li><span class="check">✓</span> Acompanhar a planilha</li>
+        <li><span class="check">✓</span> Ver quantos clientes novos entraram</li>
+        <li><span class="check">✓</span> Alinhar com Igor se precisar ajustar algo</li>
+      </ul>
+    </div>
+
+    <div class="role-col" data-anim>
+      <h3>Mensal</h3>
+      <ul>
+        <li><span class="check">✓</span> Revisar o fechamento com Igor</li>
+        <li><span class="check">✓</span> Aprovar campanhas antes de rodar</li>
+      </ul>
+    </div>
+
+    <div class="role-col" data-anim>
+      <h3>Não precisa fazer</h3>
+      <ul>
+        <li>Mexer no ManyChat</li>
+        <li>Criar conteúdo</li>
+        <li>Gerenciar o iFood</li>
+        <li>Entender de ads</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="planilha">
+  <div class="section-sub">Controle</div>
+  <h2>A planilha de pedidos</h2>
+  <p>Compartilhada, em tempo real. Todo mundo vê. Assim que o robô registra, aparece aqui.</p>
+
+  <table class="preview-table" data-anim>
+    <tr>
+      <th>Data</th>
+      <th>Cliente</th>
+      <th>Pedido</th>
+      <th>Canal</th>
+      <th>Valor</th>
+      <th>Status</th>
+    </tr>
+    <tr>
+      <td>28/06</td>
+      <td>Maria Silva</td>
+      <td>2x Sourdough, 1x Focaccia</td>
+      <td>Instagram (ads)</td>
+      <td>R$ 75</td>
+      <td><span class="status-badge status-enviado">Enviado</span></td>
+    </tr>
+    <tr>
+      <td>28/06</td>
+      <td>Carlos Mendes</td>
+      <td>1x LandBrot, 1x Brioche</td>
+      <td>WhatsApp (direto)</td>
+      <td>R$ 77</td>
+      <td><span class="status-badge status-preparando">Preparando</span></td>
+    </tr>
+    <tr>
+      <td>28/06</td>
+      <td>Ana Costa</td>
+      <td>3x Pão de Abóbora</td>
+      <td>iFood → WhatsApp</td>
+      <td>R$ 87</td>
+      <td><span class="status-badge status-pendente">Pendente</span></td>
+    </tr>
+    <tr>
+      <td>28/06</td>
+      <td>Roberto Filho</td>
+      <td>1x Pão de Forma Grãos</td>
+      <td>QR code balcão</td>
+      <td>R$ 49</td>
+      <td><span class="status-badge status-pendente">Pendente</span></td>
+    </tr>
+  </table>
+
+  <div class="cards" style="grid-template-columns: 1fr 1fr; margin-top: 30px;">
+    <div class="card" data-anim>
+      <h3>Quem preenche</h3>
+      <p>Dados do cliente, pedido e canal de origem: o robô faz automaticamente. Ninguém digita nada.</p>
+    </div>
+    <div class="card" data-anim>
+      <h3>Quem atualiza o status</h3>
+      <p>O Mota. Quando começa a preparar, muda pra "Preparando". Quando despacha, muda pra "Enviado".</p>
+    </div>
+  </div>
+</section>
+
+<section id="qrcode">
+  <div class="section-sub">Captação no balcão</div>
+  <h2>O QR Code</h2>
+  <p>Simples: o cliente escaneia, entra no WhatsApp, recebe boas-vindas automáticas e passa a fazer parte da base.</p>
+
+  <div class="qr-locations">
+    <div class="qr-item" data-anim>
+      <div class="qr-icon">🏪</div>
+      <h4>No balcão</h4>
+      <p>Próximo ao caixa, sempre visível</p>
+    </div>
+    <div class="qr-item" data-anim>
+      <div class="qr-icon">📦</div>
+      <h4>Na embalagem</h4>
+      <p>Cartão dentro de todo delivery e iFood</p>
+    </div>
+    <div class="qr-item" data-anim>
+      <div class="qr-icon">🪟</div>
+      <h4>Na vitrine</h4>
+      <p>Opcional, pra quem passa na frente</p>
+    </div>
+  </div>
+
+  <div class="card" data-anim style="max-width: 500px; margin: 20px auto;">
+    <h3>O que falar pro cliente</h3>
+    <p>"Se quiser ficar sabendo das novidades e promoções, é só escanear o QR code ali no balcão."</p>
+    <p style="margin-top: 12px; color: #555;">Não precisa forçar. É um convite.</p>
+  </div>
+</section>
+
+<section id="duvidas">
+  <div class="section-sub">FAQ</div>
+  <h2>Dúvidas comuns</h2>
+
+  <div class="faq-item" data-anim onclick="toggleFaq(this)">
+    <div class="faq-q">
+      E se o robô não souber responder algo?
+      <span class="faq-toggle">+</span>
+    </div>
+    <div class="faq-a">O cliente é direcionado pro atendimento humano. O Mota ou o Nilson respondem manualmente. O Igor configura as respostas mais comuns pra isso acontecer raramente.</div>
+  </div>
+
+  <div class="faq-item" data-anim onclick="toggleFaq(this)">
+    <div class="faq-q">
+      E se o cliente reclamar pelo WhatsApp?
+      <span class="faq-toggle">+</span>
+    </div>
+    <div class="faq-a">O robô identifica reclamação e direciona pro atendimento humano. Mota ou Nilson resolvem.</div>
+  </div>
+
+  <div class="faq-item" data-anim onclick="toggleFaq(this)">
+    <div class="faq-q">
+      E se acabar um produto no meio do dia?
+      <span class="faq-toggle">+</span>
+    </div>
+    <div class="faq-a">Mota avisa o Igor, que desativa o produto do cardápio digital na hora.</div>
+  </div>
+
+  <div class="faq-item" data-anim onclick="toggleFaq(this)">
+    <div class="faq-q">
+      E se o cliente quiser algo que não tá no cardápio digital?
+      <span class="faq-toggle">+</span>
+    </div>
+    <div class="faq-a">Mota atende normalmente e faz o pedido manual. Registra na planilha.</div>
+  </div>
+
+  <div class="faq-item" data-anim onclick="toggleFaq(this)">
+    <div class="faq-q">
+      Preciso ficar olhando a planilha o tempo todo?
+      <span class="faq-toggle">+</span>
+    </div>
+    <div class="faq-a">Não. Quando chega um pedido novo, o Mota recebe uma notificação no celular.</div>
+  </div>
+
+  <div class="faq-item" data-anim onclick="toggleFaq(this)">
+    <div class="faq-q">
+      Quem cria as promoções?
+      <span class="faq-toggle">+</span>
+    </div>
+    <div class="faq-a">O Igor cria e manda pro Nilson aprovar. Depois de aprovado, o Igor dispara pelo WhatsApp pra base segmentada. Pedidos entram na planilha normalmente.</div>
+  </div>
+</section>
+
+<div class="footer">
+  <div class="name">@IgorSHarada</div>
+  <p>Direção Criativa para Marcas Premium</p>
+</div>
+
+<script>
+  // Scroll animation observer
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, index) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => {
+          entry.target.classList.add('visible');
+        }, index * 100);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll('[data-anim]').forEach(el => observer.observe(el));
+
+  // FAQ toggle
+  function toggleFaq(item) {
+    item.classList.toggle('open');
+  }
+
+  // Smooth scroll
+  function scrollToSection(id) {
+    document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+  }
+
+  // Active nav on scroll
+  window.addEventListener('scroll', () => {
+    const sections = document.querySelectorAll('section');
+    const navLinks = document.querySelectorAll('.nav a');
+
+    sections.forEach((section, i) => {
+      const rect = section.getBoundingClientRect();
+      if (rect.top <= 200 && rect.bottom > 200) {
+        navLinks.forEach(l => l.classList.remove('active'));
+        navLinks[i].classList.add('active');
+      }
+    });
+  });
+</script>
+
+</body>
+</html>

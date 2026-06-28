@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Canal Direto — Igor Sharada</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;500;600;700;800&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body { font-family: 'Inter', sans-serif; background: #0F0F0F; color: #F5F0EB; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; width: 100%; background: #0F0F0FEE; backdrop-filter: blur(10px);
+    border-bottom: 1px solid #222; padding: 16px 40px; display: flex;
+    justify-content: space-between; align-items: center; z-index: 100;
+  }
+  nav .nav-logo { font-size: 16px; font-weight: 800; letter-spacing: -0.5px; }
+  nav .nav-logo span { color: #2ECC71; }
+  nav .nav-links { display: flex; gap: 24px; }
+  nav .nav-links a {
+    color: #888; text-decoration: none; font-size: 13px; font-weight: 600;
+    transition: color 0.2s;
+  }
+  nav .nav-links a:hover { color: #2ECC71; }
+  nav .nav-cta {
+    background: #2ECC71; color: #1A1A1A; padding: 8px 20px; font-size: 13px;
+    font-weight: 700; border: none; cursor: pointer; text-decoration: none;
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh; display: flex; flex-direction: column; justify-content: center;
+    align-items: center; text-align: center; padding: 120px 40px 80px; position: relative;
+  }
+  .hero .tag {
+    background: #2ECC7122; color: #2ECC71; padding: 6px 16px; font-size: 12px;
+    font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 24px;
+    opacity: 0; animation: fadeUp 0.6s ease forwards 0.2s;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif; font-size: 64px; font-weight: 900;
+    max-width: 800px; line-height: 1.1; margin-bottom: 24px;
+    opacity: 0; animation: fadeUp 0.6s ease forwards 0.4s;
+  }
+  .hero h1 span { color: #2ECC71; }
+  .hero p {
+    font-size: 18px; color: #888; max-width: 550px; line-height: 1.7; margin-bottom: 36px;
+    opacity: 0; animation: fadeUp 0.6s ease forwards 0.6s;
+  }
+  .hero .hero-cta {
+    display: flex; gap: 16px; opacity: 0; animation: fadeUp 0.6s ease forwards 0.8s;
+  }
+  .btn-primary {
+    background: #2ECC71; color: #1A1A1A; padding: 14px 32px; font-size: 15px;
+    font-weight: 700; border: none; cursor: pointer; text-decoration: none;
+    font-family: 'Inter', sans-serif; transition: opacity 0.2s;
+  }
+  .btn-primary:hover { opacity: 0.9; }
+  .btn-secondary {
+    background: transparent; color: #F5F0EB; padding: 14px 32px; font-size: 15px;
+    font-weight: 700; border: 1px solid #333; cursor: pointer; text-decoration: none;
+    font-family: 'Inter', sans-serif; transition: border-color 0.2s;
+  }
+  .btn-secondary:hover { border-color: #2ECC71; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* SECTION BASE */
+  section { padding: 100px 40px; max-width: 1100px; margin: 0 auto; }
+  .section-tag {
+    color: #2ECC71; font-size: 12px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 2px; margin-bottom: 12px;
+  }
+  section h2 {
+    font-family: 'Playfair Display', serif; font-size: 40px; font-weight: 900;
+    margin-bottom: 20px; line-height: 1.2;
+  }
+  section .section-desc {
+    font-size: 16px; color: #888; max-width: 600px; line-height: 1.7; margin-bottom: 48px;
+  }
+
+  /* PROBLEMA */
+  .problema-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+  }
+  .problema-card {
+    background: #1A1A1A; padding: 32px 24px; border-top: 3px solid #E74C3C;
+    opacity: 0; transform: translateY(20px); transition: all 0.5s ease;
+  }
+  .problema-card.visible { opacity: 1; transform: translateY(0); }
+  .problema-card .pc-icon { font-size: 28px; margin-bottom: 16px; }
+  .problema-card h3 { font-size: 16px; font-weight: 700; margin-bottom: 10px; }
+  .problema-card p { font-size: 13px; color: #888; line-height: 1.6; }
+
+  /* COMPARATIVO */
+  .compare-table {
+    width: 100%; border-collapse: collapse; margin-top: 32px;
+  }
+  .compare-table th {
+    padding: 14px 20px; text-align: left; font-size: 12px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 1px; border-bottom: 2px solid #333;
+  }
+  .compare-table th:nth-child(2) { color: #E74C3C; }
+  .compare-table th:nth-child(3) { color: #F39C12; }
+  .compare-table th:nth-child(4) { color: #2ECC71; }
+  .compare-table td {
+    padding: 14px 20px; border-bottom: 1px solid #1A1A1A; font-size: 14px; color: #AAA;
+  }
+  .compare-table tr:hover td { background: #1A1A1A; }
+  .check { color: #2ECC71; font-weight: 700; }
+  .cross { color: #E74C3C; font-weight: 700; }
+  .meh { color: #F39C12; font-weight: 700; }
+
+  /* ENTREGA */
+  .entrega-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+  }
+  .entrega-item {
+    background: #1A1A1A; padding: 24px; border-left: 3px solid #2ECC71;
+    opacity: 0; transform: translateX(-20px); transition: all 0.5s ease;
+  }
+  .entrega-item.visible { opacity: 1; transform: translateX(0); }
+  .entrega-item h4 { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+  .entrega-item p { font-size: 12px; color: #666; line-height: 1.5; }
+
+  /* COMO FUNCIONA */
+  .steps {
+    display: flex; flex-direction: column; gap: 0; margin-top: 40px;
+  }
+  .step {
+    display: flex; gap: 24px; opacity: 0; transform: translateX(-20px);
+    transition: all 0.5s ease;
+  }
+  .step.visible { opacity: 1; transform: translateX(0); }
+  .step .step-num {
+    width: 56px; height: 56px; background: #2ECC71; display: flex;
+    align-items: center; justify-content: center; font-weight: 800; font-size: 20px;
+    color: #1A1A1A; flex-shrink: 0; border-radius: 50%;
+  }
+  .step .step-line { display: flex; flex-direction: column; align-items: center; }
+  .step .step-connector { width: 2px; height: 40px; background: #333; }
+  .step .step-content { padding: 12px 0 48px; }
+  .step .step-content h3 { font-size: 18px; font-weight: 700; margin-bottom: 6px; }
+  .step .step-content p { font-size: 14px; color: #888; line-height: 1.6; }
+
+  /* TELAS */
+  .telas-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-top: 40px;
+  }
+  .tela-card {
+    background: #1A1A1A; padding: 32px; text-align: center;
+    opacity: 0; transform: scale(0.95); transition: all 0.5s ease;
+  }
+  .tela-card.visible { opacity: 1; transform: scale(1); }
+  .tela-card .tela-icon { font-size: 48px; margin-bottom: 16px; }
+  .tela-card h3 { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+  .tela-card p { font-size: 13px; color: #666; line-height: 1.5; }
+
+  /* PRICING */
+  .pricing-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 40px;
+  }
+  .pricing-card {
+    background: #1A1A1A; padding: 36px 28px; text-align: center;
+    opacity: 0; transform: translateY(20px); transition: all 0.5s ease;
+  }
+  .pricing-card.visible { opacity: 1; transform: translateY(0); }
+  .pricing-card.featured { border-top: 3px solid #2ECC71; }
+  .pricing-card .price-tag {
+    font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+    color: #555; margin-bottom: 12px;
+  }
+  .pricing-card .featured-tag {
+    color: #2ECC71;
+  }
+  .pricing-card h3 { font-size: 20px; font-weight: 800; margin-bottom: 6px; }
+  .pricing-card .price {
+    font-size: 36px; font-weight: 800; margin: 16px 0; color: #2ECC71;
+  }
+  .pricing-card .price small { font-size: 14px; color: #888; font-weight: 400; }
+  .pricing-card .price-desc { font-size: 13px; color: #666; margin-bottom: 24px; }
+  .pricing-card ul { list-style: none; text-align: left; }
+  .pricing-card li {
+    font-size: 13px; color: #AAA; padding: 8px 0; border-bottom: 1px solid #222;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .pricing-card li:last-child { border-bottom: none; }
+
+  /* RESULTADO */
+  .resultado-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 40px;
+  }
+  .resultado-stat {
+    background: #1A1A1A; padding: 28px 20px; text-align: center;
+    opacity: 0; transform: translateY(20px); transition: all 0.5s ease;
+  }
+  .resultado-stat.visible { opacity: 1; transform: translateY(0); }
+  .resultado-stat .rs-value { font-size: 36px; font-weight: 800; color: #2ECC71; }
+  .resultado-stat .rs-label { font-size: 11px; color: #555; text-transform: uppercase; letter-spacing: 1px; margin-top: 8px; }
+
+  /* CTA FINAL */
+  .cta-section {
+    text-align: center; padding: 100px 40px; border-top: 1px solid #222;
+  }
+  .cta-section h2 {
+    font-family: 'Playfair Display', serif; font-size: 40px; font-weight: 900;
+    margin-bottom: 16px;
+  }
+  .cta-section p { font-size: 16px; color: #888; margin-bottom: 32px; max-width: 500px; margin-left: auto; margin-right: auto; }
+
+  /* FOOTER */
+  footer {
+    text-align: center; padding: 40px; border-top: 1px solid #222;
+  }
+  footer .f-name { font-family: 'Playfair Display', serif; font-size: 18px; margin-bottom: 4px; }
+  footer p { color: #444; font-size: 12px; }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .hero h1 { font-size: 36px; }
+    .problema-grid, .entrega-grid, .pricing-grid { grid-template-columns: 1fr; }
+    .telas-grid { grid-template-columns: 1fr; }
+    .resultado-grid { grid-template-columns: repeat(2, 1fr); }
+    section { padding: 60px 24px; }
+    nav { padding: 12px 20px; }
+    nav .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">Canal <span>Direto</span></div>
+  <div class="nav-links">
+    <a href="#problema">O problema</a>
+    <a href="#solucao">A solução</a>
+    <a href="#como">Como funciona</a>
+    <a href="#sistema">O sistema</a>
+    <a href="#investimento">Investimento</a>
+  </div>
+  <a class="nav-cta" href="#contato">Quero saber mais</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="tag">Sistema de vendas online pra alimentação</div>
+  <h1>Seu cliente compra <span>direto de você</span></h1>
+  <p>Sem iFood, sem intermediário, sem comissão de plataforma. Um sistema completo que traz clientes novos, fideliza quem já comprou e coloca você no controle das suas vendas.</p>
+  <div class="hero-cta">
+    <a class="btn-primary" href="#contato">Quero pra meu negócio</a>
+    <a class="btn-secondary" href="#como">Como funciona</a>
+  </div>
+</div>
+
+<!-- PROBLEMA -->
+<section id="problema">
+  <div class="section-tag">O problema</div>
+  <h2>Seu produto é excelente. Sua venda digital, não.</h2>
+  <p class="section-desc">Você faz o melhor da região, mas na internet ninguém sabe disso. E quando sabe, compra pelo iFood, que fica com até 27% e não te passa nem o telefone do cliente.</p>
+
+  <div class="problema-grid">
+    <div class="problema-card" data-anim>
+      <div class="pc-icon">💸</div>
+      <h3>iFood come sua margem</h3>
+      <p>Até 27% de comissão. Promoções obrigatórias. Cupons que saem do seu bolso. E o cliente? É do iFood, não seu.</p>
+    </div>
+    <div class="problema-card" data-anim>
+      <div class="pc-icon">👻</div>
+      <h3>Cliente compra e some</h3>
+      <p>Sem base de dados, sem WhatsApp, sem recompra. Cada mês começa do zero. Você não sabe quem comprou, quando, nem por quê.</p>
+    </div>
+    <div class="problema-card" data-anim>
+      <div class="pc-icon">📱</div>
+      <h3>Conteúdo que não vende</h3>
+      <p>Post bonito no Instagram, zero venda. Agência entrega likes, não entrega clientes. Você paga e não sabe o retorno.</p>
+    </div>
+  </div>
+</section>
+
+<!-- COMPARATIVO -->
+<section>
+  <div class="section-tag">Comparativo</div>
+  <h2>Nem tudo que parece solução resolve</h2>
+
+  <table class="compare-table">
+    <tr>
+      <th></th>
+      <th>iFood</th>
+      <th>Agência genérica</th>
+      <th>Canal Direto</th>
+    </tr>
+    <tr>
+      <td>Gera vendas rastreáveis</td>
+      <td class="meh">Sim, mas caro</td>
+      <td class="cross">Raramente</td>
+      <td class="check">Sim</td>
+    </tr>
+    <tr>
+      <td>O cliente é seu</td>
+      <td class="cross">Não</td>
+      <td class="cross">Não</td>
+      <td class="check">Sim</td>
+    </tr>
+    <tr>
+      <td>Constrói marca</td>
+      <td class="cross">Não</td>
+      <td class="meh">Parcialmente</td>
+      <td class="check">Sim</td>
+    </tr>
+    <tr>
+      <td>Você controla o preço</td>
+      <td class="cross">iFood pressiona</td>
+      <td class="check">Sim</td>
+      <td class="check">Sim</td>
+    </tr>
+    <tr>
+      <td>Retenção e recompra</td>
+      <td class="cross">Não</td>
+      <td class="cross">Não</td>
+      <td class="check">Automático</td>
+    </tr>
+    <tr>
+      <td>Comissão</td>
+      <td class="cross">12% a 27%</td>
+      <td class="meh">Fee fixo alto</td>
+      <td class="check">A partir de 10%</td>
+    </tr>
+    <tr>
+      <td>Se parar de usar</td>
+      <td class="cross">Cliente some</td>
+      <td class="cross">Nada fica</td>
+      <td class="check">Base é sua</td>
+    </tr>
+  </table>
+</section>
+
+<!-- SOLUÇÃO -->
+<section id="solucao">
+  <div class="section-tag">O que eu entrego</div>
+  <h2>Tudo que você precisa pra vender online</h2>
+  <p class="section-desc">Não é uma peça do quebra-cabeça. É o quebra-cabeça montado.</p>
+
+  <div class="entrega-grid">
+    <div class="entrega-item" data-anim><h4>WhatsApp automatizado</h4><p>Robô atende 24h, coleta pedido, registra tudo automaticamente</p></div>
+    <div class="entrega-item" data-anim><h4>Painel de pedidos</h4><p>App no celular da equipe + monitor no caixa, tudo em tempo real</p></div>
+    <div class="entrega-item" data-anim><h4>Dashboard de vendas</h4><p>Faturamento, clientes, canais, ticket médio, taxa de recompra</p></div>
+    <div class="entrega-item" data-anim><h4>Controle de cardápio</h4><p>Liga e desliga produto na hora, reflete no WhatsApp instantaneamente</p></div>
+    <div class="entrega-item" data-anim><h4>CRM de clientes</h4><p>Base com histórico, aniversário, canal de origem, valor acumulado</p></div>
+    <div class="entrega-item" data-anim><h4>Gestão de iFood</h4><p>Cadastro, fotos, promoções, e migração pro seu canal direto</p></div>
+    <div class="entrega-item" data-anim><h4>Campanhas de ads</h4><p>Meta Ads com rastreamento completo por canal de origem</p></div>
+    <div class="entrega-item" data-anim><h4>Conteúdo e posicionamento</h4><p>Foto, vídeo, copy, direção criativa. Sua marca no nível do seu produto</p></div>
+    <div class="entrega-item" data-anim><h4>Ações de retenção</h4><p>Promoção de aniversário, reativação de inativos, combos, lançamentos</p></div>
+    <div class="entrega-item" data-anim><h4>QR Code no balcão</h4><p>Capta clientes do presencial pra sua base digital</p></div>
+    <div class="entrega-item" data-anim><h4>Cartão na embalagem</h4><p>Migra clientes do iFood/delivery pro canal direto</p></div>
+    <div class="entrega-item" data-anim><h4>Treinamento da equipe</h4><p>Tutorial interativo + implantação presencial</p></div>
+  </div>
+</section>
+
+<!-- COMO FUNCIONA -->
+<section id="como">
+  <div class="section-tag">Como funciona</div>
+  <h2>Do primeiro contato ao pedido entregue</h2>
+
+  <div class="steps">
+    <div class="step" data-anim>
+      <div class="step-line"><div class="step-num">1</div><div class="step-connector"></div></div>
+      <div class="step-content"><h3>Diagnóstico</h3><p>Analiso sua operação, seus canais, sua margem. Entendo onde tá o gap entre o produto e a venda.</p></div>
+    </div>
+    <div class="step" data-anim>
+      <div class="step-line"><div class="step-num">2</div><div class="step-connector"></div></div>
+      <div class="step-content"><h3>Implantação</h3><p>Monto o WhatsApp automatizado, configuro o painel, crio o QR Code, preparo as campanhas. Sua equipe aprende em uma tarde.</p></div>
+    </div>
+    <div class="step" data-anim>
+      <div class="step-line"><div class="step-num">3</div><div class="step-connector"></div></div>
+      <div class="step-content"><h3>Validação (90 dias)</h3><p>Rodamos com comissão reduzida pra provar que funciona. No final dos 90 dias, olhamos os números juntos e decidimos o modelo definitivo.</p></div>
+    </div>
+    <div class="step" data-anim>
+      <div class="step-line"><div class="step-num">4</div><div class="step-connector"></div></div>
+      <div class="step-content"><h3>Escala</h3><p>Canal direto rodando, iFood como porta de entrada, clientes migrando, base crescendo. Você faz o pão, eu trago o cliente.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- SISTEMA -->
+<section id="sistema">
+  <div class="section-tag">O sistema</div>
+  <h2>Tudo que sua equipe precisa, na palma da mão</h2>
+  <p class="section-desc">App no celular, monitor no caixa, dashboard pro dono. Tudo conectado em tempo real.</p>
+
+  <div class="telas-grid">
+    <div class="tela-card" data-anim>
+      <div class="tela-icon">📱</div>
+      <h3>App da equipe</h3>
+      <p>Pedidos, cardápio, clientes e configurações. Notificação instantânea quando chega pedido novo. Um toque pra mudar status.</p>
+    </div>
+    <div class="tela-card" data-anim>
+      <div class="tela-icon">🖥️</div>
+      <h3>Monitor do caixa</h3>
+      <p>Fila de pedidos em tempo real. Detalhe de cada pedido com endereço e itens. Controle de cardápio na lateral.</p>
+    </div>
+    <div class="tela-card" data-anim>
+      <div class="tela-icon">📊</div>
+      <h3>Dashboard do dono</h3>
+      <p>Faturamento, clientes novos, taxa de recompra, vendas por canal. Tudo que você precisa pra tomar decisão.</p>
+    </div>
+    <div class="tela-card" data-anim>
+      <div class="tela-icon">🤖</div>
+      <h3>WhatsApp automático</h3>
+      <p>Robô atende, mostra cardápio, coleta pedido, confirma pagamento. Sua equipe só prepara e despacha.</p>
+    </div>
+  </div>
+</section>
+
+<!-- INVESTIMENTO -->
+<section id="investimento">
+  <div class="section-tag">Investimento</div>
+  <h2>Escolhe o modelo que faz sentido pra você</h2>
+  <p class="section-desc">Três formas de trabalhar juntos. Cada uma resolve um nível diferente da operação.</p>
+
+  <div class="pricing-grid">
+    <div class="pricing-card" data-anim>
+      <div class="price-tag">Produto 1</div>
+      <h3>Direção Criativa</h3>
+      <div class="price">Mensal</div>
+      <div class="price-desc">Conteúdo, estratégia e posicionamento da marca</div>
+      <ul>
+        <li><span class="check">✓</span> Estratégia de marca</li>
+        <li><span class="check">✓</span> Foto e vídeo profissional</li>
+        <li><span class="check">✓</span> Edição e direção criativa</li>
+        <li><span class="check">✓</span> Copy e planejamento</li>
+        <li><span class="check">✓</span> Gerenciamento de redes</li>
+        <li><span class="check">✓</span> Campanhas de ads</li>
+      </ul>
+    </div>
+
+    <div class="pricing-card" data-anim>
+      <div class="price-tag">Produto 2</div>
+      <h3>Sistema de Vendas</h3>
+      <div class="price">Implantação <small>+ mensal + comissão</small></div>
+      <div class="price-desc">Automação, painel, CRM e canal direto</div>
+      <ul>
+        <li><span class="check">✓</span> Implantação do sistema</li>
+        <li><span class="check">✓</span> WhatsApp automatizado</li>
+        <li><span class="check">✓</span> Painel + App + Dashboard</li>
+        <li><span class="check">✓</span> CRM de clientes</li>
+        <li><span class="check">✓</span> Gestão de iFood + migração</li>
+        <li><span class="check">✓</span> Ações de retenção e recompra</li>
+        <li><span class="check">✓</span> Treinamento da equipe</li>
+        <li><span class="check">✓</span> Comissão só sobre vendas novas</li>
+        <li><span class="check">✓</span> 90 dias de teste</li>
+      </ul>
+    </div>
+
+    <div class="pricing-card featured" data-anim>
+      <div class="price-tag featured-tag">Completo</div>
+      <h3>Direção + Sistema</h3>
+      <div class="price">Tudo junto</div>
+      <div class="price-desc">Marca + vendas integrados numa operação só</div>
+      <ul>
+        <li><span class="check">✓</span> Tudo do Produto 1</li>
+        <li><span class="check">✓</span> Tudo do Produto 2</li>
+        <li><span class="check">✓</span> Condição especial no fee</li>
+        <li><span class="check">✓</span> Conteúdo alinhado com vendas</li>
+        <li><span class="check">✓</span> Estratégia unificada</li>
+        <li><span class="check">✓</span> Um ponto de contato pra tudo</li>
+      </ul>
+    </div>
+  </div>
+
+  <div style="text-align:center; margin-top: 40px; padding: 24px; background: #1A1A1A;">
+    <p style="font-size: 14px; color: #888; max-width: 500px; margin: 0 auto;">Valores sob consulta. Cada negócio tem seu tamanho, sua margem e seu momento. A gente senta, olha os números juntos e monta o modelo que funciona pros dois.</p>
+  </div>
+</section>
+
+<!-- RESULTADO -->
+<section>
+  <div class="section-tag">Resultado</div>
+  <h2>O que muda no seu negócio</h2>
+
+  <div class="resultado-grid">
+    <div class="resultado-stat" data-anim>
+      <div class="rs-value">4x</div>
+      <div class="rs-label">Mais lucro que iFood</div>
+    </div>
+    <div class="resultado-stat" data-anim>
+      <div class="rs-value">75%</div>
+      <div class="rs-label">Taxa de recompra</div>
+    </div>
+    <div class="resultado-stat" data-anim>
+      <div class="rs-value">100%</div>
+      <div class="rs-label">Dos clientes são seus</div>
+    </div>
+    <div class="resultado-stat" data-anim>
+      <div class="rs-value">0%</div>
+      <div class="rs-label">Comissão de plataforma</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-section" id="contato">
+  <h2>Pronto pra ter seu canal direto?</h2>
+  <p>Me manda uma mensagem. Eu analiso sua operação, mostro o sistema funcionando e a gente decide juntos se faz sentido.</p>
+  <a class="btn-primary" href="https://wa.me/5511999999999" target="_blank">Falar com Igor no WhatsApp</a>
+</div>
+
+<footer>
+  <div class="f-name">@IgorSHarada</div>
+  <p>Direção Criativa para Marcas Premium</p>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('[data-anim]').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>

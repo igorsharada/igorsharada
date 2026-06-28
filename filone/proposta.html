@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Proposta Filone — Igor Sharada</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;500;600;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #F5F0EB;
+    color: #1A1A1A;
+    line-height: 1.6;
+    font-size: 14px;
+  }
+
+  .page {
+    max-width: 800px;
+    margin: 0 auto;
+    background: #FFFFFF;
+    padding: 60px 50px;
+    min-height: 100vh;
+  }
+
+  @media print {
+    body { background: #FFFFFF; }
+    .page { padding: 40px 50px; max-width: 100%; }
+    .page-break { page-break-before: always; }
+  }
+
+  .header {
+    border-bottom: 2px solid #2ECC71;
+    padding-bottom: 30px;
+    margin-bottom: 40px;
+  }
+
+  .header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    font-weight: 900;
+    color: #1A1A1A;
+    margin-bottom: 8px;
+  }
+
+  .header .subtitle {
+    color: #4A4A4A;
+    font-size: 15px;
+    font-weight: 400;
+  }
+
+  .header .meta {
+    margin-top: 12px;
+    font-size: 13px;
+    color: #888;
+  }
+
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: #1A1A1A;
+    margin-top: 40px;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #2ECC71;
+  }
+
+  h3 {
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: #1A1A1A;
+    margin-top: 28px;
+    margin-bottom: 12px;
+  }
+
+  p {
+    color: #4A4A4A;
+    margin-bottom: 14px;
+    font-size: 14px;
+  }
+
+  .highlight {
+    background: #F5F0EB;
+    border-left: 3px solid #2ECC71;
+    padding: 16px 20px;
+    margin: 20px 0;
+    font-size: 14px;
+  }
+
+  .highlight strong { color: #1A1A1A; }
+
+  .code-block {
+    background: #1A1A1A;
+    color: #F5F0EB;
+    padding: 28px 32px;
+    margin: 20px 0;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    line-height: 2.2;
+    border-radius: 0;
+    white-space: pre;
+  }
+
+  .calc-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    background: #1A1A1A;
+  }
+
+  .calc-table td {
+    color: #F5F0EB;
+    padding: 12px 24px;
+    border-bottom: 1px solid #333;
+    font-size: 14px;
+  }
+
+  .calc-table td:last-child {
+    text-align: right;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.5px;
+  }
+
+  .calc-table tr.divider-row td {
+    padding: 0;
+    border-bottom: 2px solid #2ECC71;
+  }
+
+  .calc-table tr.result td {
+    color: #2ECC71;
+    font-weight: 700;
+    font-size: 15px;
+    border-bottom: none;
+    padding-top: 16px;
+  }
+
+  .calc-table tr.result-negative td {
+    color: #E74C3C;
+    font-weight: 700;
+    font-size: 15px;
+    border-bottom: none;
+    padding-top: 16px;
+  }
+
+  .calc-table tr.sub td {
+    padding-left: 40px;
+    font-size: 13px;
+    color: #AAA;
+  }
+
+  .calc-table tr.section-label td {
+    color: #888;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding-top: 20px;
+    border-bottom: none;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 13px;
+  }
+
+  th {
+    background: #1A1A1A;
+    color: #FFFFFF;
+    text-align: left;
+    padding: 12px 16px;
+    font-weight: 600;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  td {
+    padding: 10px 14px;
+    border-bottom: 1px solid #E8E3DE;
+    color: #4A4A4A;
+  }
+
+  table:not(.calc-table) tr:nth-child(even) { background: #FAFAF8; }
+
+  .green { color: #2ECC71; font-weight: 700; }
+  .red { color: #E74C3C; font-weight: 700; }
+  .bold { font-weight: 700; color: #1A1A1A; }
+
+  ul, ol {
+    margin: 12px 0 12px 24px;
+    color: #4A4A4A;
+  }
+
+  li { margin-bottom: 8px; font-size: 14px; }
+
+  .section-question {
+    background: #1A1A1A;
+    color: #FFFFFF;
+    padding: 20px 24px;
+    margin: 24px 0;
+    font-weight: 600;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  .divider {
+    border: none;
+    border-top: 1px solid #E8E3DE;
+    margin: 36px 0;
+  }
+
+  .footer {
+    margin-top: 50px;
+    padding-top: 20px;
+    border-top: 2px solid #2ECC71;
+    text-align: center;
+    color: #888;
+    font-size: 12px;
+  }
+
+  .footer .name {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    color: #1A1A1A;
+    margin-bottom: 4px;
+  }
+
+  .tag {
+    display: inline-block;
+    background: #2ECC71;
+    color: #FFF;
+    padding: 2px 10px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-right: 6px;
+  }
+
+  .tag.red-tag {
+    background: #E74C3C;
+  }
+
+  .visual-box {
+    background: #1A1A1A;
+    color: #F5F0EB;
+    padding: 28px;
+    margin: 20px 0;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    line-height: 1.8;
+    text-align: center;
+  }
+
+  .visual-box .col {
+    display: inline-block;
+    width: 30%;
+    vertical-align: top;
+    text-align: center;
+    padding: 0 10px;
+  }
+
+  .visual-box .col-title {
+    font-weight: bold;
+    margin-bottom: 8px;
+    font-size: 13px;
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <h1>Proposta Filone</h1>
+    <div class="subtitle">Operação de Vendas Online + Canal Direto + iFood</div>
+    <div class="meta">Igor Sharada → Nilson Diniz &nbsp;|&nbsp; Junho 2026</div>
+  </div>
+
+  <h2>Antes de tudo: vamos entender os números</h2>
+
+  <p>Nilson, você me falou que sua margem é de 30%. Antes de falar de comissão, preciso que a gente alinhe o que isso significa na prática, porque muda tudo.</p>
+
+  <h3>O que é margem bruta vs lucro líquido</h3>
+
+  <table>
+    <tr><th>Etapa</th><th>Exemplo: venda de R$100</th></tr>
+    <tr><td>Preço de venda</td><td>R$ 100</td></tr>
+    <tr><td>Custo de produção (ingredientes, embalagem)</td><td>varia</td></tr>
+    <tr><td class="bold">Margem bruta</td><td>o que sobra depois do custo de produção</td></tr>
+    <tr><td>Custos fixos (aluguel, folha, luz, impostos)</td><td>varia</td></tr>
+    <tr><td class="bold">Lucro líquido</td><td>o que sobra de verdade no bolso</td></tr>
+  </table>
+
+  <div class="section-question">Seus 30% são o que sobra depois de pagar tudo, ou é só o que sobra depois do custo do ingrediente?</div>
+
+  <hr class="divider">
+
+  <h2>Cenário 1: 30% é o lucro líquido</h2>
+  <p><span class="tag">mais provável</span></p>
+
+  <p>Se os 30% são o que sobra depois de pagar tudo (ingrediente, aluguel, folha, luz, impostos):</p>
+
+  <table class="calc-table">
+    <tr><td>Venda</td><td>R$ 100</td></tr>
+    <tr><td>Custo de produção (~35%)</td><td>- R$ 35</td></tr>
+    <tr><td>Custos fixos (~35%)</td><td>- R$ 35</td></tr>
+    <tr class="divider-row"><td colspan="2"></td></tr>
+    <tr class="result"><td>Lucro líquido</td><td>R$ 30 &nbsp;← os 30% que você falou</td></tr>
+  </table>
+
+  <p>A margem bruta real é de ~65%. Isso é saudável e dentro do padrão do mercado de panificação (CMV ideal: 28-40%).</p>
+
+  <h3>Como fica com a comissão do Igor (15%)</h3>
+
+  <p>Os custos fixos (aluguel, folha, luz) você já paga independente de vender mais ou menos. Não vai contratar funcionário novo, não vai pagar aluguel novo. O custo real de cada venda nova é só o ingrediente, embalagem e energia (forno, masseira, tudo elétrico).</p>
+
+  <table class="calc-table">
+    <tr><td>Venda nova</td><td>R$ 100</td></tr>
+    <tr><td>CMV + energia (~38%)</td><td>- R$ 38</td></tr>
+    <tr><td>Lucro Igor (15%)</td><td>- R$ 15</td></tr>
+    <tr class="divider-row"><td colspan="2"></td></tr>
+    <tr class="result"><td>Lucro Nilson</td><td>R$ 47</td></tr>
+  </table>
+
+  <div class="highlight">
+    Você fica com <strong>R$47 limpos</strong> de um dinheiro que não existia. Sem o meu trabalho, esse R$100 não entrava. É 47 pra você, 15 pra mim, 38 pro custo de produzir.
+  </div>
+
+  <h3>Exemplo com volume mensal</h3>
+
+  <table>
+    <tr><th>Vendas geradas/mês</th><th>Custo produção (38%)</th><th>Lucro Igor (15%)</th><th>Lucro Nilson (47%)</th></tr>
+    <tr><td>R$ 10.000</td><td>R$ 3.800</td><td>R$ 1.500</td><td class="green">R$ 4.700</td></tr>
+    <tr><td>R$ 20.000</td><td>R$ 7.600</td><td>R$ 3.000</td><td class="green">R$ 9.400</td></tr>
+    <tr><td>R$ 30.000</td><td>R$ 11.400</td><td>R$ 4.500</td><td class="green">R$ 14.100</td></tr>
+    <tr><td>R$ 50.000</td><td>R$ 19.000</td><td>R$ 7.500</td><td class="green">R$ 23.500</td></tr>
+  </table>
+
+  <p>Quanto mais vende, mais os dois ganham. E tudo isso é receita nova, não canibaliza o balcão.</p>
+
+  <h3>E se precisar contratar mais gente?</h3>
+
+  <p>Produzir 10-20% a mais geralmente é absorvido pela equipe que já existe. Se chegar no ponto de precisar contratar, o lucro cobre:</p>
+
+  <table>
+    <tr><th>Vendas novas/mês</th><th>Custo produção</th><th>Func. novo</th><th>Lucro Igor</th><th>Lucro Nilson</th></tr>
+    <tr><td>R$ 20.000</td><td>R$ 7.600</td><td>R$ 3.000</td><td>R$ 3.000</td><td class="green">R$ 6.400</td></tr>
+    <tr><td>R$ 30.000</td><td>R$ 11.400</td><td>R$ 3.000</td><td>R$ 4.500</td><td class="green">R$ 11.100</td></tr>
+    <tr><td>R$ 50.000</td><td>R$ 19.000</td><td>R$ 3.000</td><td>R$ 7.500</td><td class="green">R$ 20.500</td></tr>
+  </table>
+
+  <div class="highlight">Precisar contratar é sinal de que tá dando certo, não de que tá apertando.</div>
+
+  <div class="page-break"></div>
+
+  <h2>Cenário 2: 30% é a margem bruta</h2>
+  <p><span class="tag red-tag">improvável</span></p>
+
+  <p>Se o custo de produção é 70% do preço de venda:</p>
+
+  <table class="calc-table">
+    <tr><td>Venda</td><td>R$ 100</td></tr>
+    <tr><td>Custo de produção (70%)</td><td>- R$ 70</td></tr>
+    <tr class="divider-row"><td colspan="2"></td></tr>
+    <tr class="result"><td>Sobra pra tudo</td><td>R$ 30</td></tr>
+  </table>
+
+  <p>R$30 pra pagar aluguel, folha, luz, impostos e ainda lucrar. Nesse cenário, <strong>não cabe comissão de ninguém</strong>.</p>
+
+  <h2>Por que o CMV de 70% não fecha</h2>
+
+  <h3>1. O mercado não sustenta CMV de 70%</h3>
+
+  <table>
+    <tr><th>Segmento</th><th>CMV médio do mercado</th></tr>
+    <tr><td>Padaria artesanal</td><td>28% a 35%</td></tr>
+    <tr><td>Confeitaria</td><td>25% a 30%</td></tr>
+    <tr><td>Panificação geral</td><td>30% a 40%</td></tr>
+    <tr><td class="bold">CMV de 70%</td><td class="red">fora de qualquer padrão</td></tr>
+  </table>
+
+  <h3>2. A conta do mês não fecharia</h3>
+
+  <table class="calc-table">
+    <tr><td>Faturamento</td><td>R$ 100.000</td></tr>
+    <tr><td>Custo de produção (70%)</td><td>- R$ 70.000</td></tr>
+    <tr class="divider-row"><td colspan="2"></td></tr>
+    <tr class="result"><td>Sobra</td><td>R$ 30.000</td></tr>
+    <tr class="section-label"><td colspan="2">Desses R$30.000, ainda paga:</td></tr>
+    <tr class="sub"><td>Aluguel</td><td>- R$ 5.000</td></tr>
+    <tr class="sub"><td>Folha</td><td>- R$ 12.000</td></tr>
+    <tr class="sub"><td>Luz, água, gás</td><td>- R$ 3.000</td></tr>
+    <tr class="sub"><td>Impostos (~10%)</td><td>- R$ 10.000</td></tr>
+    <tr class="sub"><td>Contador, sistema</td><td>- R$ 1.000</td></tr>
+    <tr class="divider-row"><td colspan="2"></td></tr>
+    <tr class="result-negative"><td>Sobra</td><td>- R$ 1.000 &nbsp;← prejuízo</td></tr>
+  </table>
+
+  <p>Com CMV de 70%, a Filone estaria dando <strong>prejuízo</strong> todo mês. E ela tá operando há anos. Isso não bate.</p>
+
+  <h3>3. O que provavelmente acontece</h3>
+
+  <table class="calc-table">
+    <tr><td>Faturamento</td><td>R$ 100.000</td></tr>
+    <tr><td>Custo de produção (~35%)</td><td>- R$ 35.000</td></tr>
+    <tr class="divider-row"><td colspan="2"></td></tr>
+    <tr class="result"><td>Margem bruta (65%)</td><td>R$ 65.000</td></tr>
+    <tr class="section-label"><td colspan="2">Custos fixos:</td></tr>
+    <tr class="sub"><td>Aluguel</td><td>- R$ 5.000</td></tr>
+    <tr class="sub"><td>Folha</td><td>- R$ 12.000</td></tr>
+    <tr class="sub"><td>Luz, água, gás</td><td>- R$ 3.000</td></tr>
+    <tr class="sub"><td>Impostos</td><td>- R$ 10.000</td></tr>
+    <tr class="sub"><td>Outros</td><td>- R$ 5.000</td></tr>
+    <tr class="divider-row"><td colspan="2"></td></tr>
+    <tr class="result"><td>Lucro líquido (30%)</td><td>R$ 30.000 &nbsp;← o que você sente que sobra</td></tr>
+  </table>
+
+  <h3>Como confirmar</h3>
+
+  <div class="highlight">
+    <strong>CMV = (gasto com insumos ÷ faturamento) × 100</strong><br><br>
+    Exemplo: se gastou R$35.000 e faturou R$100.000:<br>
+    CMV = (35.000 ÷ 100.000) × 100 = <strong>35%</strong>
+  </div>
+
+  <div class="page-break"></div>
+
+  <h2>E o iFood?</h2>
+
+  <p>O iFood não é inimigo. Usado da forma certa, é uma ferramenta de captação de clientes novos.</p>
+
+  <h3>O problema de depender do iFood</h3>
+
+  <table>
+    <tr><th></th><th>iFood</th><th>Canal direto (WhatsApp/App)</th></tr>
+    <tr><td class="bold">Comissão</td><td>12% (R$ 12) a 27% (R$ 27)</td><td>Lucro Igor: 15% (R$ 15)</td></tr>
+    <tr><td class="bold">Lucro Nilson por R$100</td><td>R$ 50 (básico) a R$ 35 (entrega)</td><td class="green">R$ 47</td></tr>
+    <tr><td class="bold">O cliente é de quem?</td><td class="red">Do iFood</td><td class="green">Da Filone</td></tr>
+    <tr><td class="bold">Constrói marca?</td><td class="red">Não</td><td class="green">Sim</td></tr>
+    <tr><td class="bold">Controle de preço</td><td>iFood pressiona pra baixo</td><td>Você define</td></tr>
+    <tr><td class="bold">Promoções obrigatórias</td><td class="red">Sim</td><td class="green">Não</td></tr>
+    <tr><td class="bold">Se parar de usar?</td><td class="red">O cliente some</td><td class="green">O cliente já te conhece</td></tr>
+  </table>
+
+  <h3>A estratégia: iFood como porta de entrada</h3>
+
+  <table class="calc-table" style="text-align:center;">
+    <tr>
+      <td style="width:33%; text-align:center; border-right:1px solid #333; padding:20px;">
+        <div style="font-size:12px; color:#888; text-transform:uppercase; letter-spacing:1px; margin-bottom:10px;">1. iFood</div>
+        <div style="font-size:15px; font-weight:700; color:#F5F0EB; margin-bottom:6px;">Cliente descobre</div>
+        <div style="font-size:13px; color:#888; margin-top:12px;">Lucro Nilson: R$ 30</div>
+        <div style="font-size:13px; color:#888;">Lucro Igor: 5%</div>
+      </td>
+      <td style="width:33%; text-align:center; border-right:1px solid #333; padding:20px;">
+        <div style="font-size:12px; color:#888; text-transform:uppercase; letter-spacing:1px; margin-bottom:10px;">2. WhatsApp / App</div>
+        <div style="font-size:15px; font-weight:700; color:#F5F0EB; margin-bottom:6px;">Cliente migra</div>
+        <div style="font-size:20px; color:#2ECC71; margin-top:8px;">→</div>
+      </td>
+      <td style="width:33%; text-align:center; padding:20px;">
+        <div style="font-size:12px; color:#888; text-transform:uppercase; letter-spacing:1px; margin-bottom:10px;">3. Canal direto</div>
+        <div style="font-size:15px; font-weight:700; color:#2ECC71; margin-bottom:6px;">Cliente fica</div>
+        <div style="font-size:13px; color:#888; margin-top:12px;">Lucro Nilson: R$ 47</div>
+        <div style="font-size:13px; color:#888;">Lucro Igor: 15%</div>
+      </td>
+    </tr>
+  </table>
+
+  <p>Cada cliente que migra do iFood pro direto: Nilson ganha R$17 a mais por R$100 vendidos, o cliente vira da Filone, e não paga mais comissão pro iFood nesse cliente.</p>
+
+  <h3>Comparativo completo por canal</h3>
+
+  <table>
+    <tr><th>Canal</th><th>Comissão iFood</th><th>Lucro Igor</th><th>Lucro Nilson / R$100</th></tr>
+    <tr><td>Balcão (orgânico)</td><td>0%</td><td>0%</td><td class="green">R$ 62</td></tr>
+    <tr><td class="bold">Balcão → WhatsApp (QR code)</td><td>0%</td><td>5%</td><td class="green">R$ 57</td></tr>
+    <tr><td class="bold">Canal direto (Igor)</td><td>0%</td><td>15%</td><td class="green">R$ 47</td></tr>
+    <tr><td>iFood (Igor gerencia)</td><td>27%</td><td>5%</td><td>R$ 30</td></tr>
+  </table>
+
+  <h3>Simulação mensal com os dois canais</h3>
+
+  <table>
+    <tr><th>Canal</th><th>Vendas</th><th>Lucro Igor</th><th>Lucro Nilson</th></tr>
+    <tr><td>iFood (5%)</td><td>R$ 10.000</td><td>R$ 500</td><td>R$ 3.000</td></tr>
+    <tr><td>Canal direto (15%)</td><td>R$ 20.000</td><td>R$ 3.000</td><td class="green">R$ 9.400</td></tr>
+    <tr><td class="bold">Total</td><td class="bold">R$ 30.000</td><td class="bold">R$ 3.500</td><td class="bold green">R$ 12.400</td></tr>
+  </table>
+
+  <div class="page-break"></div>
+
+  <h2>O que eu entrego</h2>
+
+  <ul>
+    <li>Organização e gestão do iFood da Filone (cadastro, fotos, promoções)</li>
+    <li>Estratégia de migração de clientes do iFood pro canal direto</li>
+    <li>WhatsApp automatizado (atendimento, filtro de pedidos, promoções)</li>
+    <li>Campanhas de ads (Meta)</li>
+    <li>Conteúdo e posicionamento da marca</li>
+    <li>Cadastro e rastreio de todo cliente novo pelos canais digitais</li>
+    <li>Você e o Mota recebem o pedido pronto pra despachar</li>
+  </ul>
+
+  <h2>Sistema de gestão (App + Monitor)</h2>
+
+  <p>A operação roda num sistema próprio da Filone, acessível pelo celular e por um monitor no caixa. Cada pessoa tem seu acesso com permissões diferentes.</p>
+
+  <table>
+    <tr><th>Quem</th><th>Acesso</th><th>Dispositivo</th><th>O que vê/faz</th></tr>
+    <tr><td class="bold">Mota</td><td>App no celular</td><td>Celular</td><td>Pedidos, status, cardápio on/off, notificações</td></tr>
+    <tr><td class="bold">Caixa</td><td>Painel no monitor</td><td>Monitor no balcão</td><td>Pedidos em tempo real, status, cardápio on/off</td></tr>
+    <tr><td class="bold">Nilson</td><td>Dashboard</td><td>Celular ou notebook</td><td>Resumo de vendas, clientes, faturamento</td></tr>
+    <tr><td class="bold">Igor</td><td>Admin completo</td><td>Qualquer</td><td>Tudo + campanhas, automações, relatórios</td></tr>
+  </table>
+
+  <div class="highlight">
+    O sistema é construído com tecnologia própria (Supabase + PWA). Funciona em tempo real: quando entra um pedido, aparece na tela de todo mundo ao mesmo tempo. O Mota recebe notificação no celular. O caixa vê no monitor. Ninguém precisa instalar nada pela loja, é só abrir o link e adicionar na tela inicial.
+  </div>
+
+  <h2>Rastreamento</h2>
+
+  <ul>
+    <li><strong>WhatsApp:</strong> cliente entra pelo link da campanha, o robô coleta nome, telefone e pedido, registra numa planilha</li>
+    <li><strong>Balcão com promo:</strong> cliente chega com a promoção, Mota registra o telefone num formulário rápido, cai na mesma planilha</li>
+    <li><strong>Planilha aberta pra nós dois:</strong> você vê todos os clientes, de onde vieram e o que compraram</li>
+  </ul>
+
+  <div class="highlight">O que não passa pelo sistema (venda orgânica de balcão sem promoção) não entra na comissão. Você só paga pelo que eu trouxer.</div>
+
+  <h2>Comissão</h2>
+
+  <h3>Por origem do cliente</h3>
+
+  <table>
+    <tr><th>Origem do cliente</th><th>Lucro Igor</th><th>Justificativa</th></tr>
+    <tr><td class="bold">Canal direto (ads, Instagram, indicação digital)</td><td>15%</td><td>Igor trouxe o cliente</td></tr>
+    <tr><td class="bold">iFood (Igor gerencia)</td><td>5%</td><td>Igor gerencia a plataforma</td></tr>
+    <tr><td class="bold">Balcão → WhatsApp (QR code)</td><td>5%</td><td>Cliente já existia, Igor trabalha a retenção</td></tr>
+  </table>
+
+  <div class="highlight">
+    O cliente do balcão que entra na lista do WhatsApp via QR code gera 5%, não 15%. Ele já era cliente. O valor do Igor aqui é o trabalho de retenção e recompra: promoções no mês de aniversário, ações especiais, campanhas segmentadas. O cliente continua comprando mais vezes por causa desse trabalho.
+  </div>
+
+  <h3>Modelo de ads</h3>
+
+  <table>
+    <tr><th></th><th>Quem paga os ads</th><th>Lucro Igor</th></tr>
+    <tr><td class="bold">Cenário A</td><td>Nilson paga</td><td>15% sobre vendas rastreáveis</td></tr>
+    <tr><td class="bold">Cenário B</td><td>Igor paga</td><td>25% sobre vendas rastreáveis</td></tr>
+  </table>
+
+  <h3>Simulação Cenário A (Nilson paga ads)</h3>
+
+  <p>Cada venda nova só custa o CMV + energia (~38%). Os custos fixos já estão pagos pela operação que já existe.</p>
+
+  <table>
+    <tr><th>Vendas</th><th>Produção (38%)</th><th>Ads (Nilson)</th><th>Lucro Igor (15%)</th><th>Lucro Nilson</th></tr>
+    <tr><td>R$ 10.000</td><td>R$ 3.800</td><td>R$ 1.500</td><td>R$ 1.500</td><td class="green">R$ 3.200</td></tr>
+    <tr><td>R$ 20.000</td><td>R$ 7.600</td><td>R$ 1.500</td><td>R$ 3.000</td><td class="green">R$ 7.900</td></tr>
+    <tr><td>R$ 30.000</td><td>R$ 11.400</td><td>R$ 1.500</td><td>R$ 4.500</td><td class="green">R$ 12.600</td></tr>
+    <tr><td>R$ 50.000</td><td>R$ 19.000</td><td>R$ 3.000</td><td>R$ 7.500</td><td class="green">R$ 20.500</td></tr>
+    <tr><td>R$ 100.000</td><td>R$ 38.000</td><td>R$ 5.000</td><td>R$ 15.000</td><td class="green">R$ 42.000</td></tr>
+  </table>
+
+  <h3>Simulação Cenário B (Igor paga ads)</h3>
+
+  <table>
+    <tr><th>Vendas</th><th>Produção (38%)</th><th>Ads (Igor)</th><th>Lucro Igor (25%)</th><th>Lucro Nilson</th></tr>
+    <tr><td>R$ 10.000</td><td>R$ 3.800</td><td>R$ 0</td><td>R$ 2.500</td><td class="green">R$ 3.700</td></tr>
+    <tr><td>R$ 20.000</td><td>R$ 7.600</td><td>R$ 0</td><td>R$ 5.000</td><td class="green">R$ 7.400</td></tr>
+    <tr><td>R$ 30.000</td><td>R$ 11.400</td><td>R$ 0</td><td>R$ 7.500</td><td class="green">R$ 11.100</td></tr>
+    <tr><td>R$ 50.000</td><td>R$ 19.000</td><td>R$ 0</td><td>R$ 12.500</td><td class="green">R$ 18.500</td></tr>
+    <tr><td>R$ 100.000</td><td>R$ 38.000</td><td>R$ 0</td><td>R$ 25.000</td><td class="green">R$ 37.000</td></tr>
+  </table>
+
+  <h3>Cenário C: Comissão escalável (Nilson paga ads)</h3>
+
+  <p>A comissão começa menor enquanto a gente valida o modelo. Quando bater R$100k, o fee do Igor volta pro valor real (R$7.200) porque a operação já se provou.</p>
+
+  <table>
+    <tr><th>Faixa de vendas novas/mês</th><th>Comissão</th><th>Fee fixo Igor</th></tr>
+    <tr><td>Até R$ 10.000</td><td>10%</td><td>R$ 3.000</td></tr>
+    <tr><td>De R$ 10.000 a R$ 100.000</td><td>15%</td><td>R$ 3.000</td></tr>
+    <tr><td>De R$ 100.000 a R$ 500.000</td><td>15%</td><td>R$ 7.200</td></tr>
+    <tr><td>Acima de R$ 500.000</td><td>12,5%</td><td>R$ 7.200</td></tr>
+  </table>
+
+  <table>
+    <tr><th>Vendas/mês</th><th>Faixa</th><th>Produção (38%)</th><th>Ads (Nilson)</th><th>Lucro Igor</th><th>Lucro Nilson/mês</th><th>Lucro Nilson/ano</th></tr>
+    <tr><td>R$ 10.000</td><td>10%</td><td>R$ 3.800</td><td>R$ 1.500</td><td>R$ 1.000</td><td class="green">R$ 3.700</td><td class="green">R$ 44.400</td></tr>
+    <tr><td>R$ 20.000</td><td>15%</td><td>R$ 7.600</td><td>R$ 1.500</td><td>R$ 3.000</td><td class="green">R$ 7.900</td><td class="green">R$ 94.800</td></tr>
+    <tr><td>R$ 50.000</td><td>15%</td><td>R$ 19.000</td><td>R$ 3.000</td><td>R$ 7.500</td><td class="green">R$ 20.500</td><td class="green">R$ 246.000</td></tr>
+    <tr><td>R$ 100.000</td><td>15%</td><td>R$ 38.000</td><td>R$ 5.000</td><td>R$ 15.000</td><td class="green">R$ 42.000</td><td class="green">R$ 504.000</td></tr>
+    <tr><td>R$ 200.000</td><td>15%</td><td>R$ 76.000</td><td>R$ 8.000</td><td>R$ 30.000</td><td class="green">R$ 86.000</td><td class="green">R$ 1.032.000</td></tr>
+    <tr><td>R$ 300.000</td><td>15%</td><td>R$ 114.000</td><td>R$ 10.000</td><td>R$ 45.000</td><td class="green">R$ 131.000</td><td class="green">R$ 1.572.000</td></tr>
+    <tr><td>R$ 500.000</td><td>15%</td><td>R$ 190.000</td><td>R$ 15.000</td><td>R$ 75.000</td><td class="green">R$ 220.000</td><td class="green">R$ 2.640.000</td></tr>
+    <tr><td>R$ 750.000</td><td>12,5%</td><td>R$ 285.000</td><td>R$ 20.000</td><td>R$ 93.750</td><td class="green">R$ 351.250</td><td class="green">R$ 4.215.000</td></tr>
+  </table>
+
+  <div class="highlight">
+    Em todas as faixas, o Lucro Nilson é maior que o Lucro Igor:<br>
+    <strong>10%</strong> → Nilson fica com 3,7x mais &nbsp;|&nbsp;
+    <strong>15%</strong> → Nilson fica com 3x mais &nbsp;|&nbsp;
+    <strong>12,5%</strong> → Nilson fica com 3,7x mais<br><br>
+    Acima de R$100k o fee do Igor sobe de R$3.000 pra R$7.200 (valor real). Acima de R$500k a comissão cai de 15% pra 12,5% porque o volume já compensa e a operação tá madura.
+  </div>
+
+  <div class="highlight">
+    <strong>Importante:</strong> essas projeções usam um CMV de 38% (média do mercado). Muitas padarias artesanais operam com CMV entre 22% e 30%. Se o seu custo de produção for menor que 38%, o lucro real é ainda maior do que o que essa tabela mostra. Os números aqui são conservadores.
+  </div>
+
+  <div class="page-break"></div>
+
+  <h2>Custo das ferramentas</h2>
+
+  <table>
+    <tr><th>Ferramenta</th><th>Custo</th><th>Pra quê</th></tr>
+    <tr><td>ManyChat Pro</td><td>R$ 149/mês</td><td>Automação WhatsApp/Instagram</td></tr>
+    <tr><td>Claude Pro</td><td>R$ 105/mês</td><td>IA pra conteúdo e automações</td></tr>
+    <tr><td>ChatGPT Plus</td><td>R$ 105/mês</td><td>IA complementar</td></tr>
+    <tr><td>Adobe Creative Cloud</td><td>R$ 115/mês</td><td>Edição visual</td></tr>
+    <tr><td class="bold">Total</td><td class="bold">~R$ 474/mês</td><td></td></tr>
+  </table>
+
+  <h2>Financeiro: dívida acumulada + regras</h2>
+
+  <h3>Dívida acumulada</h3>
+
+  <p>Total em aberto (mensalidades + ads): <strong>R$ 7.376,39</strong></p>
+
+  <ul>
+    <li>Parcela semanal fixa de <strong>R$615</strong> até liquidar (12 semanas)</li>
+    <li>Quando a comissão começar a gerar, parte pode ser usada pra acelerar a quitação</li>
+  </ul>
+
+  <h3>Regra a partir de julho</h3>
+
+  <table>
+    <tr><th>Custo</th><th>Valor</th><th>Vencimento</th></tr>
+    <tr><td>Fee fixo (estratégia, conteúdo, vídeo, foto, edição, gerenciamento, copy, ads)</td><td>R$ 3.000/mês</td><td>Até dia 10</td></tr>
+    <tr><td>Ads</td><td>Variável</td><td>Até dia 10</td></tr>
+    <tr><td>Ferramentas</td><td>R$ 474/mês</td><td>Até dia 10</td></tr>
+    <tr><td>Parcela dívida</td><td>R$ 615/semana</td><td>Toda segunda</td></tr>
+  </table>
+
+  <div class="highlight">
+    <strong>Importante:</strong> o fee fixo cobre o trabalho operacional que acontece todo mês (estratégia, conteúdo, vídeo, foto, edição, gerenciamento, copy, ads). A comissão é separada, só sobre vendas novas que eu trouxer. São entregas diferentes.
+  </div>
+
+  <h3>Se atrasar</h3>
+
+  <ul>
+    <li>Atraso de 1 semana: aviso</li>
+    <li>Atraso de 2 semanas seguidas: operação pausa (ads desligam, automação pausa, conteúdo para)</li>
+    <li>Operação retoma quando regularizar</li>
+    <li>Dívida acumulada continua valendo independente de pausa</li>
+  </ul>
+
+  <p>Não quero chegar nesse ponto. Mas preciso de previsibilidade pra manter a operação rodando. Eu também tenho custos.</p>
+
+  <h2>Pagamento em produtos</h2>
+
+  <p>Já funciona entre nós e pode continuar. O fee fixo ou parte dele pode ser pago em produtos da Filone com 15% de desconto, como já fazemos hoje.</p>
+
+  <table>
+    <tr><th>Serviço</th><th>Valor</th><th>Forma de pagamento</th></tr>
+    <tr><td>Fee mensal</td><td>R$ 3.000</td><td>Dinheiro</td></tr>
+    <tr><td>Diária FIPAN / eventos</td><td>R$ 1.500/dia</td><td>Produtos (15% desc.)</td></tr>
+    <tr><td>Comissão sobre vendas</td><td>Variável</td><td>Dinheiro</td></tr>
+  </table>
+
+  <div class="highlight">
+    Essa flexibilidade existe porque a parceria é de longo prazo. Produto que eu pego é produto que eu consumo e divulgo. Todo mundo ganha.
+  </div>
+
+  <h2>Período de teste</h2>
+
+  <p>Primeiros 90 dias funcionam como validação do modelo. Durante esse período:</p>
+
+  <ul>
+    <li>Comissão de <strong>10%</strong> sobre todas as vendas rastreáveis (independente do volume)</li>
+    <li>Fee fixo de R$ 3.000/mês (mantém o valor reduzido)</li>
+    <li>No final dos 90 dias, a gente senta junto, olha os números reais e confirma o modelo escalável</li>
+    <li>Se não fizer sentido pra qualquer um dos dois, encerra sem pendência (exceto saldo devedor)</li>
+  </ul>
+
+  <div class="highlight">
+    O teste é pra você sentir confiança nos números antes de assumir o modelo completo. Eu acredito no resultado, por isso aceito começar com menos.
+  </div>
+
+  <h2>Proteção</h2>
+
+  <ul>
+    <li>O sistema (ManyChat, automações, planilha de clientes) é construído e operado pelo Igor. Se a parceria encerrar, o Igor faz a transição em 30 dias: entrega a base de clientes e orienta a equipe. Após a transição, as automações param de funcionar.</li>
+    <li>Se encerrar, existe um período de 60 dias de comissão residual sobre vendas dos clientes que o Igor trouxe, pra garantir uma saída justa.</li>
+    <li>A base de clientes pode ser usada pela Filone pra comunicação geral (cardápio, avisos) a qualquer momento.</li>
+    <li>Saldo devedor continua valendo independente de encerramento.</li>
+  </ul>
+
+  <h2>Como começa</h2>
+
+  <ol>
+    <li>Nilson regulariza o financeiro (primeira parcela da dívida + fee de julho)</li>
+    <li>Igor monta o WhatsApp automatizado (pronto pra ativar)</li>
+    <li>Igor organiza o iFood da Filone</li>
+    <li>Lança a primeira campanha no canal direto</li>
+    <li>Primeiro fechamento de comissão: 30 dias depois da campanha ativa</li>
+  </ol>
+
+  <h2>Duração</h2>
+
+  <p>Tempo indeterminado. Qualquer um pode encerrar com 30 dias de aviso. Se encerrar, saldo devedor e cauda de comissão continuam valendo.</p>
+
+  <hr class="divider">
+
+  <p style="text-align:center; font-size: 16px; margin-top: 30px; color: #1A1A1A;"><strong>Me fala o que acha.</strong></p>
+
+  <div class="footer">
+    <div class="name">@IgorSHarada</div>
+    Direção Criativa para Marcas Premium
+  </div>
+
+</div>
+</body>
+</html>

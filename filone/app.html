@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Filone — App</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #0F0F0F;
+    color: #F5F0EB;
+    max-width: 390px;
+    margin: 0 auto;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  .status-bar {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 20px 8px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #888;
+  }
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 20px 16px;
+  }
+
+  .header .greeting { font-size: 13px; color: #666; }
+  .header .greeting strong { display: block; font-size: 20px; color: #F5F0EB; margin-top: 2px; }
+
+  .header .notif {
+    width: 40px; height: 40px; background: #222; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; font-size: 18px; position: relative;
+  }
+  .header .notif .notif-badge {
+    position: absolute; top: -2px; right: -2px; width: 18px; height: 18px;
+    background: #E74C3C; border-radius: 50%; font-size: 10px; font-weight: 800;
+    display: flex; align-items: center; justify-content: center; color: #FFF;
+  }
+
+  /* PAGES */
+  .page { display: none; padding-bottom: 80px; }
+  .page.active { display: block; }
+
+  /* QUICK STATS */
+  .quick-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 0 20px 20px; }
+  .quick-stat { background: #1A1A1A; padding: 14px 12px; text-align: center; border-radius: 12px; }
+  .quick-stat .qs-value { font-size: 24px; font-weight: 800; }
+  .quick-stat .qs-label { font-size: 10px; color: #666; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 4px; }
+
+  .green { color: #2ECC71; }
+  .orange { color: #F39C12; }
+  .blue { color: #3498DB; }
+
+  .section-title {
+    display: flex; justify-content: space-between; align-items: center; padding: 0 20px 12px;
+  }
+  .section-title h2 { font-size: 16px; font-weight: 700; }
+  .section-title .see-all { font-size: 13px; color: #2ECC71; font-weight: 600; }
+
+  /* PEDIDO CARD */
+  .pedido-card {
+    background: #1A1A1A; margin: 0 20px 12px; padding: 16px; border-radius: 12px; border-left: 4px solid #F39C12;
+  }
+  .pedido-card.prep { border-left-color: #3498DB; }
+  .pedido-card.enviado { border-left-color: #2ECC71; }
+
+  .pedido-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+  .pedido-top .pedido-nome { font-size: 15px; font-weight: 700; }
+  .pedido-top .pedido-hora { font-size: 12px; color: #555; }
+  .pedido-itens { font-size: 13px; color: #AAA; margin-bottom: 10px; line-height: 1.5; }
+  .pedido-bottom { display: flex; justify-content: space-between; align-items: center; }
+
+  .pedido-canal { font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 6px; }
+  .canal-ads { background: #9B59B633; color: #9B59B6; }
+  .canal-whatsapp { background: #2ECC7133; color: #2ECC71; }
+  .canal-ifood { background: #E74C3C33; color: #E74C3C; }
+  .canal-qrcode { background: #F39C1233; color: #F39C12; }
+  .canal-indicacao { background: #3498DB33; color: #3498DB; }
+
+  .pedido-valor { font-size: 16px; font-weight: 800; color: #2ECC71; }
+
+  .pedido-actions { display: flex; gap: 8px; margin-top: 12px; }
+  .action-btn {
+    flex: 1; padding: 10px; border: none; border-radius: 8px;
+    font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 700;
+    cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px;
+  }
+  .action-btn.primary { background: #2ECC71; color: #1A1A1A; }
+  .action-btn.secondary { background: #333; color: #AAA; }
+
+  /* CARDAPIO */
+  .cardapio-item {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 14px 20px; border-bottom: 1px solid #1A1A1A;
+  }
+  .cardapio-item .ci-info h4 { font-size: 14px; font-weight: 600; }
+  .cardapio-item .ci-info .ci-preco { font-size: 12px; color: #555; margin-top: 2px; }
+  .cardapio-item.off .ci-info { opacity: 0.3; }
+
+  .toggle-mini {
+    width: 40px; height: 22px; background: #333; border-radius: 11px;
+    position: relative; cursor: pointer; transition: background 0.3s;
+  }
+  .toggle-mini.on { background: #2ECC71; }
+  .toggle-mini .tm-dot {
+    width: 16px; height: 16px; background: #FFF; border-radius: 50%;
+    position: absolute; top: 3px; left: 3px; transition: left 0.3s;
+  }
+  .toggle-mini.on .tm-dot { left: 21px; }
+
+  .cardapio-alert {
+    padding: 12px 20px; font-size: 12px; font-weight: 600; color: #E74C3C;
+    display: none;
+  }
+  .cardapio-alert.show { display: block; }
+
+  /* CLIENTES */
+  .search-bar {
+    margin: 0 20px 16px; background: #1A1A1A; border-radius: 10px;
+    padding: 12px 16px; display: flex; align-items: center; gap: 10px;
+  }
+  .search-bar input {
+    background: transparent; border: none; color: #F5F0EB; font-family: 'Inter', sans-serif;
+    font-size: 14px; width: 100%; outline: none;
+  }
+  .search-bar input::placeholder { color: #555; }
+
+  .cliente-card {
+    background: #1A1A1A; margin: 0 20px 10px; padding: 16px; border-radius: 12px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .cliente-info .cl-nome { font-size: 15px; font-weight: 700; margin-bottom: 2px; }
+  .cliente-info .cl-telefone { font-size: 12px; color: #555; }
+  .cliente-info .cl-ultimo { font-size: 11px; color: #444; margin-top: 4px; }
+  .cliente-meta { text-align: right; }
+  .cliente-meta .cl-pedidos { font-size: 20px; font-weight: 800; color: #2ECC71; }
+  .cliente-meta .cl-pedidos-label { font-size: 10px; color: #555; text-transform: uppercase; }
+  .cliente-meta .cl-canal { font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 4px; margin-top: 6px; display: inline-block; }
+  .cliente-meta .cl-total { font-size: 12px; color: #888; margin-top: 4px; }
+
+  .clientes-stats {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 0 20px 20px;
+  }
+  .cl-stat {
+    background: #1A1A1A; padding: 16px; border-radius: 12px; text-align: center;
+  }
+  .cl-stat .cls-value { font-size: 28px; font-weight: 800; }
+  .cl-stat .cls-label { font-size: 10px; color: #666; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 4px; }
+
+  /* CONFIG */
+  .config-section { padding: 0 20px 20px; }
+  .config-section h3 {
+    font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px;
+    color: #555; margin-bottom: 12px; margin-top: 20px;
+  }
+
+  .config-item {
+    background: #1A1A1A; padding: 16px; border-radius: 12px; margin-bottom: 8px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .config-item .cfg-left { display: flex; align-items: center; gap: 12px; }
+  .config-item .cfg-icon { font-size: 20px; width: 36px; height: 36px; background: #222; border-radius: 10px; display: flex; align-items: center; justify-content: center; }
+  .config-item .cfg-label { font-size: 14px; font-weight: 600; }
+  .config-item .cfg-desc { font-size: 11px; color: #555; margin-top: 2px; }
+  .config-item .cfg-arrow { color: #444; font-size: 16px; }
+
+  .config-user {
+    background: #1A1A1A; padding: 20px; border-radius: 12px; margin-bottom: 16px;
+    display: flex; align-items: center; gap: 16px;
+  }
+  .config-user .cu-avatar {
+    width: 56px; height: 56px; background: #2ECC71; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px; font-weight: 800; color: #1A1A1A;
+  }
+  .config-user .cu-info .cu-name { font-size: 17px; font-weight: 700; }
+  .config-user .cu-info .cu-role { font-size: 12px; color: #2ECC71; font-weight: 600; margin-top: 2px; }
+  .config-user .cu-info .cu-since { font-size: 11px; color: #555; margin-top: 2px; }
+
+  .config-toggle {
+    width: 40px; height: 22px; background: #2ECC71; border-radius: 11px;
+    position: relative; cursor: pointer;
+  }
+  .config-toggle .ct-dot {
+    width: 16px; height: 16px; background: #FFF; border-radius: 50%;
+    position: absolute; top: 3px; left: 21px;
+  }
+
+  .config-version {
+    text-align: center; padding: 20px; font-size: 11px; color: #333;
+  }
+
+  /* BOTTOM NAV */
+  .bottom-nav {
+    position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);
+    width: 390px; background: #1A1A1A; border-top: 1px solid #2A2A2A;
+    display: flex; justify-content: space-around; padding: 10px 0 24px;
+    z-index: 100;
+  }
+  .nav-item {
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
+    font-size: 10px; color: #555; font-weight: 600; cursor: pointer; transition: color 0.2s;
+    position: relative;
+  }
+  .nav-item.active { color: #2ECC71; }
+  .nav-item .nav-icon { font-size: 20px; }
+  .nav-item .nav-badge {
+    position: absolute; top: -4px; right: -4px; width: 16px; height: 16px;
+    background: #E74C3C; border-radius: 50%; font-size: 9px; font-weight: 800;
+    display: flex; align-items: center; justify-content: center; color: #FFF;
+  }
+</style>
+</head>
+<body>
+
+<div class="status-bar">
+  <span>14:35</span>
+  <span>Filone</span>
+  <span>📶 🔋 92%</span>
+</div>
+
+<div class="header">
+  <div class="greeting">
+    Bom dia,
+    <strong id="userName">Mota</strong>
+  </div>
+  <div class="notif">
+    🔔
+    <div class="notif-badge">3</div>
+  </div>
+</div>
+
+<!-- PAGE: PEDIDOS -->
+<div class="page active" id="page-pedidos">
+  <div class="quick-stats">
+    <div class="quick-stat">
+      <div class="qs-value orange">3</div>
+      <div class="qs-label">Pendentes</div>
+    </div>
+    <div class="quick-stat">
+      <div class="qs-value blue">1</div>
+      <div class="qs-label">Preparando</div>
+    </div>
+    <div class="quick-stat">
+      <div class="qs-value green">8</div>
+      <div class="qs-label">Entregues</div>
+    </div>
+  </div>
+
+  <div class="section-title"><h2>Pedidos pendentes</h2><span class="see-all">Ver todos</span></div>
+
+  <div class="pedido-card">
+    <div class="pedido-top"><div class="pedido-nome">Roberto Filho</div><div class="pedido-hora">14:32</div></div>
+    <div class="pedido-itens">1x Pão de Forma Grãos, 1x Sourdough</div>
+    <div class="pedido-bottom"><span class="pedido-canal canal-ads">Instagram Ads</span><span class="pedido-valor">R$ 93</span></div>
+    <div class="pedido-actions"><button class="action-btn primary">Preparar</button><button class="action-btn secondary">Detalhes</button></div>
+  </div>
+
+  <div class="pedido-card">
+    <div class="pedido-top"><div class="pedido-nome">Ana Costa</div><div class="pedido-hora">14:15</div></div>
+    <div class="pedido-itens">3x Pão de Abóbora</div>
+    <div class="pedido-bottom"><span class="pedido-canal canal-whatsapp">WhatsApp</span><span class="pedido-valor">R$ 87</span></div>
+    <div class="pedido-actions"><button class="action-btn primary">Preparar</button><button class="action-btn secondary">Detalhes</button></div>
+  </div>
+
+  <div class="pedido-card">
+    <div class="pedido-top"><div class="pedido-nome">Juliana Ramos</div><div class="pedido-hora">13:48</div></div>
+    <div class="pedido-itens">1x LandBrot, 2x Brioche</div>
+    <div class="pedido-bottom"><span class="pedido-canal canal-qrcode">QR Code Balcão</span><span class="pedido-valor">R$ 105</span></div>
+    <div class="pedido-actions"><button class="action-btn primary">Preparar</button><button class="action-btn secondary">Detalhes</button></div>
+  </div>
+
+  <div class="section-title" style="margin-top: 8px;"><h2>Preparando</h2></div>
+
+  <div class="pedido-card prep">
+    <div class="pedido-top"><div class="pedido-nome">Carlos Mendes</div><div class="pedido-hora">13:20</div></div>
+    <div class="pedido-itens">1x LandBrot, 1x Focaccia</div>
+    <div class="pedido-bottom"><span class="pedido-canal canal-ads">Instagram Ads</span><span class="pedido-valor">R$ 80</span></div>
+    <div class="pedido-actions"><button class="action-btn primary">Despachar</button><button class="action-btn secondary">Detalhes</button></div>
+  </div>
+
+  <div class="section-title" style="margin-top: 8px;"><h2>Entregues hoje</h2><span class="see-all">8 pedidos</span></div>
+
+  <div class="pedido-card enviado" style="opacity: 0.5;">
+    <div class="pedido-top"><div class="pedido-nome">Maria Silva</div><div class="pedido-hora">12:45</div></div>
+    <div class="pedido-itens">2x Sourdough, 1x Focaccia</div>
+    <div class="pedido-bottom"><span class="pedido-canal canal-whatsapp">WhatsApp</span><span class="pedido-valor">R$ 119</span></div>
+  </div>
+
+  <div class="pedido-card enviado" style="opacity: 0.5;">
+    <div class="pedido-top"><div class="pedido-nome">Pedro Alves</div><div class="pedido-hora">12:10</div></div>
+    <div class="pedido-itens">2x Demi Baguette, 1x Pão de Nozes</div>
+    <div class="pedido-bottom"><span class="pedido-canal canal-ifood">iFood → WhatsApp</span><span class="pedido-valor">R$ 73</span></div>
+  </div>
+</div>
+
+<!-- PAGE: CARDAPIO -->
+<div class="page" id="page-cardapio">
+  <div class="section-title"><h2>Cardápio digital</h2></div>
+  <div style="padding: 0 20px 12px; font-size: 13px; color: #666;">Desative quando acabar. O cliente para de ver no WhatsApp na hora.</div>
+
+  <div class="cardapio-alert" id="alertCardapio"></div>
+
+  <div class="cardapio-item"><div class="ci-info"><h4>Sourdough Orgânico</h4><div class="ci-preco">R$ 44 — 850g</div></div><div class="toggle-mini on" onclick="toggleCardapio(this)"><div class="tm-dot"></div></div></div>
+  <div class="cardapio-item"><div class="ci-info"><h4>LandBrot</h4><div class="ci-preco">R$ 49 — 800g</div></div><div class="toggle-mini on" onclick="toggleCardapio(this)"><div class="tm-dot"></div></div></div>
+  <div class="cardapio-item"><div class="ci-info"><h4>Focaccia Ligure</h4><div class="ci-preco">R$ 31 — 440g</div></div><div class="toggle-mini on" onclick="toggleCardapio(this)"><div class="tm-dot"></div></div></div>
+  <div class="cardapio-item"><div class="ci-info"><h4>Pão de Abóbora</h4><div class="ci-preco">R$ 29 — 430g</div></div><div class="toggle-mini on" onclick="toggleCardapio(this)"><div class="tm-dot"></div></div></div>
+  <div class="cardapio-item"><div class="ci-info"><h4>Brioche</h4><div class="ci-preco">R$ 28 — 275g</div></div><div class="toggle-mini on" onclick="toggleCardapio(this)"><div class="tm-dot"></div></div></div>
+  <div class="cardapio-item"><div class="ci-info"><h4>Filone Orgânico</h4><div class="ci-preco">R$ 21 — 400g</div></div><div class="toggle-mini on" onclick="toggleCardapio(this)"><div class="tm-dot"></div></div></div>
+  <div class="cardapio-item"><div class="ci-info"><h4>Italiano Redondo</h4><div class="ci-preco">R$ 22 — 500g</div></div><div class="toggle-mini on" onclick="toggleCardapio(this)"><div class="tm-dot"></div></div></div>
+  <div class="cardapio-item"><div class="ci-info"><h4>Pão de Forma Grãos</h4><div class="ci-preco">R$ 49 — 900g</div></div><div class="toggle-mini on" onclick="toggleCardapio(this)"><div class="tm-dot"></div></div></div>
+  <div class="cardapio-item"><div class="ci-info"><h4>Croissant (4un)</h4><div class="ci-preco">R$ 44 — 240g</div></div><div class="toggle-mini on" onclick="toggleCardapio(this)"><div class="tm-dot"></div></div></div>
+  <div class="cardapio-item"><div class="ci-info"><h4>Integral Sementes</h4><div class="ci-preco">R$ 29 — 440g</div></div><div class="toggle-mini on" onclick="toggleCardapio(this)"><div class="tm-dot"></div></div></div>
+  <div class="cardapio-item"><div class="ci-info"><h4>Demi Baguette (2un)</h4><div class="ci-preco">R$ 22 — 200g</div></div><div class="toggle-mini on" onclick="toggleCardapio(this)"><div class="tm-dot"></div></div></div>
+  <div class="cardapio-item"><div class="ci-info"><h4>Pain de Campagne</h4><div class="ci-preco">R$ 32 — 640g</div></div><div class="toggle-mini on" onclick="toggleCardapio(this)"><div class="tm-dot"></div></div></div>
+  <div class="cardapio-item"><div class="ci-info"><h4>Pão de Cacau</h4><div class="ci-preco">R$ 27 — 300g</div></div><div class="toggle-mini on" onclick="toggleCardapio(this)"><div class="tm-dot"></div></div></div>
+  <div class="cardapio-item"><div class="ci-info"><h4>Pão de Traverse</h4><div class="ci-preco">R$ 32 — 650g</div></div><div class="toggle-mini on" onclick="toggleCardapio(this)"><div class="tm-dot"></div></div></div>
+  <div class="cardapio-item"><div class="ci-info"><h4>Trança Suíça</h4><div class="ci-preco">R$ 31 — 450g</div></div><div class="toggle-mini on" onclick="toggleCardapio(this)"><div class="tm-dot"></div></div></div>
+  <div class="cardapio-item"><div class="ci-info"><h4>Pain au Chocolat (4un)</h4><div class="ci-preco">R$ 56 — 300g</div></div><div class="toggle-mini on" onclick="toggleCardapio(this)"><div class="tm-dot"></div></div></div>
+</div>
+
+<!-- PAGE: CLIENTES -->
+<div class="page" id="page-clientes">
+  <div class="clientes-stats">
+    <div class="cl-stat">
+      <div class="cls-value green">347</div>
+      <div class="cls-label">Total na base</div>
+    </div>
+    <div class="cl-stat">
+      <div class="cls-value">52</div>
+      <div class="cls-label">Novos este mês</div>
+    </div>
+    <div class="cl-stat">
+      <div class="cls-value orange">23</div>
+      <div class="cls-label">Inativos (+30 dias)</div>
+    </div>
+    <div class="cl-stat">
+      <div class="cls-value blue">12</div>
+      <div class="cls-label">Aniversariantes</div>
+    </div>
+  </div>
+
+  <div class="search-bar">
+    <span>🔍</span>
+    <input type="text" placeholder="Buscar cliente por nome ou telefone...">
+  </div>
+
+  <div class="section-title"><h2>Clientes recentes</h2></div>
+
+  <div class="cliente-card">
+    <div class="cliente-info">
+      <div class="cl-nome">Maria Silva</div>
+      <div class="cl-telefone">(11) 97654-3210</div>
+      <div class="cl-ultimo">Último pedido: hoje 12:45</div>
+    </div>
+    <div class="cliente-meta">
+      <div class="cl-pedidos">14</div>
+      <div class="cl-pedidos-label">Pedidos</div>
+      <span class="cl-canal canal-whatsapp">WhatsApp</span>
+      <div class="cl-total">Total: R$ 1.230</div>
+    </div>
+  </div>
+
+  <div class="cliente-card">
+    <div class="cliente-info">
+      <div class="cl-nome">Carlos Mendes</div>
+      <div class="cl-telefone">(11) 94567-8901</div>
+      <div class="cl-ultimo">Último pedido: hoje 13:20</div>
+    </div>
+    <div class="cliente-meta">
+      <div class="cl-pedidos">8</div>
+      <div class="cl-pedidos-label">Pedidos</div>
+      <span class="cl-canal canal-ads">Ads</span>
+      <div class="cl-total">Total: R$ 640</div>
+    </div>
+  </div>
+
+  <div class="cliente-card">
+    <div class="cliente-info">
+      <div class="cl-nome">Roberto Filho</div>
+      <div class="cl-telefone">(11) 98765-4321</div>
+      <div class="cl-ultimo">Último pedido: hoje 14:32</div>
+    </div>
+    <div class="cliente-meta">
+      <div class="cl-pedidos">3</div>
+      <div class="cl-pedidos-label">Pedidos</div>
+      <span class="cl-canal canal-ads">Ads</span>
+      <div class="cl-total">Total: R$ 279</div>
+    </div>
+  </div>
+
+  <div class="cliente-card">
+    <div class="cliente-info">
+      <div class="cl-nome">Ana Costa</div>
+      <div class="cl-telefone">(11) 91234-5678</div>
+      <div class="cl-ultimo">Último pedido: hoje 14:15</div>
+    </div>
+    <div class="cliente-meta">
+      <div class="cl-pedidos">6</div>
+      <div class="cl-pedidos-label">Pedidos</div>
+      <span class="cl-canal canal-whatsapp">WhatsApp</span>
+      <div class="cl-total">Total: R$ 522</div>
+    </div>
+  </div>
+
+  <div class="cliente-card">
+    <div class="cliente-info">
+      <div class="cl-nome">Pedro Alves</div>
+      <div class="cl-telefone">(11) 93456-7890</div>
+      <div class="cl-ultimo">Último pedido: hoje 12:10</div>
+    </div>
+    <div class="cliente-meta">
+      <div class="cl-pedidos">2</div>
+      <div class="cl-pedidos-label">Pedidos</div>
+      <span class="cl-canal canal-ifood">iFood</span>
+      <div class="cl-total">Total: R$ 146</div>
+    </div>
+  </div>
+
+  <div class="cliente-card">
+    <div class="cliente-info">
+      <div class="cl-nome">Fernanda Lima</div>
+      <div class="cl-telefone">(11) 92345-6789</div>
+      <div class="cl-ultimo">Último pedido: hoje 11:30</div>
+    </div>
+    <div class="cliente-meta">
+      <div class="cl-pedidos">11</div>
+      <div class="cl-pedidos-label">Pedidos</div>
+      <span class="cl-canal canal-indicacao">Indicação</span>
+      <div class="cl-total">Total: R$ 957</div>
+    </div>
+  </div>
+
+  <div class="section-title" style="margin-top: 8px;"><h2>🎂 Aniversariantes do mês</h2></div>
+
+  <div class="cliente-card" style="border-left: 3px solid #F39C12; border-radius: 12px;">
+    <div class="cliente-info">
+      <div class="cl-nome">Camila Santos</div>
+      <div class="cl-telefone">(11) 93333-4444</div>
+      <div class="cl-ultimo">Aniversário: 03/07</div>
+    </div>
+    <div class="cliente-meta">
+      <div class="cl-pedidos">5</div>
+      <div class="cl-pedidos-label">Pedidos</div>
+      <span class="cl-canal canal-qrcode">QR Code</span>
+    </div>
+  </div>
+
+  <div class="cliente-card" style="border-left: 3px solid #F39C12; border-radius: 12px;">
+    <div class="cliente-info">
+      <div class="cl-nome">Lucas Ferreira</div>
+      <div class="cl-telefone">(11) 91111-2222</div>
+      <div class="cl-ultimo">Aniversário: 15/07</div>
+    </div>
+    <div class="cliente-meta">
+      <div class="cl-pedidos">9</div>
+      <div class="cl-pedidos-label">Pedidos</div>
+      <span class="cl-canal canal-ads">Ads</span>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE: CONFIG -->
+<div class="page" id="page-config">
+  <div class="config-section">
+    <div class="config-user">
+      <div class="cu-avatar">M</div>
+      <div class="cu-info">
+        <div class="cu-name">Mota</div>
+        <div class="cu-role">Operação</div>
+        <div class="cu-since">Desde junho 2026</div>
+      </div>
+    </div>
+
+    <h3>Notificações</h3>
+
+    <div class="config-item">
+      <div class="cfg-left">
+        <div class="cfg-icon">🔔</div>
+        <div><div class="cfg-label">Pedido novo</div><div class="cfg-desc">Notificar quando chegar pedido</div></div>
+      </div>
+      <div class="config-toggle"><div class="ct-dot"></div></div>
+    </div>
+
+    <div class="config-item">
+      <div class="cfg-left">
+        <div class="cfg-icon">⏰</div>
+        <div><div class="cfg-label">Pedido atrasado</div><div class="cfg-desc">Avisar se pendente por +15 min</div></div>
+      </div>
+      <div class="config-toggle"><div class="ct-dot"></div></div>
+    </div>
+
+    <div class="config-item">
+      <div class="cfg-left">
+        <div class="cfg-icon">📦</div>
+        <div><div class="cfg-label">Produto desativado</div><div class="cfg-desc">Avisar quando alguém desativar</div></div>
+      </div>
+      <div class="config-toggle"><div class="ct-dot"></div></div>
+    </div>
+
+    <h3>Operação</h3>
+
+    <div class="config-item">
+      <div class="cfg-left">
+        <div class="cfg-icon">🖨️</div>
+        <div><div class="cfg-label">Impressão automática</div><div class="cfg-desc">Imprimir pedido quando chegar</div></div>
+      </div>
+      <div class="config-toggle"><div class="ct-dot"></div></div>
+    </div>
+
+    <div class="config-item">
+      <div class="cfg-left">
+        <div class="cfg-icon">🔊</div>
+        <div><div class="cfg-label">Som de pedido</div><div class="cfg-desc">Tocar alerta sonoro</div></div>
+      </div>
+      <div class="config-toggle"><div class="ct-dot"></div></div>
+    </div>
+
+    <h3>Conta</h3>
+
+    <div class="config-item">
+      <div class="cfg-left">
+        <div class="cfg-icon">👤</div>
+        <div><div class="cfg-label">Meus dados</div><div class="cfg-desc">Nome, telefone, senha</div></div>
+      </div>
+      <div class="cfg-arrow">›</div>
+    </div>
+
+    <div class="config-item">
+      <div class="cfg-left">
+        <div class="cfg-icon">👥</div>
+        <div><div class="cfg-label">Equipe</div><div class="cfg-desc">Gerenciar acessos</div></div>
+      </div>
+      <div class="cfg-arrow">›</div>
+    </div>
+
+    <div class="config-item">
+      <div class="cfg-left">
+        <div class="cfg-icon">📊</div>
+        <div><div class="cfg-label">Relatórios</div><div class="cfg-desc">Vendas, clientes, canais</div></div>
+      </div>
+      <div class="cfg-arrow">›</div>
+    </div>
+
+    <div class="config-item" style="margin-top: 20px;">
+      <div class="cfg-left">
+        <div class="cfg-icon">🚪</div>
+        <div><div class="cfg-label" style="color: #E74C3C;">Sair</div></div>
+      </div>
+    </div>
+
+    <div class="config-version">Filone App v1.0 — Powered by Igor Sharada</div>
+  </div>
+</div>
+
+<!-- BOTTOM NAV -->
+<div class="bottom-nav">
+  <div class="nav-item active" onclick="switchPage('pedidos', this)">
+    <span class="nav-icon">📋</span>
+    <div class="nav-badge">3</div>
+    Pedidos
+  </div>
+  <div class="nav-item" onclick="switchPage('cardapio', this)">
+    <span class="nav-icon">🍞</span>
+    Cardápio
+  </div>
+  <div class="nav-item" onclick="switchPage('clientes', this)">
+    <span class="nav-icon">👥</span>
+    Clientes
+  </div>
+  <div class="nav-item" onclick="switchPage('config', this)">
+    <span class="nav-icon">⚙️</span>
+    Config
+  </div>
+</div>
+
+<script>
+  function switchPage(page, el) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('page-' + page).classList.add('active');
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    el.classList.add('active');
+    window.scrollTo(0, 0);
+  }
+
+  function toggleCardapio(toggle) {
+    toggle.classList.toggle('on');
+    toggle.closest('.cardapio-item').classList.toggle('off');
+    const off = document.querySelectorAll('#page-cardapio .cardapio-item.off').length;
+    const alert = document.getElementById('alertCardapio');
+    if (off > 0) {
+      alert.textContent = '⚠ ' + off + ' produto(s) fora do cardápio digital';
+      alert.classList.add('show');
+    } else {
+      alert.classList.remove('show');
+    }
+  }
+</script>
+
+</body>
+</html>

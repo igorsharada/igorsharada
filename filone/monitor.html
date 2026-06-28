@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Filone — Monitor Caixa</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #0F0F0F;
+    color: #F5F0EB;
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 280px 1fr 320px;
+    grid-template-rows: 60px 1fr;
+  }
+
+  /* TOPBAR */
+  .topbar {
+    grid-column: 1 / -1;
+    background: #1A1A1A;
+    border-bottom: 1px solid #2A2A2A;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 24px;
+  }
+
+  .topbar .logo {
+    font-size: 18px;
+    font-weight: 800;
+  }
+
+  .topbar .logo span { color: #2ECC71; }
+
+  .topbar .topbar-center {
+    display: flex;
+    gap: 24px;
+  }
+
+  .topbar .stat-pill {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #888;
+  }
+
+  .stat-pill .sp-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+
+  .sp-dot.orange { background: #F39C12; }
+  .sp-dot.blue { background: #3498DB; }
+  .sp-dot.green { background: #2ECC71; }
+
+  .stat-pill .sp-value {
+    color: #F5F0EB;
+    font-weight: 800;
+  }
+
+  .topbar .topbar-right {
+    font-size: 13px;
+    color: #555;
+  }
+
+  .topbar .topbar-right strong { color: #F5F0EB; }
+
+  /* SIDEBAR LEFT - FILA */
+  .sidebar-left {
+    background: #141414;
+    border-right: 1px solid #222;
+    overflow-y: auto;
+    padding: 20px 0;
+  }
+
+  .sidebar-title {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: #555;
+    padding: 0 16px 12px;
+  }
+
+  .fila-item {
+    padding: 14px 16px;
+    border-bottom: 1px solid #1A1A1A;
+    cursor: pointer;
+    transition: background 0.2s;
+    border-left: 3px solid transparent;
+  }
+
+  .fila-item:hover { background: #1A1A1A; }
+  .fila-item.active { background: #1A1A1A; border-left-color: #2ECC71; }
+  .fila-item.pendente { border-left-color: #F39C12; }
+  .fila-item.preparando { border-left-color: #3498DB; }
+
+  .fila-item .fi-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 4px;
+  }
+
+  .fila-item .fi-nome {
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+  .fila-item .fi-hora {
+    font-size: 11px;
+    color: #555;
+  }
+
+  .fila-item .fi-itens {
+    font-size: 12px;
+    color: #666;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .fila-item .fi-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 6px;
+  }
+
+  .fila-item .fi-canal {
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 4px;
+  }
+
+  .canal-ads { background: #9B59B633; color: #9B59B6; }
+  .canal-whatsapp { background: #2ECC7133; color: #2ECC71; }
+  .canal-ifood { background: #E74C3C33; color: #E74C3C; }
+  .canal-qrcode { background: #F39C1233; color: #F39C12; }
+
+  .fila-item .fi-valor {
+    font-size: 13px;
+    font-weight: 700;
+    color: #2ECC71;
+  }
+
+  /* MAIN CONTENT */
+  .main {
+    padding: 24px;
+    overflow-y: auto;
+  }
+
+  .pedido-detail {
+    background: #1A1A1A;
+    border-radius: 12px;
+    padding: 28px;
+    margin-bottom: 20px;
+  }
+
+  .pd-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 24px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #2A2A2A;
+  }
+
+  .pd-header .pd-cliente h2 {
+    font-size: 24px;
+    font-weight: 800;
+    margin-bottom: 4px;
+  }
+
+  .pd-header .pd-cliente .pd-telefone {
+    font-size: 14px;
+    color: #555;
+  }
+
+  .pd-header .pd-meta {
+    text-align: right;
+  }
+
+  .pd-header .pd-meta .pd-hora {
+    font-size: 14px;
+    color: #888;
+    margin-bottom: 4px;
+  }
+
+  .pd-header .pd-meta .pd-canal {
+    font-size: 12px;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: 6px;
+  }
+
+  .pd-itens {
+    margin-bottom: 24px;
+  }
+
+  .pd-itens h3 {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #555;
+    margin-bottom: 12px;
+  }
+
+  .pd-item-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #222;
+    font-size: 15px;
+  }
+
+  .pd-item-row .pd-item-name { color: #CCC; }
+  .pd-item-row .pd-item-price { color: #888; font-weight: 600; }
+
+  .pd-total {
+    display: flex;
+    justify-content: space-between;
+    padding: 16px 0 0;
+    font-size: 18px;
+    font-weight: 800;
+  }
+
+  .pd-total .pd-total-value { color: #2ECC71; }
+
+  .pd-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 24px;
+  }
+
+  .pd-btn {
+    flex: 1;
+    padding: 14px;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: opacity 0.2s;
+  }
+
+  .pd-btn:hover { opacity: 0.9; }
+  .pd-btn.primary { background: #2ECC71; color: #1A1A1A; }
+  .pd-btn.secondary { background: #333; color: #AAA; }
+  .pd-btn.danger { background: #E74C3C33; color: #E74C3C; border: 1px solid #E74C3C44; }
+
+  .pd-endereco {
+    background: #141414;
+    padding: 16px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+  }
+
+  .pd-endereco h3 {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #555;
+    margin-bottom: 8px;
+  }
+
+  .pd-endereco p {
+    font-size: 14px;
+    color: #AAA;
+    line-height: 1.5;
+  }
+
+  /* SIDEBAR RIGHT - CARDAPIO */
+  .sidebar-right {
+    background: #141414;
+    border-left: 1px solid #222;
+    overflow-y: auto;
+    padding: 20px 0;
+  }
+
+  .cardapio-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    border-bottom: 1px solid #1A1A1A;
+    transition: opacity 0.3s;
+  }
+
+  .cardapio-item.off { opacity: 0.25; }
+
+  .ci-info h4 {
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  .ci-info .ci-preco {
+    font-size: 11px;
+    color: #555;
+    margin-top: 2px;
+  }
+
+  .toggle-sm {
+    width: 36px;
+    height: 20px;
+    background: #333;
+    border-radius: 10px;
+    position: relative;
+    cursor: pointer;
+    transition: background 0.3s;
+    flex-shrink: 0;
+  }
+
+  .toggle-sm.on { background: #2ECC71; }
+
+  .toggle-sm .ts-dot {
+    width: 14px;
+    height: 14px;
+    background: #FFF;
+    border-radius: 50%;
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    transition: left 0.3s;
+  }
+
+  .toggle-sm.on .ts-dot { left: 19px; }
+
+  .desativados-count {
+    padding: 12px 16px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #E74C3C;
+    display: none;
+  }
+
+  .desativados-count.show { display: block; }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="logo">Filone <span>Caixa</span></div>
+  <div class="topbar-center">
+    <div class="stat-pill">
+      <div class="sp-dot orange"></div>
+      Pendentes: <span class="sp-value">3</span>
+    </div>
+    <div class="stat-pill">
+      <div class="sp-dot blue"></div>
+      Preparando: <span class="sp-value">1</span>
+    </div>
+    <div class="stat-pill">
+      <div class="sp-dot green"></div>
+      Entregues hoje: <span class="sp-value">8</span>
+    </div>
+    <div class="stat-pill">
+      <div class="sp-dot" style="background:#E74C3C"></div>
+      iFood → WhatsApp: <span class="sp-value" style="color:#E74C3C">3</span>
+    </div>
+  </div>
+  <div class="topbar-right">
+    <strong>Caixa 01</strong> — 28/06/2026 14:35
+  </div>
+</div>
+
+<div class="sidebar-left">
+  <div class="sidebar-title">Fila de pedidos</div>
+
+  <div class="fila-item pendente active">
+    <div class="fi-top">
+      <div class="fi-nome">Roberto Filho</div>
+      <div class="fi-hora">14:32</div>
+    </div>
+    <div class="fi-itens">1x Pão de Forma Grãos, 1x Sourdough</div>
+    <div class="fi-bottom">
+      <span class="fi-canal canal-ads">Ads</span>
+      <span class="fi-valor">R$ 93</span>
+    </div>
+  </div>
+
+  <div class="fila-item pendente">
+    <div class="fi-top">
+      <div class="fi-nome">Ana Costa</div>
+      <div class="fi-hora">14:15</div>
+    </div>
+    <div class="fi-itens">3x Pão de Abóbora</div>
+    <div class="fi-bottom">
+      <span class="fi-canal canal-whatsapp">WhatsApp</span>
+      <span class="fi-valor">R$ 87</span>
+    </div>
+  </div>
+
+  <div class="fila-item pendente">
+    <div class="fi-top">
+      <div class="fi-nome">Juliana Ramos</div>
+      <div class="fi-hora">13:48</div>
+    </div>
+    <div class="fi-itens">1x LandBrot, 2x Brioche</div>
+    <div class="fi-bottom">
+      <span class="fi-canal canal-qrcode">QR Code</span>
+      <span class="fi-valor">R$ 105</span>
+    </div>
+  </div>
+
+  <div class="fila-item preparando">
+    <div class="fi-top">
+      <div class="fi-nome">Carlos Mendes</div>
+      <div class="fi-hora">13:20</div>
+    </div>
+    <div class="fi-itens">1x LandBrot, 1x Focaccia</div>
+    <div class="fi-bottom">
+      <span class="fi-canal canal-ads">Ads</span>
+      <span class="fi-valor">R$ 80</span>
+    </div>
+  </div>
+
+  <div class="sidebar-title" style="margin-top: 16px; color: #2ECC71;">Entregues</div>
+
+  <div class="fila-item" style="opacity: 0.4;">
+    <div class="fi-top">
+      <div class="fi-nome">Maria Silva</div>
+      <div class="fi-hora">12:45</div>
+    </div>
+    <div class="fi-itens">2x Sourdough, 1x Focaccia</div>
+    <div class="fi-bottom">
+      <span class="fi-canal canal-whatsapp">WhatsApp</span>
+      <span class="fi-valor">R$ 119</span>
+    </div>
+  </div>
+
+  <div class="fila-item" style="opacity: 0.4;">
+    <div class="fi-top">
+      <div class="fi-nome">Pedro Alves</div>
+      <div class="fi-hora">12:10</div>
+    </div>
+    <div class="fi-itens">2x Demi Baguette, 1x Pão de Nozes</div>
+    <div class="fi-bottom">
+      <span class="fi-canal canal-ifood">iFood</span>
+      <span class="fi-valor">R$ 73</span>
+    </div>
+  </div>
+</div>
+
+<div class="main">
+  <div class="pedido-detail">
+    <div class="pd-header">
+      <div class="pd-cliente">
+        <h2>Roberto Filho</h2>
+        <div class="pd-telefone">(11) 98765-4321</div>
+      </div>
+      <div class="pd-meta">
+        <div class="pd-hora">14:32 — há 3 min</div>
+        <span class="pd-canal canal-ads">Instagram Ads</span>
+      </div>
+    </div>
+
+    <div class="pd-endereco">
+      <h3>Entrega</h3>
+      <p>Rua das Flores, 245, Apto 12B<br>Alphaville — Barueri, SP</p>
+    </div>
+
+    <div class="pd-itens">
+      <h3>Itens do pedido</h3>
+      <div class="pd-item-row">
+        <span class="pd-item-name">1x Pão de Forma com Grãos</span>
+        <span class="pd-item-price">R$ 49</span>
+      </div>
+      <div class="pd-item-row">
+        <span class="pd-item-name">1x Sourdough Orgânico</span>
+        <span class="pd-item-price">R$ 44</span>
+      </div>
+      <div class="pd-total">
+        <span>Total</span>
+        <span class="pd-total-value">R$ 93</span>
+      </div>
+    </div>
+
+    <div class="pd-actions">
+      <button class="pd-btn primary">Preparar pedido</button>
+      <button class="pd-btn secondary">Imprimir</button>
+      <button class="pd-btn danger">Problema</button>
+    </div>
+  </div>
+</div>
+
+<div class="sidebar-right">
+  <div class="sidebar-title">Cardápio — Disponibilidade</div>
+  <div class="desativados-count" id="countDesativados"></div>
+
+  <div class="cardapio-item">
+    <div class="ci-info"><h4>Sourdough</h4><div class="ci-preco">R$ 44</div></div>
+    <div class="toggle-sm on" onclick="toggleItem(this)"><div class="ts-dot"></div></div>
+  </div>
+  <div class="cardapio-item">
+    <div class="ci-info"><h4>LandBrot</h4><div class="ci-preco">R$ 49</div></div>
+    <div class="toggle-sm on" onclick="toggleItem(this)"><div class="ts-dot"></div></div>
+  </div>
+  <div class="cardapio-item">
+    <div class="ci-info"><h4>Focaccia</h4><div class="ci-preco">R$ 31</div></div>
+    <div class="toggle-sm on" onclick="toggleItem(this)"><div class="ts-dot"></div></div>
+  </div>
+  <div class="cardapio-item">
+    <div class="ci-info"><h4>Pão de Abóbora</h4><div class="ci-preco">R$ 29</div></div>
+    <div class="toggle-sm on" onclick="toggleItem(this)"><div class="ts-dot"></div></div>
+  </div>
+  <div class="cardapio-item">
+    <div class="ci-info"><h4>Brioche</h4><div class="ci-preco">R$ 28</div></div>
+    <div class="toggle-sm on" onclick="toggleItem(this)"><div class="ts-dot"></div></div>
+  </div>
+  <div class="cardapio-item">
+    <div class="ci-info"><h4>Filone</h4><div class="ci-preco">R$ 21</div></div>
+    <div class="toggle-sm on" onclick="toggleItem(this)"><div class="ts-dot"></div></div>
+  </div>
+  <div class="cardapio-item">
+    <div class="ci-info"><h4>Italiano Redondo</h4><div class="ci-preco">R$ 22</div></div>
+    <div class="toggle-sm on" onclick="toggleItem(this)"><div class="ts-dot"></div></div>
+  </div>
+  <div class="cardapio-item">
+    <div class="ci-info"><h4>Pão de Forma Grãos</h4><div class="ci-preco">R$ 49</div></div>
+    <div class="toggle-sm on" onclick="toggleItem(this)"><div class="ts-dot"></div></div>
+  </div>
+  <div class="cardapio-item">
+    <div class="ci-info"><h4>Croissant (4un)</h4><div class="ci-preco">R$ 44</div></div>
+    <div class="toggle-sm on" onclick="toggleItem(this)"><div class="ts-dot"></div></div>
+  </div>
+  <div class="cardapio-item">
+    <div class="ci-info"><h4>Integral Sementes</h4><div class="ci-preco">R$ 29</div></div>
+    <div class="toggle-sm on" onclick="toggleItem(this)"><div class="ts-dot"></div></div>
+  </div>
+  <div class="cardapio-item">
+    <div class="ci-info"><h4>Demi Baguette</h4><div class="ci-preco">R$ 22</div></div>
+    <div class="toggle-sm on" onclick="toggleItem(this)"><div class="ts-dot"></div></div>
+  </div>
+  <div class="cardapio-item">
+    <div class="ci-info"><h4>Pain de Campagne</h4><div class="ci-preco">R$ 32</div></div>
+    <div class="toggle-sm on" onclick="toggleItem(this)"><div class="ts-dot"></div></div>
+  </div>
+</div>
+
+<script>
+  function toggleItem(toggle) {
+    toggle.classList.toggle('on');
+    toggle.closest('.cardapio-item').classList.toggle('off');
+
+    const off = document.querySelectorAll('.cardapio-item.off').length;
+    const counter = document.getElementById('countDesativados');
+    if (off > 0) {
+      counter.textContent = '⚠ ' + off + ' produto(s) fora do cardápio';
+      counter.classList.add('show');
+    } else {
+      counter.classList.remove('show');
+    }
+  }
+</script>
+
+</body>
+</html>
