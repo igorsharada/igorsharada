@@ -1,814 +1,728 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Trighum — Cultura do Pão | Padaria Artesanal, Cursos e Consultoria</title>
-  <meta name="description" content="Padaria artesanal do mestre padeiro Eriksen Miyasaki. Cursos de panificação, consultoria em fermentação natural e pães artesanais em Campinas, SP. +1.200 alunos formados.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nilson Diniz — Cursos de Panificação Artesanal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+@font-face {
+  font-family: 'TBJ Malibu';
+  src: url('tbj-malibu.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'ED Lavonia';
+  src: url('EDLavonia-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
 
-    :root {
-      --bg: #F8F5F0;
-      --bg-dark: #1A1714;
-      --bg-card: #FFFFFF;
-      --text: #1A1714;
-      --text-light: #6B6560;
-      --text-muted: #9A9490;
-      --accent: #8B7355;
-      --accent-light: #B8A88A;
-      --line: #E5DFD8;
-      --serif: 'DM Serif Display', Georgia, serif;
-      --sans: 'Inter', -apple-system, sans-serif;
-    }
+:root {
+  --vinho: #7B1A2C;
+  --vinho-dark: #5a1320;
+  --creme: #F5F0E8;
+  --creme-dark: #EDE5D8;
+  --marrom: #3E2723;
+  --dourado: #C5A882;
+  --dourado-light: #D4BC9A;
+  --branco: #FDFBF7;
+}
 
-    html { scroll-behavior: smooth; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
 
-    body {
-      font-family: var(--sans);
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-      overflow-x: hidden;
-      position: relative;
-    }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--branco);
+  color: var(--marrom);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
 
-    /* GRAIN TEXTURE */
-    body::after {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
-      pointer-events: none;
-      z-index: 9999;
-    }
+h1, h2, h3, h4 {
+  font-family: 'TBJ Malibu', Georgia, serif;
+  font-weight: 400;
+}
 
-    .reveal {
-      opacity: 0;
-      transform: translateY(40px);
-      transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
-    .reveal-delay-1 { transition-delay: 0.15s; }
-    .reveal-delay-2 { transition-delay: 0.3s; }
-    .reveal-delay-3 { transition-delay: 0.45s; }
+.script { font-family: 'ED Lavonia', cursive; }
 
-    /* NAV */
-    nav {
-      position: fixed; top: 0; width: 100%; padding: 20px 40px;
-      display: flex; justify-content: space-between; align-items: center;
-      z-index: 100; background: rgba(248, 245, 240, 0.92);
-      backdrop-filter: blur(20px); border-bottom: 1px solid transparent;
-      transition: border-color 0.3s;
-    }
-    nav.scrolled { border-bottom-color: var(--line); }
+/* ── SCROLL PROGRESS ── */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--vinho), var(--dourado));
+  z-index: 200;
+  width: 0%;
+}
 
-    .nav-logo { font-family: var(--serif); font-size: 22px; letter-spacing: 2px; text-transform: uppercase; }
+/* ── GRAIN ── */
+.grain {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 150;
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
 
-    .nav-links { display: flex; gap: 32px; align-items: center; }
-    .nav-links a {
-      color: var(--text-light); text-decoration: none; font-size: 12px;
-      font-weight: 600; letter-spacing: 1px; text-transform: uppercase;
-      transition: color 0.3s;
-    }
-    .nav-links a:hover { color: var(--text); }
+/* ── REVEAL ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-delay-1 { transition-delay: 0.15s; }
+.reveal-delay-2 { transition-delay: 0.3s; }
+.reveal-delay-3 { transition-delay: 0.45s; }
 
-    .nav-cta {
-      color: var(--text); text-decoration: none; font-size: 12px;
-      font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase;
-      padding: 12px 28px; border: 1px solid var(--text); transition: all 0.3s;
-    }
-    .nav-cta:hover { background: var(--bg-dark); color: var(--bg); }
+/* ============ HERO ============ */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  background: var(--vinho);
+  position: relative;
+  overflow: hidden;
+}
 
-    /* MOBILE MENU */
-    .menu-toggle {
-      display: none; background: none; border: none; cursor: pointer; padding: 8px;
-    }
-    .menu-toggle span {
-      display: block; width: 24px; height: 2px; background: var(--text);
-      margin: 5px 0; transition: all 0.3s;
-    }
+.hero-bg {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 55%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 20%;
+  opacity: 0.85;
+}
 
-    /* HERO */
-    .hero {
-      min-height: 100vh; display: flex; flex-direction: column;
-      justify-content: center; align-items: center; text-align: center;
-      padding: 160px 40px 100px; max-width: 900px; margin: 0 auto;
-    }
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, var(--vinho) 38%, rgba(123,26,44,0.4) 70%, rgba(123,26,44,0.15) 100%);
+}
 
-    .hero-tags {
-      display: flex; gap: 12px; margin-bottom: 36px;
-      opacity: 0; animation: fadeIn 0.8s ease 0.2s forwards;
-    }
-    .hero-tag-item {
-      font-size: 10px; font-weight: 600; letter-spacing: 3px;
-      text-transform: uppercase; color: var(--accent);
-      padding: 6px 16px; border: 1px solid var(--line);
-    }
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 620px;
+  padding: 60px 40px 60px 8%;
+}
 
-    @keyframes fadeIn { to { opacity: 1; } }
+.hero-logo {
+  width: 80px;
+  margin-bottom: 28px;
+  opacity: 0.9;
+}
 
-    .hero h1 {
-      font-family: var(--serif); font-size: clamp(44px, 6.5vw, 80px);
-      font-weight: 400; line-height: 1.08; letter-spacing: -1px; margin-bottom: 32px;
-    }
-    .hero h1 .line { display: block; overflow: hidden; }
-    .hero h1 .line-inner {
-      display: inline-block; transform: translateY(110%);
-      animation: slideUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    }
-    .hero h1 .line:nth-child(2) .line-inner { animation-delay: 0.15s; }
-    @keyframes slideUp { to { transform: translateY(0); } }
-    .hero h1 em { font-style: italic; color: var(--accent); }
+.hero-badge {
+  display: inline-block;
+  background: var(--dourado);
+  color: var(--vinho-dark);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 6px 16px;
+  border-radius: 3px;
+  margin-bottom: 24px;
+}
 
-    .hero-sub {
-      font-size: 17px; color: var(--text-light); max-width: 480px;
-      line-height: 1.9; margin-bottom: 48px;
-      opacity: 0; animation: fadeSlide 0.8s ease 0.6s forwards;
-    }
+.hero h1 {
+  font-size: clamp(34px, 5vw, 52px);
+  color: var(--creme);
+  line-height: 1.15;
+  margin-bottom: 20px;
+}
 
-    @keyframes fadeSlide {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+.hero h1 em {
+  font-style: normal;
+  color: var(--dourado);
+}
 
-    .hero-buttons {
-      display: flex; gap: 16px; flex-wrap: wrap; justify-content: center;
-      opacity: 0; animation: fadeSlide 0.8s ease 0.8s forwards;
-    }
+.hero-sub {
+  font-size: 17px;
+  color: rgba(245,240,232,0.75);
+  line-height: 1.7;
+  margin-bottom: 32px;
+  max-width: 500px;
+}
 
-    .btn-primary {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: var(--bg-dark); color: var(--bg); text-decoration: none;
-      padding: 18px 40px; font-size: 12px; font-weight: 600;
-      letter-spacing: 1.5px; text-transform: uppercase;
-      transition: transform 0.3s, opacity 0.3s;
-    }
-    .btn-primary:hover { transform: translateY(-3px); opacity: 0.9; }
+.btn-whatsapp {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: #25D366;
+  color: #fff;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  text-decoration: none;
+  padding: 18px 40px;
+  border-radius: 8px;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
 
-    .btn-secondary {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: transparent; color: var(--text); text-decoration: none;
-      padding: 18px 40px; font-size: 12px; font-weight: 600;
-      letter-spacing: 1.5px; text-transform: uppercase;
-      border: 1px solid var(--line); transition: all 0.3s;
-    }
-    .btn-secondary:hover { border-color: var(--text); }
+.btn-whatsapp:hover { background: #1fb855; transform: translateY(-2px); box-shadow: 0 8px 25px rgba(37,211,102,0.3); }
 
-    /* HERO IMAGE */
-    .hero-image {
-      padding: 0 40px; max-width: 1200px; margin: 0 auto;
-    }
-    .hero-image-inner {
-      overflow: hidden; height: 560px; position: relative;
-    }
-    .hero-image-inner img {
-      width: 100%; height: 100%; object-fit: cover;
-      transition: transform 8s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    .hero-image-inner:hover img { transform: scale(1.05); }
-    .hero-image-inner .overlay {
-      position: absolute; inset: 0;
-      background: linear-gradient(transparent 50%, rgba(26,23,20,0.7));
-    }
-    .hero-image-inner .logo-overlay {
-      position: absolute; bottom: 48px; left: 48px;
-    }
+.hero-note {
+  font-size: 12px;
+  color: rgba(245,240,232,0.4);
+  margin-top: 14px;
+}
 
-    /* MANIFESTO */
-    .manifesto {
-      max-width: 800px; margin: 0 auto; text-align: center;
-      padding: 120px 40px;
-    }
-    .manifesto blockquote {
-      font-family: var(--serif); font-size: clamp(24px, 3.5vw, 36px);
-      font-weight: 400; line-height: 1.5; font-style: italic;
-      color: var(--text); position: relative; padding: 0 20px;
-    }
-    .manifesto blockquote::before {
-      content: '"'; font-family: var(--serif); font-size: 120px;
-      position: absolute; top: -40px; left: -20px;
-      color: var(--line); line-height: 1;
-    }
-    .manifesto cite {
-      display: block; margin-top: 32px; font-size: 13px;
-      font-weight: 600; letter-spacing: 3px; text-transform: uppercase;
-      color: var(--accent); font-style: normal;
-    }
+/* ============ STATS ============ */
+.stats-bar {
+  background: var(--marrom);
+  padding: 28px 8%;
+  display: flex;
+  justify-content: center;
+  gap: 48px;
+  flex-wrap: wrap;
+}
 
-    /* STATS */
-    .stats-bar {
-      background: var(--bg-dark); padding: 80px 40px;
-    }
-    .stats-grid {
-      display: grid; grid-template-columns: repeat(4, 1fr);
-      gap: 40px; max-width: 1000px; margin: 0 auto; text-align: center;
-    }
-    .stat-number {
-      font-family: var(--serif); font-size: 44px; color: var(--accent-light);
-      margin-bottom: 8px;
-    }
-    .stat-label {
-      font-size: 12px; font-weight: 500; letter-spacing: 1px;
-      text-transform: uppercase; color: rgba(255,255,255,0.4);
-    }
+.stat { text-align: center; }
 
-    /* SECTION */
-    section { padding: 120px 40px; }
+.stat-value {
+  font-family: 'TBJ Malibu', serif;
+  font-size: 32px;
+  color: var(--dourado);
+  line-height: 1;
+}
 
-    .section-tag {
-      font-size: 11px; font-weight: 600; letter-spacing: 4px;
-      text-transform: uppercase; color: var(--accent); margin-bottom: 16px;
-    }
-    .section-title {
-      font-family: var(--serif); font-size: clamp(28px, 4vw, 44px);
-      font-weight: 400; line-height: 1.25; margin-bottom: 56px;
-    }
+.stat-label {
+  font-size: 11px;
+  color: rgba(245,240,232,0.5);
+  margin-top: 4px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
 
-    /* SERVICES */
-    .services-section { max-width: 1100px; margin: 0 auto; }
+/* ============ VIDEO + QUEM E ============ */
+.sobre {
+  padding: 100px 8%;
+  display: flex;
+  gap: 60px;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
 
-    .service-grid {
-      display: grid; grid-template-columns: repeat(2, 1fr); gap: 2px;
-    }
-    .service-card {
-      background: var(--bg-card); padding: 48px 40px;
-      border: 1px solid var(--line); transition: all 0.4s;
-    }
-    .service-card:hover {
-      background: var(--bg-dark); color: var(--bg);
-      border-color: var(--bg-dark);
-    }
-    .service-card:hover .service-desc { color: rgba(255,255,255,0.6); }
-    .service-card:hover .service-number { color: var(--accent-light); }
+.sobre-media {
+  width: 420px;
+  min-width: 300px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
 
-    .service-number {
-      font-family: var(--serif); font-size: 14px; color: var(--accent);
-      margin-bottom: 20px; letter-spacing: 2px;
-    }
-    .service-name {
-      font-family: var(--serif); font-size: 24px; margin-bottom: 12px;
-    }
-    .service-desc {
-      font-size: 14px; color: var(--text-light); line-height: 1.8;
-      transition: color 0.4s;
-    }
+.sobre-video {
+  width: 100%;
+  border-radius: 12px;
+  aspect-ratio: 9/16;
+  object-fit: cover;
+  background: var(--marrom);
+}
 
-    /* COURSES */
-    .course-grid {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px;
-    }
-    .course-card {
-      background: var(--bg-card); padding: 40px 32px;
-      border: 1px solid var(--line); display: flex;
-      flex-direction: column; justify-content: space-between;
-      transition: border-color 0.3s;
-    }
-    .course-card:hover { border-color: var(--accent); }
+.sobre-img {
+  width: 100%;
+  border-radius: 12px;
+  object-fit: cover;
+}
 
-    .course-tag {
-      font-size: 10px; font-weight: 600; letter-spacing: 2px;
-      text-transform: uppercase; color: var(--accent); margin-bottom: 20px;
-      padding-bottom: 20px; border-bottom: 1px solid var(--line);
-    }
-    .course-name {
-      font-family: var(--serif); font-size: 22px; margin-bottom: 14px;
-      line-height: 1.3;
-    }
-    .course-desc {
-      font-size: 13px; color: var(--text-light); line-height: 1.8;
-      margin-bottom: 28px; flex-grow: 1;
-    }
-    .course-price {
-      margin-bottom: 24px; padding-top: 20px; border-top: 1px solid var(--line);
-    }
-    .course-price .old {
-      font-size: 14px; color: var(--text-muted); text-decoration: line-through;
-    }
-    .course-price .current {
-      font-family: var(--serif); font-size: 32px; color: var(--accent);
-      margin-left: 8px;
-    }
-    .course-btn {
-      display: block; text-align: center; background: var(--bg-dark);
-      color: var(--bg); text-decoration: none; padding: 16px;
-      font-size: 12px; font-weight: 600; letter-spacing: 1.5px;
-      text-transform: uppercase; transition: opacity 0.3s;
-    }
-    .course-btn:hover { opacity: 0.85; }
+.sobre-content { flex: 1; }
 
-    /* CONSULTORIA */
-    .consult-section {
-      background: var(--bg-dark); max-width: 1100px; margin: 0 auto;
-      display: grid; grid-template-columns: 1fr 1fr; gap: 0;
-    }
-    .consult-left {
-      padding: 64px 48px; display: flex; flex-direction: column; justify-content: center;
-    }
-    .consult-left .section-tag { color: var(--accent-light); }
-    .consult-left h2 {
-      font-family: var(--serif); font-size: 32px; font-weight: 400;
-      color: var(--bg); line-height: 1.3; margin-bottom: 16px;
-    }
-    .consult-left p {
-      font-size: 14px; color: rgba(255,255,255,0.5); line-height: 1.8;
-      margin-bottom: 32px;
-    }
-    .consult-price {
-      margin-bottom: 32px;
-    }
-    .consult-price .cp-value {
-      font-family: var(--serif); font-size: 40px; color: var(--accent-light);
-    }
-    .consult-price .cp-label {
-      font-size: 13px; color: rgba(255,255,255,0.3); margin-left: 8px;
-    }
-    .btn-accent {
-      display: inline-block; background: var(--accent); color: var(--bg);
-      text-decoration: none; padding: 16px 32px; font-size: 12px;
-      font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase;
-      transition: opacity 0.3s;
-    }
-    .btn-accent:hover { opacity: 0.85; }
+.section-label {
+  font-family: 'ED Lavonia', cursive;
+  color: var(--vinho);
+  font-size: 20px;
+  margin-bottom: 8px;
+}
 
-    .consult-right { padding: 64px 48px; border-left: 1px solid #2A2520; }
-    .consult-feature {
-      display: flex; gap: 16px; padding: 20px 0;
-      border-bottom: 1px solid #2A2520;
-    }
-    .consult-feature:last-child { border-bottom: none; }
-    .consult-feature .cf-line {
-      width: 2px; background: var(--accent); flex-shrink: 0;
-    }
-    .consult-feature .cf-text strong {
-      display: block; font-size: 14px; color: var(--bg); margin-bottom: 4px;
-    }
-    .consult-feature .cf-text span {
-      font-size: 13px; color: rgba(255,255,255,0.4); line-height: 1.5;
-    }
+.sobre h2 {
+  font-size: clamp(26px, 3.5vw, 40px);
+  color: var(--marrom);
+  margin-bottom: 20px;
+  line-height: 1.2;
+}
 
-    /* PADARIA */
-    .padaria-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 4px; margin-bottom: 56px;
-    }
-    .padaria-img {
-      overflow: hidden; height: 400px;
-    }
-    .padaria-img img {
-      width: 100%; height: 100%; object-fit: cover;
-      transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    .padaria-img:hover img { transform: scale(1.06); }
+.sobre p {
+  font-size: 16px;
+  line-height: 1.7;
+  color: #5D4037;
+  margin-bottom: 16px;
+}
 
-    .padaria-features {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px;
-    }
-    .padaria-feature { text-align: center; }
-    .padaria-feature h4 {
-      font-family: var(--serif); font-size: 22px; margin-bottom: 10px;
-    }
-    .padaria-feature p {
-      font-size: 13px; color: var(--text-light); line-height: 1.8;
-    }
+.conquistas {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 24px;
+}
 
-    /* ERIKSEN */
-    .eriksen-section {
-      max-width: 1100px; margin: 0 auto;
-      display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center;
-    }
-    .eriksen-photo {
-      width: 100%; height: 480px; overflow: hidden;
-    }
-    .eriksen-photo img {
-      width: 100%; height: 100%; object-fit: cover;
-      transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    .eriksen-photo:hover img { transform: scale(1.04); }
+.conquista {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 14px;
+  color: var(--marrom);
+  line-height: 1.5;
+}
 
-    .eriksen-content {}
-    .eriksen-name {
-      font-family: var(--serif); font-size: 36px; margin-bottom: 8px;
-    }
-    .eriksen-title {
-      font-size: 12px; font-weight: 600; letter-spacing: 3px;
-      text-transform: uppercase; color: var(--accent); margin-bottom: 32px;
-    }
-    .eriksen-bio {
-      font-size: 15px; color: var(--text-light); line-height: 2;
-    }
-    .eriksen-stats {
-      display: flex; gap: 40px; margin-top: 40px; padding-top: 32px;
-      border-top: 1px solid var(--line);
-    }
-    .eriksen-stat .es-value {
-      font-family: var(--serif); font-size: 28px; color: var(--accent);
-    }
-    .eriksen-stat .es-label {
-      font-size: 11px; color: var(--text-muted); text-transform: uppercase;
-      letter-spacing: 1px; margin-top: 4px;
-    }
+.conquista-icon {
+  width: 26px;
+  height: 26px;
+  background: var(--vinho);
+  color: var(--creme);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
 
-    /* DEPOIMENTOS */
-    .depoimentos-grid {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px;
-    }
-    .depoimento-card {
-      background: var(--bg-card); padding: 40px 32px;
-      border: 1px solid var(--line);
-    }
-    .depoimento-text {
-      font-size: 14px; color: var(--text-light); line-height: 1.8;
-      font-style: italic; margin-bottom: 20px;
-    }
-    .depoimento-author {
-      font-size: 13px; font-weight: 600; color: var(--text);
-    }
-    .depoimento-role {
-      font-size: 11px; color: var(--text-muted); margin-top: 2px;
-    }
+/* ============ CREDENCIAIS (fotos reais) ============ */
+.credenciais {
+  background: var(--creme);
+  padding: 80px 8%;
+}
 
-    /* CTA FINAL */
-    .cta-final {
-      text-align: center; padding: 140px 40px;
-      border-top: 1px solid var(--line);
-    }
-    .cta-final h2 {
-      font-family: var(--serif); font-size: clamp(30px, 5vw, 52px);
-      font-weight: 400; line-height: 1.2; margin-bottom: 20px;
-    }
-    .cta-final p {
-      font-size: 16px; color: var(--text-light); margin-bottom: 44px;
-    }
-    .cta-whatsapp {
-      display: inline-flex; align-items: center; gap: 12px;
-      background: #25D366; color: white; text-decoration: none;
-      padding: 20px 48px; font-size: 13px; font-weight: 700;
-      letter-spacing: 1.5px; text-transform: uppercase;
-      transition: transform 0.3s, box-shadow 0.3s;
-    }
-    .cta-whatsapp:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 16px 48px rgba(37, 211, 102, 0.2);
-    }
+.credenciais h2 {
+  text-align: center;
+  font-size: clamp(24px, 3vw, 36px);
+  margin-bottom: 40px;
+  color: var(--marrom);
+}
 
-    /* FOOTER */
-    footer {
-      background: var(--bg-dark); color: rgba(255,255,255,0.5);
-      padding: 56px 40px; text-align: center; font-size: 13px;
-    }
-    .footer-logo {
-      font-family: var(--serif); font-size: 20px; letter-spacing: 3px;
-      text-transform: uppercase; color: var(--bg); margin-bottom: 16px;
-    }
-    footer a { color: rgba(255,255,255,0.5); text-decoration: none; transition: color 0.3s; }
-    footer a:hover { color: var(--accent-light); }
-    .footer-copy { margin-top: 24px; font-size: 11px; color: rgba(255,255,255,0.15); }
+.cred-grid {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  flex-wrap: wrap;
+  max-width: 1000px;
+  margin: 0 auto;
+}
 
-    /* MOBILE */
-    @media (max-width: 768px) {
-      nav { padding: 16px 20px; }
-      .nav-links { display: none; }
-      .menu-toggle { display: block; }
-      section { padding: 80px 20px; }
-      .hero { padding: 140px 20px 60px; }
-      .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 32px; }
-      .stat-number { font-size: 32px; }
-      .service-grid, .course-grid, .depoimentos-grid { grid-template-columns: 1fr; }
-      .consult-section { grid-template-columns: 1fr; }
-      .consult-right { border-left: none; border-top: 1px solid #2A2520; }
-      .padaria-grid { grid-template-columns: 1fr; }
-      .padaria-features { grid-template-columns: 1fr; gap: 32px; }
-      .eriksen-section { grid-template-columns: 1fr; gap: 40px; }
-      .eriksen-photo { height: 320px; }
-      .hero-tags { flex-wrap: wrap; justify-content: center; }
-    }
-  </style>
+.cred-img {
+  height: 340px;
+  max-width: 100%;
+  border-radius: 10px;
+  box-shadow: 0 6px 24px rgba(62,39,35,0.12);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  object-fit: contain;
+  background: var(--creme-dark);
+  padding: 8px;
+}
+
+.cred-img:hover { transform: scale(1.03); }
+
+/* ============ O QUE VEM AI ============ */
+.produtos {
+  padding: 100px 8%;
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.produtos h2 {
+  font-size: clamp(28px, 3.5vw, 42px);
+  color: var(--marrom);
+  margin-bottom: 12px;
+}
+
+.produtos > p {
+  font-size: 16px;
+  color: #795548;
+  margin-bottom: 48px;
+  line-height: 1.6;
+}
+
+.produto-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  text-align: left;
+}
+
+.produto-item {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 28px 0;
+  border-bottom: 1px solid rgba(62,39,35,0.08);
+  transition: padding-left 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.produto-item:hover {
+  padding-left: 12px;
+}
+
+.produto-number {
+  font-family: 'TBJ Malibu', serif;
+  font-size: 36px;
+  color: var(--dourado);
+  min-width: 48px;
+  line-height: 1;
+}
+
+.produto-info { flex: 1; }
+
+.produto-info h3 {
+  font-size: 20px;
+  color: var(--marrom);
+  margin-bottom: 4px;
+}
+
+.produto-info p {
+  font-size: 14px;
+  color: #795548;
+  line-height: 1.5;
+}
+
+.produto-tag {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 5px 14px;
+  border-radius: 3px;
+  white-space: nowrap;
+}
+
+.tag-starter { background: rgba(197,168,130,0.15); color: var(--dourado); }
+.tag-principal { background: var(--vinho); color: var(--creme); }
+.tag-avancado { background: rgba(62,39,35,0.1); color: var(--marrom); }
+.tag-premium { background: var(--marrom); color: var(--dourado); }
+.tag-exclusivo { background: linear-gradient(135deg, var(--dourado), #a8875e); color: #fff; }
+
+/* ============ CTA PRINCIPAL ============ */
+.cta-main {
+  background: var(--vinho);
+  padding: 80px 8%;
+  text-align: center;
+}
+
+.cta-main-inner {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.cta-main h2 {
+  font-size: clamp(26px, 3.5vw, 40px);
+  color: var(--creme);
+  margin-bottom: 16px;
+}
+
+.cta-main p {
+  font-size: 16px;
+  color: rgba(245,240,232,0.7);
+  margin-bottom: 12px;
+  line-height: 1.6;
+}
+
+.cta-benefits {
+  text-align: left;
+  max-width: 420px;
+  margin: 24px auto 32px;
+}
+
+.cta-benefit {
+  font-size: 15px;
+  color: var(--creme);
+  padding: 6px 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.cta-benefit::before {
+  content: '✦';
+  color: var(--dourado);
+  font-size: 12px;
+}
+
+.cta-note {
+  font-size: 12px;
+  color: rgba(245,240,232,0.35);
+  margin-top: 16px;
+}
+
+.btn-whatsapp-large {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: #25D366;
+  color: #fff;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  text-decoration: none;
+  padding: 20px 52px;
+  border-radius: 10px;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 15px rgba(37,211,102,0.25);
+}
+
+.btn-whatsapp-large:hover { background: #1fb855; transform: translateY(-3px); box-shadow: 0 10px 30px rgba(37,211,102,0.35); }
+
+/* ============ FOOTER ============ */
+footer {
+  background: #2C1810;
+  padding: 40px 8%;
+  text-align: center;
+}
+
+footer img { width: 56px; margin-bottom: 10px; opacity: 0.5; }
+footer p { font-size: 11px; color: rgba(245,240,232,0.25); }
+
+/* ============ RESPONSIVE ============ */
+@media (max-width: 768px) {
+  .hero-bg { width: 100%; opacity: 0.25; }
+  .hero-overlay { background: linear-gradient(180deg, rgba(123,26,44,0.9) 0%, rgba(123,26,44,0.75) 100%); }
+  .hero-content { padding: 40px 24px; max-width: 100%; }
+  .stats-bar { gap: 24px; padding: 20px 16px; }
+  .stat-value { font-size: 26px; }
+  .sobre { flex-direction: column; padding: 60px 24px; gap: 32px; }
+  .sobre-media { width: 100%; min-width: unset; }
+  .credenciais { padding: 60px 24px; }
+  .cred-grid { gap: 16px; }
+  .produtos { padding: 60px 24px; }
+  .cta-main { padding: 60px 24px; }
+  .produto-tag { display: none; }
+}
+</style>
 </head>
 <body>
 
-  <!-- NAV -->
-  <nav>
-    <div class="nav-logo"><img src="img/logo-trighum.png" alt="Trighum" style="height:36px;"></div>
-    <div class="nav-links">
-      <a href="#cursos">Cursos</a>
-      <a href="#consultoria">Consultoria</a>
-      <a href="#padaria">Padaria</a>
-      <a href="#contato" class="nav-cta">Fale conosco</a>
-    </div>
-    <button class="menu-toggle" onclick="document.querySelector('.nav-links').style.display=document.querySelector('.nav-links').style.display==='flex'?'none':'flex'">
-      <span></span><span></span><span></span>
-    </button>
-  </nav>
+<div class="scroll-progress" id="scrollProgress"></div>
+<div class="grain"></div>
 
-  <!-- HERO -->
-  <section class="hero">
-    <div class="hero-tags">
-      <span class="hero-tag-item">Padaria Artesanal</span>
-      <span class="hero-tag-item">Cursos</span>
-      <span class="hero-tag-item">Consultoria</span>
-    </div>
-    <h1>
-      <span class="line"><span class="line-inner">Mais do que pão.</span></span>
-      <span class="line"><span class="line-inner"><em>Cultura</em> do pão.</span></span>
-    </h1>
-    <p class="hero-sub">Pães artesanais de fermentação natural, cursos de panificação e consultoria. Do grão à mesa, com respeito ao tempo e ao processo.</p>
-    <div class="hero-buttons">
-      <a href="#cursos" class="btn-primary">Conhecer os cursos</a>
-      <a href="#contato" class="btn-secondary">Visitar a padaria</a>
-    </div>
-  </section>
+<!-- HERO -->
+<section class="hero">
+  <img src="img/hero-nilson-panettone.jpg" alt="Nilson Diniz abrindo panettone no campeonato mundial" class="hero-bg">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <img src="img/logo-branco.png" alt="Nilson Diniz" class="hero-logo">
+    <div class="hero-badge">Vice-campeão mundial de panettone</div>
+    <h1>Aprenda panificação artesanal com quem <em>representou o Brasil no mundo</em></h1>
+    <p class="hero-sub">Nilson Diniz está preparando uma linha completa de cursos de panificação. Entre no grupo exclusivo pra ser o primeiro a saber quando abrir.</p>
+    <a href="#grupo" class="btn-whatsapp">Entrar no grupo do WhatsApp</a>
+    <div class="hero-note">Sem spam. Só conteúdo de valor e acesso antecipado.</div>
+  </div>
+</section>
 
-  <!-- HERO IMAGE -->
-  <div class="hero-image">
-    <div class="hero-image-inner reveal">
-      <img src="img/hero-trighum.jpg" alt="Eriksen Miyasaki - Trighum">
-      <div class="overlay"></div>
-      <div class="logo-overlay">
-        <img src="img/logo-trighum.png" alt="Trighum" style="height:56px;filter:invert(1);opacity:0.85;">
+<!-- STATS (numeros reais) -->
+<div class="stats-bar">
+  <div class="stat">
+    <div class="stat-value" data-target="730" data-suffix="K">0</div>
+    <div class="stat-label">Views no Instagram</div>
+  </div>
+  <div class="stat">
+    <div class="stat-value" data-target="2" data-suffix="º">0</div>
+    <div class="stat-label">Lugar no mundo</div>
+  </div>
+  <div class="stat">
+    <div class="stat-value" data-target="25" data-suffix="+">0</div>
+    <div class="stat-label">Anos de panificação</div>
+  </div>
+  <div class="stat">
+    <div class="stat-value" data-target="12" data-suffix="K">0</div>
+    <div class="stat-label">Seguidores</div>
+  </div>
+</div>
+
+<!-- QUEM E NILSON -->
+<section class="sobre">
+  <div class="sobre-media">
+    <img src="img/nilson-degustando.jpg" alt="Nilson Diniz degustando panettone no campeonato mundial" class="sobre-img">
+  </div>
+  <div class="sobre-content">
+    <div class="section-label">Quem é Nilson Diniz</div>
+    <h2>Chef Boulanger, pioneiro em fermentação natural no Brasil</h2>
+    <p>Nascido em Kaloré, interior do Paraná, Nilson trabalhou na roça desde os 7 anos. Mais de 25 anos depois, é reconhecido internacionalmente pela técnica e pela paixão que coloca em cada massa.</p>
+    <p>Fundou a Filone Panificação Artesanal e representou o Brasil no Panettone World Championship em Milão.</p>
+    <div class="conquistas">
+      <div class="conquista">
+        <div class="conquista-icon">🏆</div>
+        <span><strong>Vice-campeão mundial</strong> de panettone — Panettone World Championship 2025, Milão</span>
+      </div>
+      <div class="conquista">
+        <div class="conquista-icon">🇧🇷</div>
+        <span><strong>Squadra Brasile</strong> — representou o Brasil na maior competição mundial</span>
+      </div>
+      <div class="conquista">
+        <div class="conquista-icon">📺</div>
+        <span><strong>Programa Mais Você</strong> — convidado da Ana Maria Braga com a Squadra Brasile</span>
+      </div>
+      <div class="conquista">
+        <div class="conquista-icon">🌾</div>
+        <span><strong>Pioneiro em fermentação natural</strong> no Brasil</span>
       </div>
     </div>
   </div>
+</section>
 
-  <!-- MANIFESTO -->
-  <section class="manifesto">
-    <blockquote class="reveal">
-      O pão é o alimento mais antigo do mundo. Fazer pão é entender tempo, paciência e processo. É transformar farinha e água em algo que conecta pessoas.
-    </blockquote>
-    <cite class="reveal reveal-delay-1">Eriksen Miyasaki</cite>
-  </section>
+<!-- CREDENCIAIS (fotos reais) -->
+<section class="credenciais">
+  <h2>A prova está no pódio</h2>
+  <div class="cred-grid">
+    <img src="img/certificado.png" alt="Certificado 2nd Place — Panettone World Championship" class="cred-img">
+    <img src="img/trofeu-2.png" alt="Nilson Diniz com troféu do campeonato mundial" class="cred-img">
+    <img src="img/ana-maria-squadra.jpg" alt="Squadra Brasile com Ana Maria Braga no Mais Você" class="cred-img">
+  </div>
+</section>
 
-  <!-- STATS -->
-  <div class="stats-bar">
-    <div class="stats-grid">
-      <div class="reveal">
-        <div class="stat-number" data-target="1200" data-suffix="+">0</div>
-        <div class="stat-label">Alunos formados</div>
+<!-- O QUE VEM AI -->
+<section class="produtos">
+  <div class="section-label">Em breve</div>
+  <h2>O que está sendo preparado</h2>
+  <p>Uma linha completa de formação em panificação artesanal. Do iniciante ao profissional que quer competir.</p>
+
+  <div class="produto-list">
+    <div class="produto-item">
+      <div class="produto-number">01</div>
+      <div class="produto-info">
+        <h3>Fermentação Natural do Zero</h3>
+        <p>Crie seu levain, faça seu primeiro pão. A base de tudo.</p>
       </div>
-      <div class="reveal reveal-delay-1">
-        <div class="stat-number" data-target="8" data-suffix=" anos">0</div>
-        <div class="stat-label">De panificação artesanal</div>
+      <span class="produto-tag tag-starter">Iniciante</span>
+    </div>
+    <div class="produto-item">
+      <div class="produto-number">02</div>
+      <div class="produto-info">
+        <h3>Panettone de Frutas Tradicional</h3>
+        <p>O curso completo. 25 aulas, do levain ao acabamento. A técnica de campeonato.</p>
       </div>
-      <div class="reveal reveal-delay-2">
-        <div class="stat-number" data-target="4">0</div>
-        <div class="stat-label">Frentes de atuação</div>
+      <span class="produto-tag tag-principal">Curso principal</span>
+    </div>
+    <div class="produto-item">
+      <div class="produto-number">03</div>
+      <div class="produto-info">
+        <h3>Panettone de Chocolate</h3>
+        <p>A receita que levou o Brasil ao pódio mundial.</p>
       </div>
-      <div class="reveal reveal-delay-3">
-        <div class="stat-number" data-suffix="∞">∞</div>
-        <div class="stat-label">Paixão pelo processo</div>
+      <span class="produto-tag tag-avancado">Avançado</span>
+    </div>
+    <div class="produto-item">
+      <div class="produto-number">04</div>
+      <div class="produto-info">
+        <h3>Workshop presencial na Filone</h3>
+        <p>1 dia inteiro ao lado do Nilson, mão na massa, turma de no máximo 6 pessoas.</p>
       </div>
+      <span class="produto-tag tag-premium">Premium</span>
+    </div>
+    <div class="produto-item">
+      <div class="produto-number">05</div>
+      <div class="produto-info">
+        <h3>Consultoria operacional</h3>
+        <p>Nilson vai até a sua operação. Diagnóstico, treinamento, implementação. Valor sob consulta.</p>
+      </div>
+      <span class="produto-tag tag-exclusivo">Exclusivo</span>
     </div>
   </div>
+</section>
 
-  <!-- SERVICES -->
-  <section class="services-section">
-    <div class="section-tag reveal">O que fazemos</div>
-    <div class="section-title reveal">Quatro formas de viver<br>a cultura do pão.</div>
+<!-- CTA PRINCIPAL -->
+<section class="cta-main" id="grupo">
+  <div class="cta-main-inner">
+    <div class="section-label" style="color:var(--dourado)">Pré-lançamento</div>
+    <h2>Entre no grupo exclusivo do WhatsApp</h2>
+    <p>Os cursos ainda não estão disponíveis. Quem entrar agora vai ter:</p>
 
-    <div class="service-grid">
-      <div class="service-card reveal">
-        <div class="service-number">01</div>
-        <div class="service-name">Padaria</div>
-        <div class="service-desc">Pães artesanais produzidos pelo mestre padeiro Eriksen Miyasaki. Fermentação natural, ingredientes selecionados, tempo respeitado.</div>
-      </div>
-      <div class="service-card reveal reveal-delay-1">
-        <div class="service-number">02</div>
-        <div class="service-name">Cursos</div>
-        <div class="service-desc">Do iniciante ao profissional. Aprenda os fundamentos da panificação artesanal com quem já formou mais de 1.200 alunos.</div>
-      </div>
-      <div class="service-card reveal reveal-delay-2">
-        <div class="service-number">03</div>
-        <div class="service-name">Consultoria</div>
-        <div class="service-desc">Leve a excelência da panificação artesanal pra sua operação. Treinamento de equipe, padronização e qualidade.</div>
-      </div>
-      <div class="service-card reveal reveal-delay-3">
-        <div class="service-number">04</div>
-        <div class="service-name">Loja</div>
-        <div class="service-desc">Bannetons, couches e acessórios profissionais pra quem produz em casa ou na padaria. Tudo que o padeiro precisa.</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- COURSES -->
-  <section class="services-section" id="cursos">
-    <div class="section-tag reveal">Cursos</div>
-    <div class="section-title reveal">Aprenda a fazer pão <em style="font-family:var(--serif);color:var(--accent);">de verdade.</em></div>
-
-    <div class="course-grid">
-      <div class="course-card reveal">
-        <div>
-          <div class="course-tag">Curso Gravado</div>
-          <div class="course-name">Levain do Zero à Produção</div>
-          <div class="course-desc">Do primeiro levain até a produção consistente. Tudo o que você precisa pra dominar a fermentação natural.</div>
-        </div>
-        <a href="#contato" class="course-btn">Quero me inscrever</a>
-      </div>
-      <div class="course-card reveal reveal-delay-1">
-        <div>
-          <div class="course-tag">Curso Gravado · Online</div>
-          <div class="course-name">Técnicas Essenciais de Fermentação Natural</div>
-          <div class="course-desc">As técnicas que todo padeiro artesanal precisa dominar. Do básico ao profissional, com fundamento de engenharia de alimentos.</div>
-          <div class="course-price">
-            <span class="old">R$ 1.000</span>
-            <span class="current">R$ 497</span>
-          </div>
-        </div>
-        <a href="#contato" class="course-btn">Comprar curso</a>
-      </div>
-      <div class="course-card reveal reveal-delay-2">
-        <div>
-          <div class="course-tag">Aula Gravada · Online</div>
-          <div class="course-name">Pão Francês com Fermentação Natural</div>
-          <div class="course-desc">O pão mais consumido do Brasil, feito do jeito certo. Fermentação natural, sem aditivos, com técnica profissional.</div>
-          <div class="course-price">
-            <span class="old">R$ 750</span>
-            <span class="current">R$ 347</span>
-          </div>
-        </div>
-        <a href="#contato" class="course-btn">Comprar curso</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- CONSULTORIA -->
-  <section style="padding:40px 40px 120px;" id="consultoria">
-    <div class="consult-section reveal">
-      <div class="consult-left">
-        <div class="section-tag">Consultoria</div>
-        <h2>Leve a excelência do Trighum pra sua operação.</h2>
-        <p>Encontro online de 1 hora com Eriksen. Treinamento de equipe, desenvolvimento de receitas, ultracongelamento, redução de custos e montagem de padaria.</p>
-        <div class="consult-price">
-          <span class="cp-value">R$ 600</span>
-          <span class="cp-label">por sessão</span>
-        </div>
-        <a href="#contato" class="btn-accent">Agendar consultoria →</a>
-      </div>
-      <div class="consult-right">
-        <div class="consult-feature">
-          <div class="cf-line"></div>
-          <div class="cf-text"><strong>Treinamento de equipe</strong><span>Padronize a qualidade da sua produção.</span></div>
-        </div>
-        <div class="consult-feature">
-          <div class="cf-line"></div>
-          <div class="cf-text"><strong>Desenvolvimento de receitas</strong><span>Receitas exclusivas pro seu negócio.</span></div>
-        </div>
-        <div class="consult-feature">
-          <div class="cf-line"></div>
-          <div class="cf-text"><strong>Redução de custos</strong><span>Otimize processos sem perder qualidade.</span></div>
-        </div>
-        <div class="consult-feature">
-          <div class="cf-line"></div>
-          <div class="cf-text"><strong>Montagem de padaria</strong><span>Do projeto ao primeiro pão saindo do forno.</span></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- PADARIA -->
-  <section class="services-section" id="padaria">
-    <div class="section-tag reveal">Padaria</div>
-    <div class="section-title reveal">Pão artesanal feito com tempo,<br>não com pressa.</div>
-
-    <div class="padaria-grid reveal">
-      <div class="padaria-img">
-        <img src="img/bread-1.jpg" alt="Pão artesanal Trighum">
-      </div>
-      <div class="padaria-img">
-        <img src="img/bread-2.jpg" alt="Pães do Trighum">
-      </div>
+    <div class="cta-benefits">
+      <div class="cta-benefit">Conteúdo exclusivo do Nilson antes de todo mundo</div>
+      <div class="cta-benefit">Aviso em primeira mão quando abrir as vagas</div>
+      <div class="cta-benefit">Desconto de lançamento (só pra quem tá no grupo)</div>
+      <div class="cta-benefit">1h de mentoria com Nilson no pré-lançamento</div>
     </div>
 
-    <div class="padaria-features reveal">
-      <div class="padaria-feature">
-        <h4>Fermentação Natural</h4>
-        <p>Sem aditivos, sem atalhos. Cada pão fermenta no seu tempo.</p>
-      </div>
-      <div class="padaria-feature">
-        <h4>Loja Física</h4>
-        <p>Pães frescos todos os dias em Campinas. Venha conhecer.</p>
-      </div>
-      <div class="padaria-feature">
-        <h4>Delivery</h4>
-        <p>Peça pelo app e receba os pães do Trighum na sua casa.</p>
-      </div>
-    </div>
-  </section>
+    <a href="#" class="btn-whatsapp-large">Entrar no grupo do WhatsApp</a>
+    <div class="cta-note">Vagas limitadas. Sem spam, só conteúdo de valor.</div>
+  </div>
+</section>
 
-  <!-- ERIKSEN -->
-  <section>
-    <div class="eriksen-section">
-      <div class="eriksen-photo reveal">
-        <img src="img/hero-trighum.jpg" alt="Eriksen Miyasaki">
-      </div>
-      <div class="eriksen-content">
-        <div class="section-tag reveal">Quem faz</div>
-        <div class="eriksen-name reveal">Eriksen Miyasaki</div>
-        <div class="eriksen-title reveal">Mestre Padeiro · Engenheiro de Alimentos</div>
-        <p class="eriksen-bio reveal">Formado em Engenharia de Alimentos, dedicou a carreira à pesquisa e à prática da panificação artesanal. Desde 2016, comanda o Trighum em Campinas com uma missão: ensinar que pão de verdade é tempo, processo e respeito ao ingrediente.</p>
-        <div class="eriksen-stats reveal">
-          <div class="eriksen-stat">
-            <div class="es-value">1.200+</div>
-            <div class="es-label">Alunos</div>
-          </div>
-          <div class="eriksen-stat">
-            <div class="es-value">8 anos</div>
-            <div class="es-label">De experiência</div>
-          </div>
-          <div class="eriksen-stat">
-            <div class="es-value">4</div>
-            <div class="es-label">Frentes</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+<!-- FOOTER -->
+<footer>
+  <img src="img/logo-branco.png" alt="Nilson Diniz">
+  <p>Nilson Diniz — Chef Boulanger · Tradição · Técnica · Paixão</p>
+</footer>
 
-  <!-- DEPOIMENTOS -->
-  <section class="services-section">
-    <div class="section-tag reveal">Depoimentos</div>
-    <div class="section-title reveal">O que dizem os alunos.</div>
+<script>
+// ── SCROLL PROGRESS ──
+window.addEventListener('scroll', () => {
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  document.getElementById('scrollProgress').style.width = (scrollTop / docHeight * 100) + '%';
+});
 
-    <div class="depoimentos-grid">
-      <div class="depoimento-card reveal">
-        <p class="depoimento-text">"Fiz o curso de fermentação natural e mudou minha relação com o pão. A didática do Eriksen é incrível, ele explica o porquê de cada etapa."</p>
-        <div class="depoimento-author">Mariana Santos</div>
-        <div class="depoimento-role">Padeira artesanal, São Paulo</div>
-      </div>
-      <div class="depoimento-card reveal reveal-delay-1">
-        <p class="depoimento-text">"A consultoria salvou minha padaria. Em uma sessão, o Eriksen identificou onde eu estava perdendo dinheiro e me ensinou a otimizar a produção."</p>
-        <div class="depoimento-author">Ricardo Oliveira</div>
-        <div class="depoimento-role">Dono de padaria, Campinas</div>
-      </div>
-      <div class="depoimento-card reveal reveal-delay-2">
-        <p class="depoimento-text">"O levain que eu faço hoje é graças ao curso do Trighum. Conteúdo denso, prático e direto. Vale cada centavo."</p>
-        <div class="depoimento-author">Fernanda Lima</div>
-        <div class="depoimento-role">Aluna, turma 2025</div>
-      </div>
-    </div>
-  </section>
+// ── REVEAL ON SCROLL ──
+document.querySelectorAll('.sobre-content, .sobre-media, .produtos > *, .cta-main-inner').forEach(el => {
+  el.classList.add('reveal');
+});
 
-  <!-- CTA -->
-  <section class="cta-final" id="contato">
-    <h2 class="reveal">Quer aprender, encomendar<br>ou levar o Trighum<br>pra sua operação?</h2>
-    <p class="reveal reveal-delay-1">Fale direto com a gente pelo WhatsApp.</p>
-    <a href="https://wa.me/5519982057101?text=Oi%2C%20vi%20o%20site%20do%20Trighum%20e%20quero%20saber%20mais" class="cta-whatsapp reveal reveal-delay-2">Chamar no WhatsApp</a>
-  </section>
+document.querySelectorAll('.produto-item').forEach((el, i) => {
+  el.classList.add('reveal');
+  if (i <= 4) el.classList.add('reveal-delay-' + Math.min(i, 3));
+});
 
-  <!-- FOOTER -->
-  <footer>
-    <div class="footer-logo">Trighum</div>
-    <div>Campinas, SP · <a href="https://instagram.com/trighum">@trighum</a> · <a href="mailto:contato@trighum.com.br">contato@trighum.com.br</a></div>
-    <div class="footer-copy">© 2026 Trighum - Todos os Direitos Reservados</div>
-  </footer>
+document.querySelectorAll('.cred-img').forEach((el, i) => {
+  el.classList.add('reveal');
+  el.classList.add('reveal-delay-' + (i + 1));
+});
 
-  <script>
-    // Nav scroll
-    window.addEventListener('scroll', () => {
-      document.querySelector('nav').classList.toggle('scrolled', window.scrollY > 60);
-    });
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) entry.target.classList.add('visible');
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 
-    // Reveal
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) entry.target.classList.add('visible');
-      });
-    }, { threshold: 0.12 });
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
-    // Counter
-    function animateCounters(el) {
-      el.querySelectorAll('.stat-number[data-target]').forEach(counter => {
-        if (counter.animating) return;
-        counter.animating = true;
-        const target = parseInt(counter.dataset.target);
-        const suffix = counter.dataset.suffix || '';
-        const duration = 1400;
-        const start = performance.now();
-        const animate = (now) => {
-          const progress = Math.min((now - start) / duration, 1);
-          const eased = 1 - Math.pow(1 - progress, 3);
-          counter.textContent = Math.floor(target * eased) + suffix;
-          if (progress < 1) requestAnimationFrame(animate);
-          else counter.animating = false;
-        };
-        requestAnimationFrame(animate);
-      });
+// ── COUNTER ANIMATION ──
+function animateCounters() {
+  document.querySelectorAll('.stat-value[data-target]').forEach(counter => {
+    const target = parseInt(counter.dataset.target);
+    const suffix = counter.dataset.suffix || '';
+    const duration = 2200;
+    const fps = 60;
+    const totalFrames = duration / (1000 / fps);
+    let frame = 0;
+
+    const timer = setInterval(() => {
+      frame++;
+      const eased = 1 - Math.pow(1 - (frame / totalFrames), 3);
+      let current = Math.floor(eased * target);
+      if (frame >= totalFrames) { current = target; clearInterval(timer); }
+      counter.textContent = current + suffix;
+    }, 1000 / fps);
+  });
+}
+
+let counterAnimated = false;
+const counterObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting && !counterAnimated) {
+      counterAnimated = true;
+      animateCounters();
     }
+  });
+}, { threshold: 0.5 });
+counterObserver.observe(document.querySelector('.stats-bar'));
 
-    const counterObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) animateCounters(entry.target);
-        else {
-          entry.target.querySelectorAll('.stat-number[data-target]').forEach(c => {
-            c.textContent = '0'; c.animating = false;
-          });
-        }
-      });
-    }, { threshold: 0.3 });
-    document.querySelectorAll('.stats-bar').forEach(el => counterObserver.observe(el));
-  </script>
-
+// ── PARALLAX ──
+window.addEventListener('scroll', () => {
+  const heroImg = document.querySelector('.hero-bg');
+  if (heroImg) heroImg.style.transform = `translateY(${window.scrollY * 0.08}px)`;
+});
+</script>
 </body>
 </html>
