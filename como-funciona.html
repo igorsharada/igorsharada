@@ -491,6 +491,10 @@
     'Quer ter isso no seu negócio? Me manda uma mensagem no WhatsApp.'
   ];
 
+  // Audio narration (ElevenLabs)
+  const narrationAudio = new Audio('audio/narration.mp3');
+  const slideTimes = [0, 6, 19, 30, 41]; // seconds where each slide starts
+
   // Build dots
   const dotsContainer = document.getElementById('demoDots');
   for (let i = 0; i < demoTotal; i++) {
@@ -511,18 +515,11 @@
     }
     document.getElementById('demoProgress').style.width = ((n + 1) / demoTotal * 100) + '%';
 
-    // Narrate
-    if ('speechSynthesis' in window && demoAuto) {
-      speechSynthesis.cancel();
-      const utter = new SpeechSynthesisUtterance(demoNarrations[n]);
-      utter.lang = 'pt-BR';
-      utter.rate = 0.92;
-      utter.pitch = 1;
-      const voices = speechSynthesis.getVoices();
-      const ptVoice = voices.find(v => v.lang.startsWith('pt') && v.name.includes('Google')) || voices.find(v => v.lang.startsWith('pt'));
-      if (ptVoice) utter.voice = ptVoice;
-      utter.onend = () => { setTimeout(demoAutoNext, 1500); };
-      speechSynthesis.speak(utter);
+    // Audio narration
+    if (demoAuto && narrationAudio) {
+      narrationAudio.currentTime = slideTimes[n];
+      if (narrationAudio.paused) narrationAudio.play();
+      demoScheduleNext();
     }
   }
 
@@ -530,14 +527,26 @@
     demoGoTo((demoCurrent + dir + demoTotal) % demoTotal);
   }
 
+  let demoTimer = null;
+
   function demoAutoNext() {
     if (!demoAuto) return;
     if (demoCurrent < demoTotal - 1) {
       demoNav(1);
     } else {
       demoAuto = false;
+      narrationAudio.pause();
       document.getElementById('demoPlayBtn').textContent = '▶';
     }
+  }
+
+  function demoScheduleNext() {
+    if (demoTimer) clearTimeout(demoTimer);
+    if (!demoAuto || demoCurrent >= demoTotal - 1) return;
+    const currentStart = slideTimes[demoCurrent];
+    const nextStart = slideTimes[demoCurrent + 1];
+    const duration = (nextStart - currentStart) * 1000;
+    demoTimer = setTimeout(demoAutoNext, duration);
   }
 
   function demoToggleAuto() {
@@ -545,16 +554,21 @@
     if (demoAuto) {
       demoAuto = false;
       btn.textContent = '▶';
-      speechSynthesis.cancel();
+      narrationAudio.pause();
+      if (demoTimer) clearTimeout(demoTimer);
     } else {
       demoAuto = true;
       btn.textContent = '⏸';
-      demoGoTo(demoCurrent);
+      demoCurrent = 0;
+      demoGoTo(0);
+      narrationAudio.currentTime = 0;
+      narrationAudio.play();
+      demoScheduleNext();
     }
   }
 
-  // Load voices
-  if ('speechSynthesis' in window) speechSynthesis.getVoices();
+  // Preload audio
+  narrationAudio.preload = 'auto';
 </script>
 
 </body>
