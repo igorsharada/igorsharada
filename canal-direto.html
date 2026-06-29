@@ -140,8 +140,13 @@
     section { padding: 100px 20px; }
     .hero { padding: 140px 20px 80px; }
     .card-grid-3, .entrega-grid, .result-grid, .card-grid-2 { grid-template-columns: 1fr; }
+    .section-title { font-size: 24px; }
+    .result-stat .rs-value { font-size: 28px; }
+    .pricing-card .p-price { font-size: 13px; }
     nav { padding: 16px 20px; }
-    nav div[style*="gap:24px"] a:not(.nav-cta) { display: none; }
+    nav .nav-links-inner { display: none !important; }
+    .compare-table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .compare-table th, .compare-table td { white-space: nowrap; padding: 10px 14px; }
   }
 </style>
 </head>
@@ -153,9 +158,9 @@
 <nav>
   <a href="index.html" class="nav-name" style="text-decoration:none;color:var(--text);">Igor<span class="accent">SHarada</span></a>
   <div style="display:flex;gap:24px;align-items:center;">
-    <a href="#solucao" style="color:var(--text-muted);text-decoration:none;font-size:12px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;transition:color 0.3s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--text-muted)'">Solução</a>
-    <a href="#como" style="color:var(--text-muted);text-decoration:none;font-size:12px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;transition:color 0.3s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--text-muted)'">Como funciona</a>
-    <a href="#investimento" style="color:var(--text-muted);text-decoration:none;font-size:12px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;transition:color 0.3s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--text-muted)'">Investimento</a>
+    <a href="#solucao" class="nav-links-inner" style="color:var(--text-muted);text-decoration:none;font-size:12px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;transition:color 0.3s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--text-muted)'">Solução</a>
+    <a href="#como" class="nav-links-inner" style="color:var(--text-muted);text-decoration:none;font-size:12px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;transition:color 0.3s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--text-muted)'">Como funciona</a>
+    <a href="#investimento" class="nav-links-inner" style="color:var(--text-muted);text-decoration:none;font-size:12px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;transition:color 0.3s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--text-muted)'">Investimento</a>
     <a class="nav-cta" href="#contato">Falar comigo</a>
   </div>
 </nav>
