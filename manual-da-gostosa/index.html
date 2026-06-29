@@ -1,0 +1,1235 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manual da Gostosa Emocionalmente Estável</title>
+  <meta name="description" content="O guia prático de 7 dias pra você parar de se anular, recuperar seu valor e agir como uma mulher que sabe o que merece.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #FFF5EB;
+      --bg-alt: #E8C9B8;
+      --red: #8B1A1A;
+      --red-light: #A52A2A;
+      --text: #3D2B1F;
+      --text-light: #6B4F3F;
+      --text-muted: #9B8579;
+      --gold: #C9A84C;
+      --gold-light: #E8C96A;
+      --white: #FFFDF9;
+      --pink-soft: #F5E1D5;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ===== DECORATIVE BORDERS ===== */
+    body::before, body::after {
+      content: '';
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background: linear-gradient(180deg, var(--red), var(--gold), var(--red));
+      z-index: 100;
+    }
+    body::before { left: 0; }
+    body::after { right: 0; }
+
+    /* ===== SCROLL PROGRESS BAR ===== */
+    .progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--red), var(--gold));
+      z-index: 200;
+      width: 0%;
+      transition: width 0.1s linear;
+    }
+
+    /* ===== UTILITY ===== */
+    .container { max-width: 720px; margin: 0 auto; padding: 0 24px; }
+    .section { padding: 80px 0; }
+
+    h1, h2, h3 { font-family: 'Playfair Display', serif; color: var(--red); }
+
+    .crown {
+      display: block;
+      margin: 0 auto 8px;
+      font-size: 24px;
+      line-height: 1;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+
+    /* ===== REVEAL ANIMATIONS ===== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+
+    .reveal-left {
+      opacity: 0;
+      transform: translateX(-40px);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal-left.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .reveal-scale {
+      opacity: 0;
+      transform: scale(0.9);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal-scale.visible {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    /* ===== CTA BUTTON ===== */
+    .cta-btn {
+      display: inline-block;
+      background: var(--red);
+      color: var(--white);
+      font-family: 'Inter', sans-serif;
+      font-weight: 700;
+      font-size: 17px;
+      padding: 18px 44px;
+      border-radius: 50px;
+      text-decoration: none;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 4px 20px rgba(139, 26, 26, 0.25);
+      letter-spacing: 0.3px;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-btn::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      background: rgba(255,255,255,0.15);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      transition: width 0.6s ease, height 0.6s ease;
+    }
+    .cta-btn:hover::before {
+      width: 300px;
+      height: 300px;
+    }
+    .cta-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 32px rgba(139, 26, 26, 0.35);
+    }
+
+    .cta-pulse {
+      animation: pulse 2.5s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 4px 20px rgba(139, 26, 26, 0.25); }
+      50% { box-shadow: 0 4px 32px rgba(139, 26, 26, 0.45), 0 0 0 8px rgba(139, 26, 26, 0.08); }
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      padding: 100px 0 80px;
+      text-align: center;
+      background: linear-gradient(180deg, var(--white) 0%, var(--bg) 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(ellipse at 30% 20%, rgba(201, 168, 76, 0.08) 0%, transparent 50%),
+                  radial-gradient(ellipse at 70% 80%, rgba(139, 26, 26, 0.05) 0%, transparent 50%);
+      animation: hero-bg 20s ease-in-out infinite alternate;
+    }
+    @keyframes hero-bg {
+      0% { transform: translate(0, 0) rotate(0deg); }
+      100% { transform: translate(-5%, 5%) rotate(3deg); }
+    }
+    .hero > .container { position: relative; z-index: 1; }
+    .hero-tag {
+      display: inline-block;
+      background: var(--pink-soft);
+      color: var(--red);
+      font-size: 12px;
+      font-weight: 600;
+      padding: 6px 18px;
+      border-radius: 50px;
+      margin-bottom: 28px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      animation: fadeDown 1s ease-out;
+    }
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .hero h1 {
+      font-size: clamp(30px, 6vw, 48px);
+      line-height: 1.2;
+      margin-bottom: 20px;
+      animation: fadeUp 1s ease-out 0.2s both;
+    }
+    .hero h1 em {
+      font-style: italic;
+      background: linear-gradient(135deg, var(--gold), var(--gold-light), var(--gold));
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: shimmer 3s ease-in-out infinite;
+    }
+    @keyframes shimmer {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .hero .sub {
+      font-size: 17px;
+      color: var(--text-light);
+      max-width: 520px;
+      margin: 0 auto 36px;
+      line-height: 1.8;
+      animation: fadeUp 1s ease-out 0.4s both;
+    }
+    .hero .cta-btn {
+      animation: fadeUp 1s ease-out 0.6s both;
+    }
+    .hero .micro {
+      display: block;
+      margin-top: 16px;
+      font-size: 13px;
+      color: var(--text-muted);
+      animation: fadeUp 1s ease-out 0.8s both;
+    }
+
+    /* ===== FLOATING PARTICLES ===== */
+    .particles {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .particle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: var(--gold);
+      border-radius: 50%;
+      opacity: 0.3;
+      animation: rise linear infinite;
+    }
+    .particle:nth-child(1) { left: 10%; animation-duration: 12s; animation-delay: 0s; }
+    .particle:nth-child(2) { left: 30%; animation-duration: 15s; animation-delay: 2s; width: 3px; height: 3px; }
+    .particle:nth-child(3) { left: 50%; animation-duration: 18s; animation-delay: 4s; }
+    .particle:nth-child(4) { left: 70%; animation-duration: 14s; animation-delay: 1s; width: 5px; height: 5px; opacity: 0.2; }
+    .particle:nth-child(5) { left: 90%; animation-duration: 16s; animation-delay: 3s; width: 3px; height: 3px; }
+    @keyframes rise {
+      0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+      10% { opacity: 0.3; }
+      90% { opacity: 0.3; }
+      100% { transform: translateY(-100px) rotate(720deg); opacity: 0; }
+    }
+
+    /* ===== IDENTIFICATION ===== */
+    .identify {
+      background: var(--white);
+      border-top: 1px solid var(--pink-soft);
+      border-bottom: 1px solid var(--pink-soft);
+    }
+    .identify h2 {
+      font-size: clamp(24px, 4vw, 34px);
+      margin-bottom: 12px;
+      text-align: center;
+    }
+    .identify .lead {
+      text-align: center;
+      font-size: 16px;
+      color: var(--text-light);
+      margin-bottom: 40px;
+    }
+    .identify-list {
+      list-style: none;
+      max-width: 560px;
+      margin: 0 auto;
+    }
+    .identify-list li {
+      padding: 18px 0;
+      padding-left: 32px;
+      position: relative;
+      font-size: 16px;
+      color: var(--text);
+      border-bottom: 1px solid rgba(232, 201, 184, 0.5);
+      transition: transform 0.3s ease, color 0.3s ease;
+      cursor: default;
+    }
+    .identify-list li:last-child { border-bottom: none; }
+    .identify-list li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 24px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--red);
+      opacity: 0.4;
+      transition: all 0.3s ease;
+    }
+    .identify-list li:hover {
+      transform: translateX(8px);
+      color: var(--red);
+    }
+    .identify-list li:hover::before {
+      opacity: 1;
+      transform: scale(1.4);
+      box-shadow: 0 0 8px rgba(139, 26, 26, 0.3);
+    }
+
+    /* ===== PROBLEM ===== */
+    .problem { text-align: center; }
+    .problem h2 {
+      font-size: clamp(24px, 4vw, 34px);
+      margin-bottom: 20px;
+    }
+    .problem p {
+      font-size: 17px;
+      color: var(--text-light);
+      max-width: 560px;
+      margin: 0 auto 20px;
+      line-height: 1.8;
+    }
+    .highlight-box {
+      background: var(--white);
+      border-left: 4px solid var(--gold);
+      padding: 28px 32px;
+      max-width: 560px;
+      margin: 32px auto 0;
+      border-radius: 0 16px 16px 0;
+      text-align: left;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .highlight-box::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(201, 168, 76, 0.05) 0%, transparent 60%);
+    }
+    .highlight-box:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(201, 168, 76, 0.12);
+    }
+    .highlight-box p {
+      font-family: 'Playfair Display', serif;
+      font-size: 18px;
+      font-style: italic;
+      color: var(--red);
+      margin: 0;
+      line-height: 1.7;
+      position: relative;
+    }
+
+    /* ===== STORY ===== */
+    .story {
+      text-align: center;
+      background: var(--white);
+      border-top: 1px solid var(--pink-soft);
+      border-bottom: 1px solid var(--pink-soft);
+      position: relative;
+      overflow: hidden;
+    }
+    .story::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(ellipse at 50% 0%, rgba(201, 168, 76, 0.06) 0%, transparent 60%);
+    }
+    .story > .container { position: relative; }
+    .story-photo {
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      margin: 0 auto 28px;
+      border: 3px solid var(--gold);
+      overflow: hidden;
+      position: relative;
+      box-shadow: 0 8px 32px rgba(201, 168, 76, 0.2);
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s ease;
+    }
+    .story-photo::after {
+      content: '';
+      position: absolute;
+      inset: -3px;
+      border-radius: 50%;
+      background: conic-gradient(from 0deg, var(--gold), var(--red), var(--gold-light), var(--gold));
+      z-index: -1;
+      animation: rotate-border 8s linear infinite;
+    }
+    @keyframes rotate-border {
+      to { transform: rotate(360deg); }
+    }
+    .story-photo:hover {
+      transform: scale(1.05);
+      box-shadow: 0 12px 40px rgba(201, 168, 76, 0.3);
+    }
+    .story-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top center;
+    }
+    .story h2 {
+      font-size: clamp(24px, 4vw, 32px);
+      margin-bottom: 20px;
+    }
+    .story p {
+      font-size: 16px;
+      color: var(--text-light);
+      max-width: 540px;
+      margin: 0 auto 16px;
+      line-height: 1.8;
+    }
+    .story p strong { color: var(--text); }
+    .story .tag {
+      display: inline-block;
+      background: var(--pink-soft);
+      color: var(--red);
+      font-size: 13px;
+      font-weight: 600;
+      padding: 8px 20px;
+      border-radius: 50px;
+      margin-top: 20px;
+      transition: all 0.3s ease;
+    }
+    .story .tag:hover {
+      background: var(--red);
+      color: var(--white);
+    }
+
+    /* ===== SOLUTION ===== */
+    .solution { text-align: center; }
+    .solution h2 {
+      font-size: clamp(24px, 4vw, 34px);
+      margin-bottom: 12px;
+    }
+    .solution .lead {
+      font-size: 16px;
+      color: var(--text-light);
+      margin-bottom: 40px;
+    }
+    .solution-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+      max-width: 540px;
+      margin: 0 auto;
+    }
+    .solution-card {
+      background: var(--white);
+      padding: 24px 28px;
+      border-radius: 16px;
+      border-left: 3px solid var(--gold);
+      text-align: left;
+      box-shadow: 0 2px 8px rgba(61, 43, 31, 0.04);
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+      overflow: hidden;
+    }
+    .solution-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 3px;
+      height: 0;
+      background: var(--red);
+      transition: height 0.4s ease;
+    }
+    .solution-card:hover::before { height: 100%; }
+    .solution-card:hover {
+      transform: translateX(6px);
+      box-shadow: 0 4px 20px rgba(61, 43, 31, 0.08);
+      border-left-color: var(--red);
+    }
+    .solution-card h3 {
+      font-size: 17px;
+      margin-bottom: 6px;
+      color: var(--red);
+    }
+    .solution-card p {
+      font-size: 14px;
+      color: var(--text-light);
+      line-height: 1.7;
+    }
+
+    /* ===== PILLARS ===== */
+    .pillars {
+      background: var(--white);
+      text-align: center;
+      border-top: 1px solid var(--pink-soft);
+      border-bottom: 1px solid var(--pink-soft);
+    }
+    .pillars h2 {
+      font-size: clamp(24px, 4vw, 34px);
+      margin-bottom: 8px;
+    }
+    .pillars .lead {
+      font-size: 15px;
+      color: var(--text-light);
+      margin-bottom: 40px;
+    }
+    .pillars-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      max-width: 640px;
+      margin: 0 auto;
+    }
+    .pillar-item {
+      background: var(--bg);
+      padding: 28px 20px;
+      border-radius: 14px;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      cursor: default;
+    }
+    .pillar-item:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 28px rgba(139, 26, 26, 0.08);
+      background: var(--white);
+    }
+    .pillar-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--red);
+      color: var(--white);
+      font-weight: 700;
+      font-size: 14px;
+      margin-bottom: 12px;
+      transition: all 0.3s ease;
+    }
+    .pillar-item:hover .pillar-num {
+      transform: scale(1.15);
+      box-shadow: 0 4px 12px rgba(139, 26, 26, 0.3);
+    }
+    .pillar-item h3 { font-size: 15px; margin-bottom: 6px; }
+    .pillar-item p { font-size: 13px; color: var(--text-light); }
+
+    /* ===== SOCIAL PROOF ===== */
+    .proof { text-align: center; overflow: hidden; }
+    .proof h2 {
+      font-size: clamp(24px, 4vw, 34px);
+      margin-bottom: 8px;
+    }
+    .proof .lead {
+      font-size: 15px;
+      color: var(--text-light);
+      margin-bottom: 36px;
+    }
+    .testimonials {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      max-width: 540px;
+      margin: 0 auto;
+    }
+    .testimonial {
+      background: var(--white);
+      padding: 20px;
+      border-radius: 14px;
+      text-align: left;
+      box-shadow: 0 2px 8px rgba(61, 43, 31, 0.04);
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      border: 1px solid transparent;
+    }
+    .testimonial:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(139, 26, 26, 0.06);
+      border-color: var(--pink-soft);
+    }
+    .testimonial p {
+      font-size: 15px;
+      color: var(--text);
+      margin-bottom: 10px;
+      line-height: 1.6;
+    }
+    .testimonial .who {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    /* ===== VALUE ANCHOR ===== */
+    .anchor {
+      text-align: center;
+      background: var(--white);
+      border-top: 1px solid var(--pink-soft);
+      border-bottom: 1px solid var(--pink-soft);
+    }
+    .anchor h2 {
+      font-size: clamp(22px, 3.5vw, 30px);
+      margin-bottom: 20px;
+    }
+    .anchor p {
+      font-size: 16px;
+      color: var(--text-light);
+      max-width: 500px;
+      margin: 0 auto 16px;
+      line-height: 1.8;
+    }
+    .anchor .number {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--red), var(--gold));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ===== PRICING ===== */
+    .pricing {
+      text-align: center;
+      background: linear-gradient(180deg, var(--bg) 0%, var(--white) 50%, var(--bg) 100%);
+    }
+    .price-card {
+      background: var(--white);
+      max-width: 440px;
+      margin: 0 auto;
+      padding: 44px 36px;
+      border-radius: 24px;
+      box-shadow: 0 8px 40px rgba(139, 26, 26, 0.08);
+      border: 2px solid var(--gold);
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+    .price-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(201, 168, 76, 0.03) 0%, transparent 50%, rgba(139, 26, 26, 0.03) 100%);
+    }
+    .price-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 56px rgba(139, 26, 26, 0.12);
+    }
+    .price-card > * { position: relative; }
+    .price-card h2 { font-size: 26px; margin-bottom: 4px; }
+    .price-card .sub {
+      font-size: 14px;
+      color: var(--text-light);
+      margin-bottom: 28px;
+    }
+    .price-compare {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+    .price-compare span { text-decoration: line-through; }
+    .price-value {
+      font-family: 'Playfair Display', serif;
+      font-size: 56px;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--red), #B22222);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 4px;
+    }
+    .price-value small {
+      font-size: 24px;
+      vertical-align: top;
+      margin-right: 2px;
+    }
+    .price-installment {
+      font-size: 14px;
+      color: var(--text-light);
+      margin-bottom: 28px;
+    }
+    .price-includes {
+      list-style: none;
+      text-align: left;
+      margin: 28px 0;
+      padding: 24px 0;
+      border-top: 1px solid var(--pink-soft);
+      border-bottom: 1px solid var(--pink-soft);
+    }
+    .price-includes li {
+      padding: 8px 0;
+      padding-left: 24px;
+      position: relative;
+      font-size: 14px;
+      color: var(--text);
+      transition: transform 0.3s ease;
+    }
+    .price-includes li:hover { transform: translateX(4px); }
+    .price-includes li::before {
+      content: '\2713';
+      position: absolute;
+      left: 0;
+      color: var(--gold);
+      font-weight: 700;
+      font-size: 14px;
+    }
+    .guarantee-text {
+      margin-top: 20px;
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+    .guarantee-text strong { color: var(--red); }
+
+    /* ===== FAQ ===== */
+    .faq h2 {
+      text-align: center;
+      font-size: clamp(24px, 4vw, 34px);
+      margin-bottom: 40px;
+    }
+    .faq-list {
+      max-width: 560px;
+      margin: 0 auto;
+    }
+    .faq-item {
+      border-bottom: 1px solid var(--pink-soft);
+      padding: 20px 0;
+    }
+    .faq-item summary {
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+      color: var(--text);
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      transition: color 0.3s ease;
+    }
+    .faq-item summary:hover { color: var(--red); }
+    .faq-item summary::after {
+      content: '+';
+      font-size: 22px;
+      color: var(--gold);
+      font-weight: 300;
+      flex-shrink: 0;
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .faq-item[open] summary::after { transform: rotate(135deg); }
+    .faq-item p {
+      margin-top: 14px;
+      font-size: 14px;
+      color: var(--text-light);
+      line-height: 1.8;
+      animation: faqReveal 0.4s ease-out;
+    }
+    @keyframes faqReveal {
+      from { opacity: 0; transform: translateY(-8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ===== FINAL CTA ===== */
+    .final-cta {
+      text-align: center;
+      background: linear-gradient(180deg, var(--bg) 0%, var(--pink-soft) 100%);
+      padding: 100px 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .final-cta::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(ellipse at 50% 100%, rgba(201, 168, 76, 0.1) 0%, transparent 60%);
+    }
+    .final-cta > .container { position: relative; }
+    .final-cta h2 {
+      font-size: clamp(26px, 5vw, 40px);
+      margin-bottom: 16px;
+      line-height: 1.3;
+    }
+    .final-cta p {
+      font-size: 16px;
+      color: var(--text-light);
+      margin-bottom: 36px;
+      max-width: 460px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.8;
+    }
+    .final-cta .micro {
+      display: block;
+      margin-top: 16px;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    /* ===== STICKY CTA MOBILE ===== */
+    .sticky-cta {
+      display: none;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(255, 245, 235, 0.95);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      padding: 12px 20px;
+      z-index: 90;
+      border-top: 1px solid var(--pink-soft);
+      text-align: center;
+      transform: translateY(100%);
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .sticky-cta.visible { transform: translateY(0); }
+    .sticky-cta .cta-btn {
+      font-size: 15px;
+      padding: 14px 32px;
+      width: 100%;
+    }
+    .sticky-cta .sticky-price {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      text-align: center;
+      padding: 36px 24px;
+      font-size: 12px;
+      color: var(--text-muted);
+      background: var(--pink-soft);
+      line-height: 1.8;
+    }
+    footer a {
+      color: var(--red);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    footer a:hover { color: var(--gold); }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 600px) {
+      .section { padding: 64px 0; }
+      .hero { padding: 72px 0 56px; }
+      .price-card { padding: 36px 24px; }
+      .price-value { font-size: 48px; }
+      .cta-btn { font-size: 16px; padding: 16px 36px; }
+      .pillars-grid { grid-template-columns: 1fr; }
+      .testimonials { grid-template-columns: 1fr; }
+      body::before, body::after { width: 3px; }
+      .highlight-box { padding: 24px; }
+      .sticky-cta { display: block; }
+      .story-photo { width: 180px; height: 180px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- PROGRESS BAR -->
+  <div class="progress-bar" id="progressBar"></div>
+
+  <!-- FLOATING PARTICLES -->
+  <div class="particles">
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+  </div>
+
+  <!-- ===================== HERO ===================== -->
+  <section class="hero">
+    <div class="container">
+      <span class="hero-tag">Ebook Digital &middot; 85 Páginas</span>
+      <span class="crown">👑</span>
+      <h1>Chega de ser a mulher<br>que aceita <em>migalhas</em></h1>
+      <p class="sub">Você sabe que merece mais. Mas toda vez que tenta mudar, cai no mesmo padrão. Esse manual existe pra quebrar esse ciclo.</p>
+      <a href="#comprar" class="cta-btn cta-pulse">Quero meu Manual por R$97</a>
+      <span class="micro">Acesso imediato &middot; Garantia de 7 dias</span>
+    </div>
+  </section>
+
+  <!-- ===================== IDENTIFICATION ===================== -->
+  <section class="identify section">
+    <div class="container">
+      <span class="crown reveal">👑</span>
+      <h2 class="reveal">Isso parece a sua vida?</h2>
+      <p class="lead reveal">Se marcar 3 ou mais, esse manual foi escrito pra você.</p>
+      <ul class="identify-list">
+        <li class="reveal reveal-delay-1">Você se doa inteira e recebe o mínimo de volta</li>
+        <li class="reveal reveal-delay-1">Aceita coisas que sabe que não deveria, mas tem medo de ficar sozinha</li>
+        <li class="reveal reveal-delay-2">Precisa de alguém pra se sentir completa</li>
+        <li class="reveal reveal-delay-2">Diz "sim" quando queria dizer "não". E depois se odeia por isso</li>
+        <li class="reveal reveal-delay-3">Já se perguntou "o que tem de errado comigo?"</li>
+        <li class="reveal reveal-delay-3">Coloca todo mundo na frente e sempre fica por último</li>
+        <li class="reveal reveal-delay-4">Sabe que merece mais, mas não sabe por onde começar</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ===================== PROBLEM ESCALATION ===================== -->
+  <section class="problem section">
+    <div class="container">
+      <span class="crown reveal">👑</span>
+      <h2 class="reveal">O problema não é você.<br>É o que você tá aceitando.</h2>
+      <p class="reveal">Você já tentou mudar. Já leu frases motivacionais, já prometeu pra si mesma que "dessa vez vai ser diferente". Talvez até tenha começado uma terapia.</p>
+      <p class="reveal">Mas no fundo, continua no mesmo ciclo: se anulando, aceitando menos do que merece, e achando que o problema é com você.</p>
+      <p class="reveal"><strong>Não é.</strong></p>
+      <p class="reveal">O que falta não é motivação. É um método prático, com base na psicologia, pra você entender seus padrões e agir diferente. De verdade.</p>
+      <div class="highlight-box reveal-scale">
+        <p>"Não me vesti de medo, me vesti de pele viva. E você também pode."</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== STORY ===================== -->
+  <section class="story section">
+    <div class="container">
+      <div class="story-photo reveal-scale"><img src="deia.png" alt="Deia - Psicóloga e criadora do Manual da Gostosa"></div>
+      <h2 class="reveal">Mas deixa eu te contar<br>um bastidor</h2>
+      <p class="reveal">Eu sou a Deia. Psicóloga, sexóloga, e uma mulher que viveu o mesmo caos emocional que você tá vivendo agora.</p>
+      <p class="reveal">Já aceitei migalhas. Já me anulei por relacionamento. Já me perguntei o que tinha de errado comigo.</p>
+      <p class="reveal">Até que eu entendi: <strong>o problema nunca foi eu. Era o que eu tava aceitando.</strong></p>
+      <p class="reveal">Hoje eu casei de novo. Não por falta, mas por abundância. Por coragem de recomeçar, por ousadia de desafiar o tempo e dizer: <strong>ainda mereço o amor, e mereço inteiro.</strong></p>
+      <p class="reveal">Esse manual nasceu dessa jornada. Da minha história e da experiência clínica com centenas de mulheres. Porque o amor da vida chega no tempo exato em que a gente se escolhe primeiro.</p>
+      <span class="tag reveal">CRP 06-124871 &middot; Psicóloga Clínica e Sexóloga</span>
+    </div>
+  </section>
+
+  <!-- ===================== SOLUTION ===================== -->
+  <section class="solution section">
+    <div class="container">
+      <span class="crown reveal">👑</span>
+      <h2 class="reveal">O que é o Manual</h2>
+      <p class="lead reveal">7 dias de conteúdo prático pra transformar a forma como você se enxerga</p>
+      <div class="solution-grid">
+        <div class="solution-card reveal reveal-delay-1">
+          <h3>Ebook completo (85 páginas)</h3>
+          <p>Conteúdo diário com exercícios pra você aplicar imediatamente. Sem enrolação, sem textão acadêmico.</p>
+        </div>
+        <div class="solution-card reveal reveal-delay-2">
+          <h3>Exercícios de autoconhecimento</h3>
+          <p>Atividades guiadas pra identificar seus padrões, entender seus gatilhos e quebrar ciclos que se repetem.</p>
+        </div>
+        <div class="solution-card reveal reveal-delay-3">
+          <h3>Guia de limites saudáveis</h3>
+          <p>Como dizer "não" sem culpa. Nos relacionamentos, na família e no trabalho.</p>
+        </div>
+        <div class="solution-card reveal reveal-delay-4">
+          <h3>Bônus: FAQ Emocional</h3>
+          <p>As perguntas que toda mulher faz (e tem vergonha de perguntar) respondidas com base na psicologia.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== PILLARS ===================== -->
+  <section class="pillars section">
+    <div class="container">
+      <span class="crown reveal">👑</span>
+      <h2 class="reveal">Os 5 Pilares</h2>
+      <p class="lead reveal">O mapa da estabilidade emocional que você vai percorrer</p>
+      <div class="pillars-grid">
+        <div class="pillar-item reveal reveal-delay-1">
+          <span class="pillar-num">1</span>
+          <h3>Autoconhecimento</h3>
+          <p>Entender por que você repete os mesmos erros</p>
+        </div>
+        <div class="pillar-item reveal reveal-delay-1">
+          <span class="pillar-num">2</span>
+          <h3>Autovalor</h3>
+          <p>Reconhecer seu valor sem depender de ninguém</p>
+        </div>
+        <div class="pillar-item reveal reveal-delay-2">
+          <span class="pillar-num">3</span>
+          <h3>Sexualidade</h3>
+          <p>A sexualidade como poder pessoal e conexão consigo mesma</p>
+        </div>
+        <div class="pillar-item reveal reveal-delay-2">
+          <span class="pillar-num">4</span>
+          <h3>Inteligência Emocional</h3>
+          <p>Sentir sem se destruir. Reagir com clareza.</p>
+        </div>
+        <div class="pillar-item reveal reveal-delay-3">
+          <span class="pillar-num">5</span>
+          <h3>Limites</h3>
+          <p>Dizer não sem culpa e atrair quem te respeita</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== SOCIAL PROOF ===================== -->
+  <section class="proof section">
+    <div class="container">
+      <span class="crown reveal">👑</span>
+      <h2 class="reveal">Quem viu, já quer</h2>
+      <p class="lead reveal">Comentários reais no lançamento do manual</p>
+      <div class="testimonials">
+        <div class="testimonial reveal reveal-delay-1">
+          <p>"Ansiosa para consumir esse projeto!!!"</p>
+          <span class="who">@dralorranepeixoto</span>
+        </div>
+        <div class="testimonial reveal reveal-delay-1">
+          <p>"Maravilhosa aaaaa! Eu quero muito! ❤️"</p>
+          <span class="who">@mccferrari ✓</span>
+        </div>
+        <div class="testimonial reveal reveal-delay-2">
+          <p>"Querooo"</p>
+          <span class="who">@leticiasabbag</span>
+        </div>
+        <div class="testimonial reveal reveal-delay-2">
+          <p>"😍😍😍 Sucesso!"</p>
+          <span class="who">@drataminenobre</span>
+        </div>
+        <div class="testimonial reveal reveal-delay-3">
+          <p>"Ansiosa ❤️"</p>
+          <span class="who">@projetopsico_e_nutri</span>
+        </div>
+        <div class="testimonial reveal reveal-delay-3">
+          <p>"😍😍😍😍"</p>
+          <span class="who">@clarasossai</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== VALUE ANCHOR ===================== -->
+  <section class="anchor section">
+    <div class="container">
+      <span class="crown reveal">👑</span>
+      <h2 class="reveal">Coloca na ponta do lápis</h2>
+      <p class="reveal">Uma sessão de terapia custa entre <span class="number">R$150</span> e <span class="number">R$350</span>.</p>
+      <p class="reveal">O Manual da Gostosa te entrega 7 dias de conteúdo prático com base psicológica, exercícios guiados e um método pra você aplicar no seu tempo. E custa menos que uma única sessão.</p>
+      <p class="reveal">E se não fizer sentido, você tem 7 dias pra pedir seu dinheiro de volta.</p>
+    </div>
+  </section>
+
+  <!-- ===================== PRICING ===================== -->
+  <section class="pricing section" id="comprar">
+    <div class="container">
+      <div class="price-card reveal-scale">
+        <span class="crown">👑</span>
+        <h2>Manual da Gostosa</h2>
+        <p class="sub">Emocionalmente Estável</p>
+
+        <p class="price-compare">De <span>R$197</span></p>
+        <p class="price-value"><small>R$</small>97</p>
+        <p class="price-installment">ou 12x de R$9,70</p>
+
+        <ul class="price-includes">
+          <li>Ebook completo, 85 páginas</li>
+          <li>7 dias de conteúdo prático com exercícios</li>
+          <li>Mapa dos 5 Pilares da Estabilidade Emocional</li>
+          <li>Guia de limites saudáveis</li>
+          <li>Bônus: FAQ Emocional</li>
+          <li>Acesso imediato após a compra</li>
+        </ul>
+
+        <a href="https://go.hotmart.com/R106535826M" class="cta-btn cta-pulse">Quero me transformar</a>
+
+        <p class="guarantee-text"><strong>Garantia incondicional de 7 dias.</strong> Se não fizer sentido pra você, devolvemos 100% do valor. Sem perguntas, sem burocracia.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FAQ ===================== -->
+  <section class="faq section">
+    <div class="container">
+      <span class="crown reveal">👑</span>
+      <h2 class="reveal">Perguntas frequentes</h2>
+      <div class="faq-list">
+        <details class="faq-item reveal">
+          <summary>Pra quem é esse manual?</summary>
+          <p>Pra qualquer mulher que sente que está se anulando, aceitando menos do que merece ou presa em padrões emocionais que se repetem. Não importa se você está em um relacionamento ou não. O manual é sobre você, não sobre ele.</p>
+        </details>
+        <details class="faq-item reveal">
+          <summary>Isso substitui terapia?</summary>
+          <p>Não. O manual complementa a terapia. Ele te dá ferramentas práticas pro dia a dia. Se você já faz terapia, vai potencializar seus resultados. Se não faz, vai te dar um ponto de partida sólido.</p>
+        </details>
+        <details class="faq-item reveal">
+          <summary>É só teoria ou tem parte prática?</summary>
+          <p>Tem muita parte prática. São 7 dias de exercícios, reflexões guiadas e atividades pra aplicar na vida real. Nada de textão acadêmico. Tudo direto ao ponto.</p>
+        </details>
+        <details class="faq-item reveal">
+          <summary>Como eu recebo?</summary>
+          <p>Imediatamente após a compra, você recebe o acesso por email. É um ebook digital (PDF) que você pode ler no celular, tablet ou computador.</p>
+        </details>
+        <details class="faq-item reveal">
+          <summary>E se eu não gostar?</summary>
+          <p>Você tem 7 dias de garantia incondicional. Se por qualquer motivo não fizer sentido, é só pedir reembolso. 100% do valor de volta, sem perguntas.</p>
+        </details>
+        <details class="faq-item reveal">
+          <summary>Quem é a autora?</summary>
+          <p>Deia (Andrea Hermínia Elia Maiafa) é psicóloga clínica e sexóloga, registrada no CRP 06-124871. O manual combina experiência clínica com sua própria jornada de transformação.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FINAL CTA ===================== -->
+  <section class="final-cta">
+    <div class="container">
+      <span class="crown reveal">👑</span>
+      <h2 class="reveal">O amor da vida chega no tempo exato<br>em que a gente se escolhe primeiro</h2>
+      <p class="reveal">São R$97 entre continuar do jeito que tá ou começar a se escolher de verdade.</p>
+      <a href="#comprar" class="cta-btn cta-pulse reveal">Quero meu Manual por R$97</a>
+      <span class="micro reveal">Acesso imediato &middot; Garantia de 7 dias &middot; PDF pra ler onde quiser</span>
+    </div>
+  </section>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer>
+    <p>Manual da Gostosa Emocionalmente Estável &middot; Todos os direitos reservados</p>
+    <p>Criado por <strong>Deia</strong> (CRP 06-124871) &middot; <a href="https://www.instagram.com/manualdagostosa.ee/" target="_blank" rel="noopener">@manualdagostosa.ee</a></p>
+    <p style="margin-top: 8px;">Este produto não substitui acompanhamento psicológico profissional.</p>
+  </footer>
+
+  <!-- ===================== STICKY CTA MOBILE ===================== -->
+  <div class="sticky-cta" id="stickyCta">
+    <a href="#comprar" class="cta-btn">Quero meu Manual por R$97</a>
+    <p class="sticky-price">Garantia de 7 dias &middot; Acesso imediato</p>
+  </div>
+
+  <!-- ===================== SCRIPTS ===================== -->
+  <script>
+    // Scroll progress bar
+    window.addEventListener('scroll', () => {
+      const winScroll = document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = (winScroll / height) * 100;
+      document.getElementById('progressBar').style.width = scrolled + '%';
+    });
+
+    // Reveal on scroll (Intersection Observer)
+    const revealElements = document.querySelectorAll('.reveal, .reveal-left, .reveal-scale');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+
+    revealElements.forEach(el => observer.observe(el));
+
+    // Sticky CTA on mobile
+    const stickyCta = document.getElementById('stickyCta');
+    const heroSection = document.querySelector('.hero');
+    const pricingSection = document.getElementById('comprar');
+
+    if (window.innerWidth <= 600) {
+      const stickyObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting && entry.target === heroSection) {
+            const pricingRect = pricingSection.getBoundingClientRect();
+            if (pricingRect.top > window.innerHeight) {
+              stickyCta.classList.add('visible');
+            }
+          } else if (entry.isIntersecting && entry.target === heroSection) {
+            stickyCta.classList.remove('visible');
+          }
+          if (entry.isIntersecting && entry.target === pricingSection) {
+            stickyCta.classList.remove('visible');
+          }
+          if (!entry.isIntersecting && entry.target === pricingSection) {
+            const pricingRect = pricingSection.getBoundingClientRect();
+            if (pricingRect.bottom < 0) {
+              stickyCta.classList.add('visible');
+            }
+          }
+        });
+      }, { threshold: 0 });
+
+      stickyObserver.observe(heroSection);
+      stickyObserver.observe(pricingSection);
+    }
+
+    // Smooth number count animation for price
+    const priceEl = document.querySelector('.price-value');
+    let priceCounted = false;
+    const priceObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !priceCounted) {
+          priceCounted = true;
+          let current = 0;
+          const target = 97;
+          const duration = 1200;
+          const start = performance.now();
+          const animate = (now) => {
+            const elapsed = now - start;
+            const progress = Math.min(elapsed / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 3);
+            current = Math.floor(eased * target);
+            priceEl.innerHTML = '<small>R$</small>' + current;
+            if (progress < 1) requestAnimationFrame(animate);
+          };
+          requestAnimationFrame(animate);
+        }
+      });
+    }, { threshold: 0.5 });
+    priceObserver.observe(priceEl);
+  </script>
+</body>
+</html>
