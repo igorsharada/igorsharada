@@ -124,6 +124,37 @@
       background-repeat: repeat;
     }
 
+    /* ── PARALLAX ── */
+    .parallax-wrap {
+      overflow: hidden;
+      position: relative;
+    }
+    .parallax-img {
+      width: 100%;
+      height: 130%;
+      object-fit: cover;
+      position: absolute;
+      top: -15%;
+      left: 0;
+      will-change: transform;
+    }
+    .parallax-section {
+      position: relative;
+      overflow: hidden;
+    }
+    .parallax-bg {
+      position: absolute;
+      inset: -20% 0;
+      background-size: cover;
+      background-position: center;
+      will-change: transform;
+      z-index: 0;
+    }
+    .parallax-content {
+      position: relative;
+      z-index: 1;
+    }
+
     /* ── REVEAL ── */
     .reveal {
       opacity: 0;
@@ -619,23 +650,20 @@
       overflow: visible;
     }
 
-    .cta-section::before {
-      content: '';
+    .cta-glow {
       position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 900px;
-      height: 900px;
-      background: radial-gradient(ellipse, var(--accent-glow) 0%, transparent 60%);
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(ellipse, rgba(46, 204, 113, 0.15) 0%, rgba(46, 204, 113, 0.05) 40%, transparent 70%);
       pointer-events: none;
-      animation: breathe 4s ease-in-out infinite;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      transition: left 0.4s cubic-bezier(0.16, 1, 0.3, 1), top 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s;
+      opacity: 0;
+      z-index: 0;
     }
-
-    @keyframes breathe {
-      0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
-      50% { transform: translate(-50%, -50%) scale(1.15); opacity: 1; }
-    }
+    .cta-section:hover .cta-glow { opacity: 1; }
+    .cta-section .cta-title, .cta-section .cta-sub, .cta-section .cta-whatsapp { position: relative; z-index: 1; }
 
     .cta-title {
       font-family: var(--heading);
@@ -764,8 +792,8 @@
         <p class="hero-sub">Pra restaurantes, clínicas, hotéis e negócios premium que merecem aparecer do jeito certo, pro público certo. Foto, vídeo, conteúdo, anúncios e sites.</p>
         <a href="#contato" class="hero-cta">Quero conversar →</a>
       </div>
-      <div class="hero-img-wrap">
-        <img src="img/igor-hero.jpg" alt="Igor SHarada">
+      <div class="hero-img-wrap parallax-wrap" style="height:100%;">
+        <img src="img/igor-hero.jpg" alt="Igor SHarada" class="parallax-img" data-speed="0.3">
       </div>
     </div>
   </section>
@@ -830,14 +858,27 @@
     <div class="section-label reveal" style="text-align:center;">Bastidores</div>
     <div class="section-title reveal" style="text-align:center;margin-bottom:40px;">Do bastidor ao resultado.</div>
     <div class="reveal photo-break-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
-      <div style="border-radius:20px;overflow:hidden;height:400px;">
-        <img src="img/setup-studio.jpg" alt="Setup profissional" style="width:100%;height:100%;object-fit:cover;filter:grayscale(20%);transition:filter 0.5s,transform 0.5s;" onmouseover="this.style.filter='grayscale(0%)';this.style.transform='scale(1.03)'" onmouseout="this.style.filter='grayscale(20%)';this.style.transform='scale(1)'">
+      <div class="parallax-wrap" style="border-radius:20px;height:400px;">
+        <img src="img/setup-studio.jpg" alt="Setup profissional" class="parallax-img" data-speed="0.12" style="filter:grayscale(20%);transition:filter 0.5s;" onmouseover="this.style.filter='grayscale(0%)'" onmouseout="this.style.filter='grayscale(20%)'">
       </div>
-      <div style="border-radius:20px;overflow:hidden;height:400px;">
-        <img src="img/igor-kitchen.jpg" alt="Igor SHarada filmando na cozinha" style="width:100%;height:100%;object-fit:cover;filter:grayscale(20%);transition:filter 0.5s,transform 0.5s;" onmouseover="this.style.filter='grayscale(0%)';this.style.transform='scale(1.03)'" onmouseout="this.style.filter='grayscale(20%)';this.style.transform='scale(1)'">
+      <div class="parallax-wrap" style="border-radius:20px;height:400px;">
+        <img src="img/igor-kitchen.jpg" alt="Igor SHarada filmando na cozinha" class="parallax-img" data-speed="0.28" style="filter:grayscale(20%);transition:filter 0.5s;" onmouseover="this.style.filter='grayscale(0%)'" onmouseout="this.style.filter='grayscale(20%)'">
       </div>
     </div>
   </section>
+
+  <!-- PARALLAX DIVIDER -->
+  <div class="parallax-section" style="height:360px;margin:0 auto;max-width:1300px;">
+    <div class="parallax-bg" data-speed="0.15" style="background-image:url('img/igor-process.jpg');opacity:0.2;"></div>
+    <div class="parallax-bg" data-speed="0.35" style="background:radial-gradient(ellipse at 30% 50%, var(--accent-glow) 0%, transparent 50%);opacity:0.6;"></div>
+    <div class="parallax-bg" data-speed="0.5" style="background:radial-gradient(ellipse at 70% 60%, rgba(46,204,113,0.06) 0%, transparent 40%);opacity:0.8;"></div>
+    <div class="parallax-content" style="height:100%;display:flex;align-items:center;justify-content:center;">
+      <div style="text-align:center;">
+        <div class="reveal" style="font-family:var(--heading);font-size:clamp(20px,3vw,32px);font-weight:800;letter-spacing:-1px;color:var(--text);">O que aparece nas redes hoje</div>
+        <div class="reveal reveal-delay-1" style="font-family:var(--heading);font-size:clamp(20px,3vw,32px);font-weight:800;letter-spacing:-1px;color:var(--accent);">não mostra nem metade do que você entrega.</div>
+      </div>
+    </div>
+  </div>
 
   <!-- SERVICES -->
   <section class="services">
@@ -904,8 +945,40 @@
     <div class="section-label reveal">Como trabalhar comigo</div>
     <div class="section-title reveal">Três formas, um objetivo:<br><span style="color:var(--accent);">sua marca vendendo mais.</span></div>
 
-    <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:20px; margin-top:48px;">
-      <div class="service-card reveal" style="border-top:2px solid var(--accent-glow); padding:32px 24px;">
+    <style>
+      .esteira-carousel {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+        margin-top: 48px;
+      }
+      .esteira-carousel .esteira-card {
+        padding: 32px 24px;
+      }
+      .carousel-controls { display: none; }
+
+      @media (max-width: 768px) {
+        .esteira-carousel {
+          display: flex;
+          overflow-x: auto;
+          scroll-snap-type: x mandatory;
+          -webkit-overflow-scrolling: touch;
+          scrollbar-width: none;
+          padding-bottom: 8px;
+          gap: 16px;
+        }
+        .esteira-carousel::-webkit-scrollbar { display: none; }
+        .esteira-carousel .esteira-card {
+          min-width: 85vw;
+          flex-shrink: 0;
+          scroll-snap-align: center;
+        }
+        .carousel-controls { display: flex; }
+      }
+    </style>
+
+    <div class="esteira-carousel">
+      <div class="service-card reveal esteira-card" style="border-top:2px solid var(--accent-glow);">
         <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1.5px; color:var(--text-muted); margin-bottom:16px;">Direção Criativa</div>
         <div class="service-name" style="font-size:18px; margin-bottom:12px;">Marca e conteúdo</div>
         <div class="service-desc" style="font-size:13px; margin-bottom:20px;">Foto, vídeo, estratégia, copy, ads e gerenciamento. Sua marca aparecendo do tamanho que ela é.</div>
@@ -918,7 +991,7 @@
         </div>
       </div>
 
-      <a href="canal-direto.html" class="service-card reveal reveal-delay-1" style="border-top:2px solid var(--accent-glow); padding:32px 24px; text-decoration:none; color:inherit;">
+      <a href="canal-direto.html" class="service-card reveal reveal-delay-1 esteira-card" style="border-top:2px solid var(--accent-glow); text-decoration:none; color:inherit;">
         <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1.5px; color:var(--text-muted); margin-bottom:16px;">Sistema de Vendas</div>
         <div class="service-name" style="font-size:18px; margin-bottom:12px;">Canal direto</div>
         <div class="service-desc" style="font-size:13px; margin-bottom:20px;">WhatsApp automatizado, painel de pedidos, CRM, gestão de iFood e migração pro seu canal. Você só despacha.</div>
@@ -932,7 +1005,7 @@
         <div style="margin-top:20px; font-size:12px; font-weight:600; letter-spacing:1px; text-transform:uppercase; color:var(--accent);">Saiba mais →</div>
       </a>
 
-      <a href="canal-direto.html" class="service-card reveal reveal-delay-2" style="border-top:2px solid var(--accent); padding:32px 24px; text-decoration:none; color:inherit;">
+      <a href="canal-direto.html" class="service-card reveal reveal-delay-2 esteira-card" style="border-top:2px solid var(--accent); text-decoration:none; color:inherit;">
         <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1.5px; color:var(--accent); margin-bottom:16px;">Pacote completo</div>
         <div class="service-name" style="font-size:18px; margin-bottom:12px;">Marca + Vendas</div>
         <div class="service-desc" style="font-size:13px; margin-bottom:20px;">Tudo integrado numa operação só. Conteúdo que constrói marca e sistema que converte em venda.</div>
@@ -947,6 +1020,17 @@
       </a>
     </div>
 
+    <!-- Controles (só mobile) -->
+    <div class="carousel-controls" style="justify-content:center; align-items:center; gap:24px; margin-top:24px;">
+      <button onclick="scrollCarousel(-1)" style="background:none; border:1px solid rgba(255,255,255,0.1); color:var(--text); width:40px; height:40px; font-size:18px; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:border-color 0.3s; font-family:inherit;">&larr;</button>
+      <div style="display:flex; gap:8px;" class="carousel-dots">
+        <button onclick="goToSlide(0)" style="width:24px; height:3px; background:var(--accent); border:none; cursor:pointer; border-radius:2px; transition:all 0.3s; padding:0;" class="dot"></button>
+        <button onclick="goToSlide(1)" style="width:24px; height:3px; background:var(--text-muted); border:none; cursor:pointer; border-radius:2px; transition:all 0.3s; opacity:0.3; padding:0;" class="dot"></button>
+        <button onclick="goToSlide(2)" style="width:24px; height:3px; background:var(--text-muted); border:none; cursor:pointer; border-radius:2px; transition:all 0.3s; opacity:0.3; padding:0;" class="dot"></button>
+      </div>
+      <button onclick="scrollCarousel(1)" style="background:none; border:1px solid rgba(255,255,255,0.1); color:var(--text); width:40px; height:40px; font-size:18px; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:border-color 0.3s; font-family:inherit;">&rarr;</button>
+    </div>
+
     <div class="reveal reveal-delay-3" style="text-align:center; margin-top:40px; padding:20px; background:var(--bg-card); font-size:13px; color:var(--text-muted);">
       Valores sob consulta. Cada negócio tem seu tamanho e seu momento. A gente conversa, olha os números e monta o que faz sentido.
     </div>
@@ -957,10 +1041,10 @@
     <div class="section-label reveal">Pra quem é</div>
     <div class="section-title reveal">Mesmo sistema, adaptado<br>pro <span style="color:var(--accent)">seu mercado.</span></div>
 
-    <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:20px; margin-top:48px;">
+    <div class="esteira-carousel" style="margin-top:48px;">
 
-      <div class="service-card reveal" style="padding:32px 24px; position:relative; overflow:hidden;">
-        <div style="font-size:36px; margin-bottom:16px;">🍞</div>
+      <div class="service-card reveal esteira-card" style="position:relative; overflow:hidden;">
+        <div style="width:48px;height:48px;display:flex;align-items:center;justify-content:center;background:var(--accent-glow);border-radius:12px;margin-bottom:16px;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2ECC71" stroke-width="1.5"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg></div>
         <div class="service-name" style="font-size:18px; margin-bottom:8px;">Gastronomia</div>
         <div style="font-size:12px; color:var(--text-muted); margin-bottom:16px;">Padarias, restaurantes, confeitarias, hamburguerias, pizzarias</div>
         <div style="border-top:1px solid #222; padding-top:16px; font-size:12px; color:var(--text-muted);">
@@ -973,8 +1057,8 @@
         </div>
       </div>
 
-      <div class="service-card reveal reveal-delay-1" style="padding:32px 24px; position:relative; overflow:hidden;">
-        <div style="font-size:36px; margin-bottom:16px;">🏥</div>
+      <div class="service-card reveal reveal-delay-1 esteira-card" style="position:relative; overflow:hidden;">
+        <div style="width:48px;height:48px;display:flex;align-items:center;justify-content:center;background:var(--accent-glow);border-radius:12px;margin-bottom:16px;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2ECC71" stroke-width="1.5"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
         <div class="service-name" style="font-size:18px; margin-bottom:8px;">Saúde</div>
         <div style="font-size:12px; color:var(--text-muted); margin-bottom:16px;">Clínicas, dentistas, médicos, estéticas, nutricionistas, psicólogos</div>
         <div style="border-top:1px solid #222; padding-top:16px; font-size:12px; color:var(--text-muted);">
@@ -987,8 +1071,8 @@
         </div>
       </div>
 
-      <div class="service-card reveal reveal-delay-2" style="padding:32px 24px; position:relative; overflow:hidden;">
-        <div style="font-size:36px; margin-bottom:16px;">🏢</div>
+      <div class="service-card reveal reveal-delay-2 esteira-card" style="position:relative; overflow:hidden;">
+        <div style="width:48px;height:48px;display:flex;align-items:center;justify-content:center;background:var(--accent-glow);border-radius:12px;margin-bottom:16px;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2ECC71" stroke-width="1.5"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></div>
         <div class="service-name" style="font-size:18px; margin-bottom:8px;">Serviços e Indústria</div>
         <div style="font-size:12px; color:var(--text-muted); margin-bottom:16px;">Gráficas, hotéis, estúdios, lojas, prestadores de serviço</div>
         <div style="border-top:1px solid #222; padding-top:16px; font-size:12px; color:var(--text-muted);">
@@ -1018,6 +1102,7 @@
 
   <!-- CTA -->
   <section class="cta-section" id="contato">
+    <div class="cta-glow" id="ctaGlow"></div>
     <div class="cta-title reveal">Quer ver o que eu<br>faria com a <span style="color:var(--accent)">sua marca?</span></div>
     <p class="cta-sub reveal reveal-delay-1">Sem compromisso, sem formulário. Me manda uma mensagem.</p>
     <a href="https://wa.me/5511947933300?text=Oi%20Igor%2C%20vi%20seu%20trabalho%20e%20quero%20conversar" class="cta-whatsapp reveal reveal-delay-2">Chamar no WhatsApp</a>
@@ -1071,7 +1156,79 @@
       const scrolled = window.scrollY / (document.body.scrollHeight - window.innerHeight);
       progressBar.style.width = (scrolled * 100) + '%';
       nav.classList.toggle('scrolled', window.scrollY > 60);
+
+      // Parallax
+      document.querySelectorAll('.parallax-img').forEach(img => {
+        const rect = img.closest('.parallax-wrap').getBoundingClientRect();
+        const speed = parseFloat(img.dataset.speed) || 0.2;
+        const yPos = -(rect.top * speed);
+        img.style.transform = 'translate3d(0,' + yPos + 'px, 0)';
+      });
+
+      document.querySelectorAll('.parallax-bg').forEach(bg => {
+        const rect = bg.parentElement.getBoundingClientRect();
+        const speed = parseFloat(bg.dataset.speed) || 0.3;
+        const yPos = -(rect.top * speed);
+        bg.style.transform = 'translate3d(0,' + yPos + 'px, 0)';
+      });
     });
+
+    // CTA glow follow cursor (smooth lerp)
+    const ctaSection = document.querySelector('.cta-section');
+    const ctaGlow = document.getElementById('ctaGlow');
+    let glowX = 0, glowY = 0, targetX = 0, targetY = 0, glowActive = false;
+
+    if (ctaSection && ctaGlow) {
+      ctaGlow.style.transition = 'none';
+
+      ctaSection.addEventListener('mouseenter', () => { glowActive = true; ctaGlow.style.opacity = '1'; });
+      ctaSection.addEventListener('mouseleave', () => { glowActive = false; ctaGlow.style.opacity = '0'; });
+
+      ctaSection.addEventListener('mousemove', (e) => {
+        const rect = ctaSection.getBoundingClientRect();
+        targetX = e.clientX - rect.left;
+        targetY = e.clientY - rect.top;
+      });
+
+      function animateGlow() {
+        glowX += (targetX - glowX) * 0.05;
+        glowY += (targetY - glowY) * 0.05;
+        ctaGlow.style.left = glowX + 'px';
+        ctaGlow.style.top = glowY + 'px';
+        requestAnimationFrame(animateGlow);
+      }
+      animateGlow();
+    }
+
+    // Carousel
+    const carousel = document.querySelector('.esteira-carousel');
+    const dots = document.querySelectorAll('.carousel-dots .dot');
+
+    function getCardWidth() {
+      if (!carousel || !carousel.firstElementChild) return 300;
+      return carousel.firstElementChild.offsetWidth + 20;
+    }
+
+    function updateDots() {
+      if (!carousel || !dots.length) return;
+      const index = Math.round(carousel.scrollLeft / getCardWidth());
+      dots.forEach((d, i) => {
+        d.style.background = i === index ? 'var(--accent)' : 'var(--text-muted)';
+        d.style.opacity = i === index ? '1' : '0.3';
+      });
+    }
+
+    function scrollCarousel(dir) {
+      if (!carousel) return;
+      carousel.scrollBy({ left: dir * getCardWidth(), behavior: 'smooth' });
+    }
+
+    function goToSlide(index) {
+      if (!carousel) return;
+      carousel.scrollTo({ left: index * getCardWidth(), behavior: 'smooth' });
+    }
+
+    if (carousel) carousel.addEventListener('scroll', updateDots);
 
     // Scroll reveal
     const revealObserver = new IntersectionObserver((entries) => {
