@@ -516,11 +516,12 @@
       speechSynthesis.cancel();
       const utter = new SpeechSynthesisUtterance(demoNarrations[n]);
       utter.lang = 'pt-BR';
-      utter.rate = 0.95;
+      utter.rate = 0.92;
       utter.pitch = 1;
       const voices = speechSynthesis.getVoices();
       const ptVoice = voices.find(v => v.lang.startsWith('pt') && v.name.includes('Google')) || voices.find(v => v.lang.startsWith('pt'));
       if (ptVoice) utter.voice = ptVoice;
+      utter.onend = () => { setTimeout(demoAutoNext, 1500); };
       speechSynthesis.speak(utter);
     }
   }
@@ -529,15 +530,24 @@
     demoGoTo((demoCurrent + dir + demoTotal) % demoTotal);
   }
 
+  function demoAutoNext() {
+    if (!demoAuto) return;
+    if (demoCurrent < demoTotal - 1) {
+      demoNav(1);
+    } else {
+      demoAuto = false;
+      document.getElementById('demoPlayBtn').textContent = '▶';
+    }
+  }
+
   function demoToggleAuto() {
     const btn = document.getElementById('demoPlayBtn');
     if (demoAuto) {
-      clearInterval(demoAuto);
-      demoAuto = null;
+      demoAuto = false;
       btn.textContent = '▶';
       speechSynthesis.cancel();
     } else {
-      demoAuto = setInterval(() => demoNav(1), 6000);
+      demoAuto = true;
       btn.textContent = '⏸';
       demoGoTo(demoCurrent);
     }
