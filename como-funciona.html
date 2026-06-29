@@ -332,6 +332,108 @@
   </div>
 </section>
 
+<!-- DEMO INTERATIVA -->
+<section>
+  <div class="section-label reveal">Demonstração</div>
+  <div class="section-title reveal">Veja o sistema <span class="accent">funcionando.</span></div>
+  <div class="section-desc reveal">Clique em play pra assistir a demo narrada, ou navegue manualmente com as setas.</div>
+
+  <div class="reveal" style="background:var(--bg-card); border:1px solid rgba(255,255,255,0.06); border-radius:8px; overflow:hidden; position:relative; min-height:480px;">
+
+    <!-- DEMO SLIDES -->
+    <div class="demo-slide demo-active" data-demo="0" style="padding:60px 40px; text-align:center; display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:480px;">
+      <div style="font-size:11px; font-weight:600; letter-spacing:3px; text-transform:uppercase; color:var(--accent); margin-bottom:16px;">Canal Direto</div>
+      <div style="font-family:var(--heading); font-size:clamp(24px,3vw,36px); font-weight:800; letter-spacing:-1px; margin-bottom:12px;">Seu cliente compra <span style="color:var(--accent);">direto de você</span></div>
+      <div style="font-size:14px; color:var(--text-muted); max-width:400px;">Do primeiro contato até o pedido entregue e o painel de controle.</div>
+    </div>
+
+    <div class="demo-slide" data-demo="1" style="padding:40px; display:flex; gap:40px; align-items:center; justify-content:center; min-height:480px; flex-wrap:wrap;">
+      <div style="flex:1; min-width:260px; max-width:360px;">
+        <div style="font-size:11px; font-weight:600; letter-spacing:3px; text-transform:uppercase; color:var(--accent); margin-bottom:12px;">WhatsApp automatizado</div>
+        <div style="font-family:var(--heading); font-size:22px; font-weight:700; margin-bottom:8px;">O robô atende e coleta o pedido</div>
+        <div style="font-size:13px; color:var(--text-muted); line-height:1.7;">O cliente escolhe os produtos, informa o endereço e paga. Tudo no WhatsApp, sem a equipe precisar digitar.</div>
+      </div>
+      <div style="width:260px; background:#0B141A; border-radius:20px; padding:0; overflow:hidden; flex-shrink:0;">
+        <div style="background:#1F2C34; padding:10px 14px; display:flex; align-items:center; gap:8px;">
+          <div style="width:30px;height:30px;background:#2ECC71;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:#1A1A1A;">F</div>
+          <div><div style="font-size:13px;font-weight:600;">Filone Padaria</div><div style="font-size:10px;color:#8696A0;">online</div></div>
+        </div>
+        <div style="padding:10px; display:flex; flex-direction:column; gap:4px; min-height:280px;">
+          <div class="wa-demo-msg bot">Bem-vindo! Como posso ajudar?</div>
+          <div class="wa-demo-msg user">Quero fazer um pedido</div>
+          <div class="wa-demo-msg bot">Aqui está o cardápio. Selecione:</div>
+          <div class="wa-demo-msg user">2x Sourdough e 1x Focaccia</div>
+          <div class="wa-demo-msg bot">Total: R$119. Entrega ou retirada?</div>
+          <div class="wa-demo-msg user">Entrega</div>
+          <div class="wa-demo-msg bot" style="color:#2ECC71;">Pedido confirmado! Previsão: 45 min.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo-slide" data-demo="2" style="padding:40px; display:flex; gap:40px; align-items:center; justify-content:center; min-height:480px; flex-wrap:wrap;">
+      <div style="flex:1; min-width:260px; max-width:360px;">
+        <div style="font-size:11px; font-weight:600; letter-spacing:3px; text-transform:uppercase; color:var(--accent); margin-bottom:12px;">App da equipe</div>
+        <div style="font-family:var(--heading); font-size:22px; font-weight:700; margin-bottom:8px;">Pedido chega na hora, no celular</div>
+        <div style="font-size:13px; color:var(--text-muted); line-height:1.7;">Notificação instantânea. A equipe vê o pedido, prepara e despacha. Acabou um produto? Desativa com um toque.</div>
+      </div>
+      <div style="width:260px; background:#0F0F0F; border-radius:20px; padding:16px; flex-shrink:0;">
+        <div style="display:flex;gap:6px;margin-bottom:12px;">
+          <div style="flex:1;background:#1A1A1A;padding:10px;text-align:center;border-radius:8px;"><div style="font-size:18px;font-weight:800;color:#F39C12;">3</div><div style="font-size:8px;color:#555;text-transform:uppercase;">Pendentes</div></div>
+          <div style="flex:1;background:#1A1A1A;padding:10px;text-align:center;border-radius:8px;"><div style="font-size:18px;font-weight:800;color:#3498DB;">1</div><div style="font-size:8px;color:#555;text-transform:uppercase;">Preparando</div></div>
+          <div style="flex:1;background:#1A1A1A;padding:10px;text-align:center;border-radius:8px;"><div style="font-size:18px;font-weight:800;color:#2ECC71;">8</div><div style="font-size:8px;color:#555;text-transform:uppercase;">Entregues</div></div>
+        </div>
+        <div style="background:#1A1A1A;padding:12px;border-radius:8px;border-left:3px solid #F39C12;margin-bottom:6px;">
+          <div style="display:flex;justify-content:space-between;"><span style="font-size:13px;font-weight:700;">Maria Silva</span><span style="font-size:10px;color:#555;">14:34</span></div>
+          <div style="font-size:11px;color:#888;margin:4px 0;">2x Sourdough, 1x Focaccia</div>
+          <div style="display:flex;justify-content:space-between;"><span style="font-size:9px;padding:2px 6px;background:#2ECC7133;color:#2ECC71;border-radius:3px;">WhatsApp</span><span style="font-size:14px;font-weight:800;color:#2ECC71;">R$ 119</span></div>
+        </div>
+        <div style="background:#1A1A1A;padding:12px;border-radius:8px;border-left:3px solid #F39C12;">
+          <div style="display:flex;justify-content:space-between;"><span style="font-size:13px;font-weight:700;">Roberto Filho</span><span style="font-size:10px;color:#555;">14:32</span></div>
+          <div style="font-size:11px;color:#888;margin:4px 0;">1x Pão de Forma Grãos</div>
+          <div style="display:flex;justify-content:space-between;"><span style="font-size:9px;padding:2px 6px;background:#9B59B633;color:#9B59B6;border-radius:3px;">Ads</span><span style="font-size:14px;font-weight:800;color:#2ECC71;">R$ 49</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo-slide" data-demo="3" style="padding:40px; text-align:center; display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:480px;">
+      <div style="font-size:11px; font-weight:600; letter-spacing:3px; text-transform:uppercase; color:var(--accent); margin-bottom:12px;">Dashboard</div>
+      <div style="font-family:var(--heading); font-size:22px; font-weight:700; margin-bottom:16px;">Acompanhe tudo num painel</div>
+      <div style="display:flex; gap:12px; flex-wrap:wrap; justify-content:center; margin-bottom:20px;">
+        <div style="background:#222;padding:16px 20px;border-radius:8px;text-align:center;min-width:100px;"><div style="font-size:24px;font-weight:800;color:#2ECC71;">12</div><div style="font-size:9px;color:#555;text-transform:uppercase;margin-top:4px;">Pedidos hoje</div></div>
+        <div style="background:#222;padding:16px 20px;border-radius:8px;text-align:center;min-width:100px;"><div style="font-size:24px;font-weight:800;">R$ 847</div><div style="font-size:9px;color:#555;text-transform:uppercase;margin-top:4px;">Faturamento</div></div>
+        <div style="background:#222;padding:16px 20px;border-radius:8px;text-align:center;min-width:100px;"><div style="font-size:24px;font-weight:800;">347</div><div style="font-size:9px;color:#555;text-transform:uppercase;margin-top:4px;">Clientes</div></div>
+        <div style="background:#222;padding:16px 20px;border-radius:8px;text-align:center;min-width:100px;"><div style="font-size:24px;font-weight:800;color:#F39C12;">3</div><div style="font-size:9px;color:#555;text-transform:uppercase;margin-top:4px;">Pendentes</div></div>
+      </div>
+      <div style="font-size:13px; color:var(--text-muted); max-width:400px;">Faturamento, clientes novos, vendas por canal, taxa de recompra. Tudo em tempo real.</div>
+    </div>
+
+    <div class="demo-slide" data-demo="4" style="padding:60px 40px; text-align:center; display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:480px;">
+      <div style="font-family:var(--heading); font-size:clamp(22px,3vw,32px); font-weight:800; letter-spacing:-1px; margin-bottom:16px;">Pronto pra ter isso no <span style="color:var(--accent);">seu negócio?</span></div>
+      <a href="https://wa.me/5511947933300?text=Oi%20Igor%2C%20vi%20a%20demo%20do%20Canal%20Direto%20e%20quero%20saber%20mais" class="btn-primary" style="margin-top:16px;">Chamar no WhatsApp</a>
+    </div>
+
+    <!-- DEMO CONTROLS -->
+    <div style="position:absolute; bottom:16px; left:50%; transform:translateX(-50%); display:flex; gap:12px; align-items:center;">
+      <button onclick="demoNav(-1)" style="width:36px;height:36px;background:rgba(255,255,255,0.06);border:none;color:var(--text);font-size:16px;cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center;">←</button>
+      <button onclick="demoToggleAuto()" id="demoPlayBtn" style="width:36px;height:36px;background:var(--accent);border:none;color:var(--bg);font-size:14px;cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center;">▶</button>
+      <div style="display:flex;gap:6px;" id="demoDots"></div>
+      <button onclick="demoNav(1)" style="width:36px;height:36px;background:rgba(255,255,255,0.06);border:none;color:var(--text);font-size:16px;cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center;">→</button>
+    </div>
+    <div style="position:absolute;bottom:0;left:0;height:3px;background:var(--accent);transition:width 0.5s;" id="demoProgress"></div>
+  </div>
+</section>
+
+<style>
+  .demo-slide { position:absolute; inset:0; opacity:0; transition: opacity 0.6s ease; pointer-events:none; }
+  .demo-slide.demo-active { position:relative; opacity:1; pointer-events:auto; }
+  .wa-demo-msg { padding:6px 10px; border-radius:6px; font-size:12px; line-height:1.4; max-width:80%; }
+  .wa-demo-msg.bot { background:#1F2C34; color:#E9EDEF; align-self:flex-start; border-bottom-left-radius:0; }
+  .wa-demo-msg.user { background:#005C4B; color:#E9EDEF; align-self:flex-end; border-bottom-right-radius:0; }
+  @media (max-width: 768px) {
+    .demo-slide { padding: 24px 16px !important; min-height: 420px !important; }
+  }
+</style>
+
 <!-- CTA -->
 <div class="cta-section" id="contato">
   <div class="section-title reveal">Quer ver funcionando <span class="accent">pro seu negócio?</span></div>
@@ -374,6 +476,75 @@
     document.querySelectorAll('.nicho-detail').forEach(d => d.classList.remove('active'));
     document.querySelectorAll('.nicho-detail[data-nicho="' + nicho + '"]').forEach(d => d.classList.add('active'));
   }
+
+  // Demo slideshow
+  const demoSlides = document.querySelectorAll('.demo-slide');
+  const demoTotal = demoSlides.length;
+  let demoCurrent = 0;
+  let demoAuto = null;
+
+  const demoNarrations = [
+    'Canal Direto. Veja como seu cliente compra direto de você, sem intermediário.',
+    'O cliente entra no WhatsApp do seu negócio. O robô atende automaticamente, mostra o cardápio, coleta o pedido e confirma. Sem a equipe precisar digitar nada.',
+    'O pedido chega no celular da equipe em tempo real. Notificação instantânea. A equipe prepara, atualiza o status, e o cliente acompanha pelo WhatsApp.',
+    'O dono acompanha tudo num dashboard: pedidos do dia, faturamento, clientes na base, vendas por canal. Tudo atualizado em tempo real.',
+    'Quer ter isso no seu negócio? Me manda uma mensagem no WhatsApp.'
+  ];
+
+  // Build dots
+  const dotsContainer = document.getElementById('demoDots');
+  for (let i = 0; i < demoTotal; i++) {
+    const dot = document.createElement('div');
+    dot.style.cssText = 'width:20px;height:3px;border-radius:2px;cursor:pointer;transition:all 0.3s;' + (i === 0 ? 'background:var(--accent);' : 'background:var(--text-muted);opacity:0.3;');
+    dot.onclick = () => demoGoTo(i);
+    dotsContainer.appendChild(dot);
+  }
+
+  function demoGoTo(n) {
+    demoSlides.forEach(s => s.classList.remove('demo-active'));
+    demoSlides[n].classList.add('demo-active');
+    demoCurrent = n;
+    const dots = dotsContainer.children;
+    for (let i = 0; i < dots.length; i++) {
+      dots[i].style.background = i === n ? 'var(--accent)' : 'var(--text-muted)';
+      dots[i].style.opacity = i === n ? '1' : '0.3';
+    }
+    document.getElementById('demoProgress').style.width = ((n + 1) / demoTotal * 100) + '%';
+
+    // Narrate
+    if ('speechSynthesis' in window && demoAuto) {
+      speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(demoNarrations[n]);
+      utter.lang = 'pt-BR';
+      utter.rate = 0.95;
+      utter.pitch = 1;
+      const voices = speechSynthesis.getVoices();
+      const ptVoice = voices.find(v => v.lang.startsWith('pt') && v.name.includes('Google')) || voices.find(v => v.lang.startsWith('pt'));
+      if (ptVoice) utter.voice = ptVoice;
+      speechSynthesis.speak(utter);
+    }
+  }
+
+  function demoNav(dir) {
+    demoGoTo((demoCurrent + dir + demoTotal) % demoTotal);
+  }
+
+  function demoToggleAuto() {
+    const btn = document.getElementById('demoPlayBtn');
+    if (demoAuto) {
+      clearInterval(demoAuto);
+      demoAuto = null;
+      btn.textContent = '▶';
+      speechSynthesis.cancel();
+    } else {
+      demoAuto = setInterval(() => demoNav(1), 6000);
+      btn.textContent = '⏸';
+      demoGoTo(demoCurrent);
+    }
+  }
+
+  // Load voices
+  if ('speechSynthesis' in window) speechSynthesis.getVoices();
 </script>
 
 </body>
