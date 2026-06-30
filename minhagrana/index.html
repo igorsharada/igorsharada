@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>MinhaGrana — Organize sua vida financeira sem complicação</title>
+<link rel="stylesheet" href="https://use.typekit.net/zcj7fwd.css">
+<style>
+  :root {
+    --primaria: #00695C;
+    --primaria-escura: #004D40;
+    --primaria-clara: #E0F2F1;
+    --positivo: #2E7D32;
+    --positivo-claro: #E8F5E9;
+    --negativo: #C62828;
+    --negativo-claro: #FFEBEE;
+    --laranja: #E65100;
+    --laranja-claro: #FFF3E0;
+    --roxo: #6A1B9A;
+    --roxo-claro: #F3E5F5;
+    --azul: #1565C0;
+    --azul-claro: #E3F2FD;
+    --amarelo: #F57F17;
+    --amarelo-claro: #FFF8E1;
+    --escuro: #1A1A1A;
+    --texto-claro: #5C6B6E;
+    --cinza-bg: #F7F9FA;
+    --borda: #E5EAEA;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: "noto-sans", sans-serif;
+    color: var(--escuro);
+    background: #FFFFFF;
+    line-height: 1.5;
+  }
+  h1, h2, h3, .heading { font-family: "oaks", sans-serif; font-weight: 800; }
+  img { max-width: 100%; display: block; }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 20px; }
+  a { text-decoration: none; }
+
+  /* ===== CTA BUTTON ===== */
+  .btn-cta {
+    display: inline-block;
+    background: #2ECC71;
+    color: #FFFFFF;
+    font-weight: 800;
+    font-size: 18px;
+    padding: 18px 36px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 8px 24px rgba(46,204,113,0.35);
+    transition: transform .15s ease;
+  }
+  .btn-cta:active { transform: scale(0.98); }
+  .btn-cta .small { display: block; font-size: 12px; font-weight: 600; opacity: .85; margin-top: 3px; }
+
+  /* ===== HERO ===== */
+  .hero {
+    background: linear-gradient(180deg, var(--primaria) 0%, var(--primaria-escura) 100%);
+    color: #FFFFFF;
+    padding: 36px 0 50px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero .eyebrow {
+    display: inline-block;
+    background: rgba(255,255,255,0.15);
+    color: #E0F2F1;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: .5px;
+    padding: 6px 16px;
+    border-radius: 30px;
+    margin-bottom: 18px;
+  }
+  .hero h1 {
+    font-size: 30px;
+    line-height: 1.25;
+    margin-bottom: 14px;
+    max-width: 680px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .hero h1 .accent { color: #80CBC4; }
+  .hero p.lead {
+    font-size: 16px;
+    color: #CFE9E6;
+    max-width: 480px;
+    margin: 0 auto 26px;
+    font-weight: 400;
+  }
+  .hero .price-tag {
+    font-size: 13px; color: #B2DFDB; margin-top: 14px; font-weight: 600;
+  }
+  .hero .price-tag b { color: #FFFFFF; font-size: 15px; }
+
+  /* dashboard mockup in hero */
+  .mockup {
+    background: #FFFFFF;
+    border-radius: 16px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+    padding: 18px;
+    max-width: 420px;
+    margin: 32px auto 0;
+    text-align: left;
+  }
+  .mockup .mtitle { font-size: 11px; font-weight: 800; color: var(--primaria); margin-bottom: 10px; letter-spacing: .5px; }
+  .mockup .cards { display: flex; gap: 8px; margin-bottom: 12px; }
+  .mockup .card { flex: 1; border-radius: 8px; padding: 8px 6px; text-align: center; }
+  .mockup .card .l { font-size: 8px; font-weight: 800; color: #FFFFFF; opacity: .9; }
+  .mockup .card .v { font-size: 13px; font-weight: 800; color: #FFFFFF; margin-top: 2px; }
+  .mockup .catrow { display: flex; align-items: center; justify-content: space-between; padding: 5px 0; font-size: 11px; color: var(--escuro); border-bottom: 1px solid var(--borda); }
+  .mockup .catrow:last-child { border-bottom: none; }
+  .mockup .bar { background: var(--cinza-bg); border-radius: 6px; height: 6px; width: 80px; overflow: hidden; }
+  .mockup .bar .f { height: 100%; border-radius: 6px; }
+
+  /* ===== SECTION GENERIC ===== */
+  section { padding: 50px 0; }
+  .section-title { font-size: 24px; text-align: center; margin-bottom: 8px; color: var(--escuro); }
+  .section-lead { text-align: center; color: var(--texto-claro); font-size: 15px; max-width: 480px; margin: 0 auto 32px; }
+
+  /* ===== PROBLEMA ===== */
+  .problemas { background: var(--cinza-bg); }
+  .problema-grid { display: grid; grid-template-columns: 1fr; gap: 14px; }
+  .problema-card {
+    background: #FFFFFF; border-radius: 12px; padding: 20px; border: 1px solid var(--borda);
+    display: flex; gap: 14px; align-items: flex-start;
+  }
+  .problema-card .emoji { font-size: 26px; flex-shrink: 0; }
+  .problema-card h3 { font-size: 15px; margin-bottom: 4px; font-weight: 700; font-family: "noto-sans", sans-serif; }
+  .problema-card p { font-size: 13.5px; color: var(--texto-claro); }
+
+  /* ===== FEATURES (abas) ===== */
+  .features-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .feature-card {
+    border-radius: 14px; padding: 18px 14px; color: #FFFFFF; text-align: center;
+  }
+  .feature-card .ic { font-size: 26px; margin-bottom: 8px; }
+  .feature-card .ft { font-size: 13.5px; font-weight: 800; }
+  .feature-card .fd { font-size: 11px; opacity: .9; margin-top: 4px; line-height: 1.4; }
+
+  /* ===== COMO FUNCIONA ===== */
+  .como-funciona { background: var(--primaria-clara); }
+  .passos { display: flex; flex-direction: column; gap: 22px; max-width: 480px; margin: 0 auto; }
+  .passo { display: flex; gap: 16px; align-items: flex-start; }
+  .passo .num {
+    width: 38px; height: 38px; border-radius: 50%; background: var(--primaria); color: #FFFFFF;
+    display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 16px; flex-shrink: 0;
+  }
+  .passo h3 { font-size: 15px; font-weight: 700; margin-bottom: 3px; font-family: "noto-sans", sans-serif; }
+  .passo p { font-size: 13.5px; color: var(--texto-claro); }
+
+  /* ===== ENTREGA ===== */
+  .entrega-lista { max-width: 460px; margin: 0 auto; display: flex; flex-direction: column; gap: 12px; }
+  .entrega-item {
+    display: flex; gap: 12px; align-items: center; background: #FFFFFF; border: 1px solid var(--borda);
+    border-radius: 10px; padding: 14px 16px;
+  }
+  .entrega-item .check {
+    width: 26px; height: 26px; border-radius: 50%; background: var(--positivo-claro); color: var(--positivo);
+    display: flex; align-items: center; justify-content: center; font-weight: 800; flex-shrink: 0; font-size: 14px;
+  }
+  .entrega-item span.txt { font-size: 14px; font-weight: 600; }
+
+  /* ===== PREÇO ===== */
+  .preco-section { background: linear-gradient(180deg, var(--primaria-escura) 0%, var(--primaria) 100%); color: #FFFFFF; text-align: center; }
+  .preco-box {
+    background: #FFFFFF; color: var(--escuro); border-radius: 18px; padding: 32px 24px; max-width: 380px; margin: 0 auto;
+  }
+  .preco-box .old { font-size: 14px; color: var(--texto-claro); text-decoration: line-through; }
+  .preco-box .new { font-size: 44px; font-weight: 800; color: var(--primaria); margin: 4px 0; font-family: "oaks", sans-serif; }
+  .preco-box .new sup { font-size: 18px; top: -18px; }
+  .preco-box .parcelas { font-size: 13px; color: var(--texto-claro); margin-bottom: 20px; }
+  .garantia { margin-top: 22px; font-size: 12.5px; color: #DCEFEC; display: flex; align-items: center; justify-content: center; gap: 6px; }
+
+  /* ===== FAQ ===== */
+  .faq-item { border-bottom: 1px solid var(--borda); padding: 16px 0; }
+  .faq-item h3 { font-size: 14.5px; font-weight: 700; margin-bottom: 6px; font-family: "noto-sans", sans-serif; }
+  .faq-item p { font-size: 13.5px; color: var(--texto-claro); }
+
+  /* ===== CTA FINAL ===== */
+  .cta-final { background: var(--escuro); color: #FFFFFF; text-align: center; padding: 50px 0; }
+  .cta-final h2 { font-size: 22px; margin-bottom: 10px; }
+  .cta-final p { color: #B0B8B9; font-size: 14px; margin-bottom: 24px; }
+
+  footer { background: #111417; color: #777E80; text-align: center; padding: 22px 0; font-size: 12px; }
+
+  @media (min-width: 768px) {
+    .hero h1 { font-size: 42px; }
+    .hero p.lead { font-size: 18px; max-width: 560px; }
+    .problema-grid { grid-template-columns: repeat(3, 1fr); }
+    .features-grid { grid-template-columns: repeat(3, 1fr); }
+    .section-title { font-size: 30px; }
+    .passos { max-width: 600px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===================== HERO ===================== -->
+<section class="hero">
+  <div class="wrap">
+    <div class="eyebrow">PLANILHA FINANCEIRA PESSOAL</div>
+    <h1>Pare de se perguntar <span class="accent">pra onde foi seu dinheiro</span> esse mês</h1>
+    <p class="lead">A planilha que mostra exatamente quanto você ganha, gasta e guarda. Sem fórmula pra aprender, sem curso, sem complicação.</p>
+    <a href="#comprar" class="btn-cta">Quero organizar minha grana<span class="small">Acesso imediato após a compra</span></a>
+    <div class="price-tag">Pagamento único de <b>R$ 47</b> · sem mensalidade</div>
+
+    <div class="mockup">
+      <div class="mtitle">📊 DASHBOARD · JANEIRO 2026</div>
+      <div class="cards">
+        <div class="card" style="background:#2E7D32;"><div class="l">RECEITAS</div><div class="v">R$ 4.450</div></div>
+        <div class="card" style="background:#C62828;"><div class="l">GASTOS</div><div class="v">R$ 2.177</div></div>
+        <div class="card" style="background:#00695C;"><div class="l">SALDO</div><div class="v">R$ 2.273</div></div>
+      </div>
+      <div class="catrow"><span>Moradia</span><div class="bar"><div class="f" style="width:90%; background:#E65100;"></div></div></div>
+      <div class="catrow"><span>Alimentação</span><div class="bar"><div class="f" style="width:55%; background:#E65100;"></div></div></div>
+      <div class="catrow"><span>Transporte</span><div class="bar"><div class="f" style="width:25%; background:#E65100;"></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PROBLEMA ===================== -->
+<section class="problemas">
+  <div class="wrap">
+    <h2 class="section-title">Isso parece com você?</h2>
+    <p class="section-lead">Você não precisa de mais um app de banco. Precisa enxergar o todo.</p>
+    <div class="problema-grid">
+      <div class="problema-card">
+        <div class="emoji">😵</div>
+        <div>
+          <h3>Não sabe quanto sobra no fim do mês</h3>
+          <p>O dinheiro entra e some, e você não sabe te dizer onde foi parar.</p>
+        </div>
+      </div>
+      <div class="problema-card">
+        <div class="emoji">📱</div>
+        <div>
+          <h3>Usa 3 bancos e nenhum mostra o todo</h3>
+          <p>Nubank, Inter, C6... cada um mostra um pedaço. Falta a visão completa.</p>
+        </div>
+      </div>
+      <div class="problema-card">
+        <div class="emoji">😩</div>
+        <div>
+          <h3>Já tentou planilha pronta e travou</h3>
+          <p>Baixou um modelo, encheu de fórmula quebrada e desistiu na primeira semana.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== O QUE TEM DENTRO ===================== -->
+<section>
+  <div class="wrap">
+    <h2 class="section-title">Tudo que você precisa, em um só lugar</h2>
+    <p class="section-lead">7 abas prontas. Você só preenche, a planilha calcula tudo sozinha.</p>
+    <div class="features-grid">
+      <div class="feature-card" style="background:#2E7D32;"><div class="ic">💵</div><div class="ft">Receitas</div><div class="fd">Salário, freelance, extras</div></div>
+      <div class="feature-card" style="background:#E65100;"><div class="ic">💸</div><div class="ft">Gastos</div><div class="fd">Por categoria, automático</div></div>
+      <div class="feature-card" style="background:#6A1B9A;"><div class="ic">💳</div><div class="ft">Cartão</div><div class="fd">Parcelas calculadas sozinhas</div></div>
+      <div class="feature-card" style="background:#1565C0;"><div class="ic">🎯</div><div class="ft">Metas</div><div class="fd">Com barra de progresso visual</div></div>
+      <div class="feature-card" style="background:#F57F17;"><div class="ic">📉</div><div class="ft">Dívidas</div><div class="fd">Pra saber o que priorizar</div></div>
+      <div class="feature-card" style="background:#00695C;"><div class="ic">📊</div><div class="ft">Dashboard</div><div class="fd">Resumo visual de tudo</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== COMO FUNCIONA ===================== -->
+<section class="como-funciona">
+  <div class="wrap">
+    <h2 class="section-title">Como funciona</h2>
+    <p class="section-lead">Em 5 minutos você já está usando.</p>
+    <div class="passos">
+      <div class="passo">
+        <div class="num">1</div>
+        <div><h3>Compra com segurança pela Hotmart</h3><p>Cartão, Pix ou boleto. Em até 12x.</p></div>
+      </div>
+      <div class="passo">
+        <div class="num">2</div>
+        <div><h3>Recebe o acesso na hora, no seu e-mail</h3><p>Sem espera. O link já chega liberado.</p></div>
+      </div>
+      <div class="passo">
+        <div class="num">3</div>
+        <div><h3>Faz uma cópia pro seu Google Drive</h3><p>Fica só sua, ninguém mais acessa.</p></div>
+      </div>
+      <div class="passo">
+        <div class="num">4</div>
+        <div><h3>Começa a usar no mesmo dia</h3><p>A planilha já vem com exemplos pra você entender rapidinho.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== O QUE VOCÊ RECEBE ===================== -->
+<section>
+  <div class="wrap">
+    <h2 class="section-title">O que você recebe</h2>
+    <p class="section-lead">Tudo pronto, sem precisar configurar nada sozinho.</p>
+    <div class="entrega-lista">
+      <div class="entrega-item"><div class="check">✓</div><span class="txt">Planilha completa no Google Sheets</span></div>
+      <div class="entrega-item"><div class="check">✓</div><span class="txt">Dashboard com gráficos automáticos</span></div>
+      <div class="entrega-item"><div class="check">✓</div><span class="txt">Guia de uso em PDF, passo a passo</span></div>
+      <div class="entrega-item"><div class="check">✓</div><span class="txt">Vídeo tutorial de 5 minutos</span></div>
+      <div class="entrega-item"><div class="check">✓</div><span class="txt">Atualizações futuras incluídas</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PREÇO ===================== -->
+<section class="preco-section" id="comprar">
+  <div class="wrap">
+    <h2 class="section-title" style="color:#FFFFFF;">Menos que um lanche.<br>Pra vida inteira organizada.</h2>
+    <div class="preco-box" style="margin-top:28px;">
+      <div class="old">De R$ 97</div>
+      <div class="new"><sup>R$</sup> 47</div>
+      <div class="parcelas">ou 12x de R$ 4,70 no cartão</div>
+      <a href="#" class="btn-cta" style="width:100%;">Quero a minha agora</a>
+    </div>
+    <div class="garantia">🔒 Compra segura via Hotmart · 7 dias de garantia</div>
+  </div>
+</section>
+
+<!-- ===================== FAQ ===================== -->
+<section>
+  <div class="wrap" style="max-width:640px;">
+    <h2 class="section-title">Perguntas frequentes</h2>
+    <div style="margin-top:24px;">
+      <div class="faq-item">
+        <h3>Preciso saber usar planilha ou Excel?</h3>
+        <p>Não. Se você sabe digitar e escolher uma opção num menu, sabe usar a MinhaGrana.</p>
+      </div>
+      <div class="faq-item">
+        <h3>Funciona no celular?</h3>
+        <p>Sim, pelo app do Google Sheets. Você pode lançar um gasto assim que sair do caixa.</p>
+      </div>
+      <div class="faq-item">
+        <h3>É uma assinatura?</h3>
+        <p>Não. Pagamento único de R$ 47. A planilha é sua pra sempre, sem mensalidade.</p>
+      </div>
+      <div class="faq-item">
+        <h3>Funciona com qualquer banco?</h3>
+        <p>Sim. Você lança os valores manualmente, então funciona com Nubank, Inter, C6 ou qualquer outro.</p>
+      </div>
+      <div class="faq-item">
+        <h3>E se eu não gostar?</h3>
+        <p>Você tem 7 dias de garantia. Se não for pra você, devolvemos seu dinheiro sem perguntas.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CTA FINAL ===================== -->
+<section class="cta-final">
+  <div class="wrap">
+    <h2>Sua grana organizada começa hoje</h2>
+    <p>R$ 47, acesso imediato, sem mensalidade.</p>
+    <a href="#comprar" class="btn-cta">Quero organizar minha grana</a>
+  </div>
+</section>
+
+<footer>
+  💰 MinhaGrana · Compra processada com segurança pela Hotmart
+</footer>
+
+</body>
+</html>
