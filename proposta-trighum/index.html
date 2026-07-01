@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Proposta — Trighum × Igor S. Harada</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #F8F5F0;
+      --bg-dark: #1A1714;
+      --white: #FFFFFF;
+      --text: #1A1714;
+      --text-light: #6B6560;
+      --text-muted: #9A9490;
+      --accent: #8B7355;
+      --accent-light: #B8A88A;
+      --line: #E5DFD8;
+      --serif: 'DM Serif Display', Georgia, serif;
+      --sans: 'Inter', -apple-system, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--sans);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.025'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+
+    /* HEADER */
+    header {
+      padding: 48px 48px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .header-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .header-date {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    /* HERO */
+    .hero {
+      padding: 80px 48px 96px;
+      max-width: 900px;
+    }
+    .hero-tag {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 32px;
+    }
+    .hero h1 {
+      font-family: var(--serif);
+      font-size: clamp(40px, 5.5vw, 68px);
+      font-weight: 400;
+      line-height: 1.1;
+      letter-spacing: -0.5px;
+      margin-bottom: 28px;
+    }
+    .hero h1 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+    .hero p {
+      font-size: 17px;
+      color: var(--text-light);
+      max-width: 540px;
+      line-height: 1.85;
+    }
+
+    /* DIVIDER */
+    .divider {
+      height: 1px;
+      background: var(--line);
+      margin: 0 48px;
+    }
+
+    /* SECTIONS */
+    section {
+      padding: 80px 48px;
+    }
+
+    .section-tag {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 20px;
+    }
+
+    .section-title {
+      font-family: var(--serif);
+      font-size: clamp(28px, 3.5vw, 42px);
+      font-weight: 400;
+      line-height: 1.2;
+      margin-bottom: 20px;
+    }
+    .section-title em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .section-lead {
+      font-size: 16px;
+      color: var(--text-light);
+      max-width: 560px;
+      line-height: 1.85;
+      margin-bottom: 48px;
+    }
+
+    /* DIAGNOSTICO */
+    .diag-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+      max-width: 760px;
+    }
+    .diag-item {
+      background: var(--white);
+      padding: 32px;
+    }
+    .diag-item:first-child { border-radius: 2px 0 0 0; }
+    .diag-item:nth-child(2) { border-radius: 0 2px 0 0; }
+    .diag-item:nth-child(3) { border-radius: 0 0 0 2px; }
+    .diag-item:last-child { border-radius: 0 0 2px 0; }
+    .diag-label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+    .diag-text {
+      font-size: 15px;
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    /* IMAGEM */
+    .img-section {
+      padding: 0 48px;
+    }
+    .img-wrap {
+      overflow: hidden;
+      height: 480px;
+    }
+    .img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 30%;
+      filter: grayscale(20%);
+    }
+
+    /* O QUE ESTÁ INCLUÍDO */
+    .included-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 24px;
+      max-width: 900px;
+    }
+    .included-item {
+      padding: 28px 0;
+      border-top: 1px solid var(--line);
+    }
+    .included-num {
+      font-family: var(--serif);
+      font-size: 32px;
+      color: var(--accent-light);
+      margin-bottom: 12px;
+    }
+    .included-title {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .included-desc {
+      font-size: 13px;
+      color: var(--text-light);
+      line-height: 1.7;
+    }
+
+    /* COMO FUNCIONA */
+    .process-list {
+      max-width: 640px;
+      counter-reset: step;
+    }
+    .process-item {
+      display: flex;
+      gap: 28px;
+      padding: 28px 0;
+      border-bottom: 1px solid var(--line);
+      align-items: flex-start;
+    }
+    .process-item:first-child { border-top: 1px solid var(--line); }
+    .process-num {
+      font-family: var(--serif);
+      font-size: 22px;
+      color: var(--accent-light);
+      min-width: 32px;
+      padding-top: 2px;
+    }
+    .process-content h3 {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+    .process-content p {
+      font-size: 14px;
+      color: var(--text-light);
+      line-height: 1.7;
+    }
+
+    /* PLANOS */
+    .plans-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      max-width: 800px;
+    }
+    .plan-card {
+      background: var(--white);
+      padding: 36px 28px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+    .plan-card.featured {
+      background: var(--bg-dark);
+      color: var(--bg);
+    }
+    .plan-badge {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 20px;
+    }
+    .plan-card.featured .plan-badge {
+      color: var(--accent-light);
+    }
+    .plan-name {
+      font-family: var(--serif);
+      font-size: 26px;
+      font-weight: 400;
+      margin-bottom: 8px;
+    }
+    .plan-desc {
+      font-size: 13px;
+      color: var(--text-light);
+      margin-bottom: 28px;
+      line-height: 1.6;
+    }
+    .plan-card.featured .plan-desc {
+      color: var(--accent-light);
+    }
+    .plan-price {
+      margin-bottom: 28px;
+      padding-bottom: 28px;
+      border-bottom: 1px solid var(--line);
+    }
+    .plan-card.featured .plan-price {
+      border-color: rgba(255,255,255,0.1);
+    }
+    .plan-value {
+      font-family: var(--serif);
+      font-size: 36px;
+      font-weight: 400;
+    }
+    .plan-value small {
+      font-family: var(--sans);
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--text-light);
+      margin-left: 4px;
+    }
+    .plan-card.featured .plan-value small {
+      color: var(--accent-light);
+    }
+    .plan-obs {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 6px;
+    }
+    .plan-card.featured .plan-obs {
+      color: var(--accent-light);
+    }
+    .plan-items {
+      list-style: none;
+      flex: 1;
+    }
+    .plan-items li {
+      font-size: 13px;
+      color: var(--text-light);
+      padding: 9px 0;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      line-height: 1.5;
+    }
+    .plan-card.featured .plan-items li {
+      color: rgba(248, 245, 240, 0.75);
+      border-color: rgba(255,255,255,0.08);
+    }
+    .plan-items li::before {
+      content: '—';
+      color: var(--accent-light);
+      font-size: 12px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* NOTA ATALAIA */
+    .note {
+      background: var(--white);
+      padding: 36px 40px;
+      max-width: 760px;
+      border-left: 3px solid var(--accent);
+    }
+    .note p {
+      font-size: 15px;
+      color: var(--text-light);
+      line-height: 1.8;
+    }
+    .note strong {
+      color: var(--text);
+    }
+
+    /* FOOTER */
+    footer {
+      padding: 64px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      border-top: 1px solid var(--line);
+    }
+    .footer-left h3 {
+      font-family: var(--serif);
+      font-size: 22px;
+      font-weight: 400;
+      margin-bottom: 8px;
+    }
+    .footer-left p {
+      font-size: 14px;
+      color: var(--text-light);
+    }
+    .footer-right {
+      text-align: right;
+    }
+    .footer-right p {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.8;
+    }
+
+    @media (max-width: 768px) {
+      header, .hero, section, footer { padding-left: 24px; padding-right: 24px; }
+      .divider { margin: 0 24px; }
+      .img-section { padding: 0 24px; }
+      .diag-grid { grid-template-columns: 1fr; }
+      .included-grid { grid-template-columns: 1fr; }
+      .plans-grid { grid-template-columns: 1fr; }
+      .footer-right { display: none; }
+      .img-wrap { height: 280px; }
+      .hero { padding-top: 48px; padding-bottom: 64px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <span class="header-label">Proposta Comercial — Trighum</span>
+    <span class="header-date">Julho 2026</span>
+  </header>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-tag">Igor S. Harada × Trighum</div>
+    <h1>O trabalho do Eriksen,<br>mostrado do tamanho<br>que <em>merece.</em></h1>
+    <p>Conteúdo de alta qualidade pra posicionar a Trighum onde ela já está: referência em panificação artesanal no Brasil.</p>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- DIAGNÓSTICO -->
+  <section>
+    <div class="section-tag reveal">O que eu vi</div>
+    <div class="section-title reveal">A Trighum tem tudo.<br>O que falta é comunicar<br><em>no nível do que entrega.</em></div>
+    <p class="section-lead reveal">+1.200 alunos formados, consultoria com demanda maior que a oferta, produtos que param o scroll. O conteúdo atual não reflete esse tamanho.</p>
+
+    <div class="diag-grid">
+      <div class="diag-item reveal">
+        <div class="diag-label">Força</div>
+        <div class="diag-text">Autoridade real. Eriksen construiu tudo na raça e sabe mais sobre fermentação natural que a maioria dos professores do mercado.</div>
+      </div>
+      <div class="diag-item reveal reveal-delay-1">
+        <div class="diag-label">Oportunidade</div>
+        <div class="diag-text">Cursos e consultoria não têm gargalo de produção. É onde o crescimento acontece sem exigir mais do ateliê.</div>
+      </div>
+      <div class="diag-item reveal reveal-delay-1">
+        <div class="diag-label">Gap atual</div>
+        <div class="diag-text">O Instagram não mostra o nível do produto. Quem vê de fora não consegue sentir o que é comprar um pão Trighum.</div>
+      </div>
+      <div class="diag-item reveal reveal-delay-2">
+        <div class="diag-label">Solução</div>
+        <div class="diag-text">Conteúdo de receitas com os produtos Trighum. Cada reel é uma demonstração de produto e uma aula ao mesmo tempo.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- IMAGEM -->
+  <div class="img-section">
+    <div class="img-wrap">
+      <img src="img/hero-trighum.jpg" alt="Trighum">
+    </div>
+  </div>
+
+  <div class="divider" style="margin-top: 0;"></div>
+
+  <!-- DIFERENCIAL -->
+  <section style="padding-bottom: 0;">
+    <p class="section-lead reveal">Não trabalho com equipe terceirizada nem com template. Cada entrega passa por uma cabeça só, da ideia ao arquivo final. E antes de filmar qualquer coisa, a gente decide junto o que vale a pena produzir.</p>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- O QUE ESTÁ INCLUÍDO -->
+  <section>
+    <div class="section-tag reveal">Em todos os planos</div>
+    <div class="section-title reveal">O que você recebe<br>todo mês.</div>
+
+    <div class="included-grid">
+      <div class="included-item reveal">
+        <div class="included-num">08</div>
+        <div class="included-title">Conteúdos por mês</div>
+        <div class="included-desc">4 reels e 4 estáticos ou carrosséis, todos conectados, produzidos em uma diária. Ideia, roteiro, filmagem, edição e legenda.</div>
+      </div>
+      <div class="included-item reveal reveal-delay-1">
+        <div class="included-num">01</div>
+        <div class="included-title">Reunião de pré-produção</div>
+        <div class="included-desc">As receitas são decididas juntos. Levamos em conta sazonalidade, produtos em destaque e o que faz sentido pra aquele mês.</div>
+      </div>
+      <div class="included-item reveal reveal-delay-2">
+        <div class="included-num">01</div>
+        <div class="included-title">Diária em Campinas</div>
+        <div class="included-desc">Filmagem e ensaio concentrados em uma diária. Você produz, eu dirijo e registro.</div>
+      </div>
+      <div class="included-item reveal">
+        <div class="included-num">∞</div>
+        <div class="included-title">Direção criativa</div>
+        <div class="included-desc">Cada entrega passa pelo olhar de quem entende de gastronomia e de conteúdo. Nada genérico, nada de template.</div>
+      </div>
+      <div class="included-item reveal reveal-delay-1">
+        <div class="included-num">✓</div>
+        <div class="included-title">Legendas</div>
+        <div class="included-desc">Cada peça entregue com legenda pronta pra publicar.</div>
+      </div>
+      <div class="included-item reveal reveal-delay-2">
+        <div class="included-num">✓</div>
+        <div class="included-title">Revisões ilimitadas</div>
+        <div class="included-desc">Enquanto não estiver do jeito que o Eriksen aprova, a gente ajusta.</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- COMO FUNCIONA -->
+  <section>
+    <div class="section-tag reveal">Como funciona</div>
+    <div class="section-title reveal">Um mês de conteúdo<br>em <em>um dia bem feito.</em></div>
+
+    <div class="process-list">
+      <div class="process-item reveal">
+        <div class="process-num">01</div>
+        <div class="process-content">
+          <h3>Pré-produção</h3>
+          <p>Reunião pra decidir as receitas do mês. Você escolhe os produtos que quer destacar, eu sugiro o formato de cada reel e como transformar isso em conteúdo que para o scroll.</p>
+        </div>
+      </div>
+      <div class="process-item reveal">
+        <div class="process-num">02</div>
+        <div class="process-content">
+          <h3>Diária de produção</h3>
+          <p>Um dia em Campinas. Você executa as receitas, eu dirijo, filmo e fotografo. Sai o conteúdo do mês inteiro em uma sessão concentrada.</p>
+        </div>
+      </div>
+      <div class="process-item reveal">
+        <div class="process-num">03</div>
+        <div class="process-content">
+          <h3>Edição e aprovação</h3>
+          <p>Edito os reels e preparo as fotos. Você aprova. Ajusta o que precisar. Só vai quando estiver certo.</p>
+        </div>
+      </div>
+      <div class="process-item reveal">
+        <div class="process-num">04</div>
+        <div class="process-content">
+          <h3>Publicação</h3>
+          <p>Entrego os arquivos prontos pra você publicar no ritmo que preferir. No plano Crescimento, cuido da publicação e do agendamento.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- IMAGEM 2 -->
+  <div class="img-section">
+    <div class="img-wrap" style="height: 360px;">
+      <img src="img/bread-1.jpg" alt="Pão Trighum" style="object-position: center 40%;">
+    </div>
+  </div>
+
+  <div class="divider" style="margin-top: 0;"></div>
+
+  <!-- EXEMPLO RECEITA -->
+  <section style="padding-top: 0; padding-bottom: 0;">
+    <div class="note reveal">
+      <p>A lasanha de brioche que você mencionou, por exemplo: uma diária de produção gera 8 conteúdos conectados a essa receita. Sem nova visita, sem novo custo.</p>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- PLANOS -->
+  <section>
+    <div class="section-tag reveal">Investimento</div>
+    <div class="section-title reveal">Duas formas de<br><em>trabalhar juntos.</em></div>
+    <p class="section-lead reveal">Começa pelo conteúdo. Quando fizer sentido, a gente acelera.</p>
+
+    <div class="plans-grid">
+
+      <!-- PLANO 1 -->
+      <div class="plan-card reveal">
+        <div class="plan-badge">Conteúdo</div>
+        <div class="plan-name">Conteúdo</div>
+        <div class="plan-desc">Presença consistente, produção de alto nível. Pra construir autoridade e posicionar a Trighum onde ela já está.</div>
+        <div class="plan-price">
+          <div class="plan-value">R$4.500 <small>/mês</small></div>
+        </div>
+        <ul class="plan-items">
+          <li>4 reels por mês</li>
+          <li>4 estáticos ou carrosséis com fotos</li>
+          <li>Reunião de pré-produção</li>
+          <li>1 diária em Campinas</li>
+          <li>Direção criativa e edição completa</li>
+          <li>Copy das legendas</li>
+        </ul>
+      </div>
+
+      <!-- PLANO 2 (featured) -->
+      <div class="plan-card featured reveal reveal-delay-1">
+        <div class="plan-badge">Recomendado</div>
+        <div class="plan-name">Crescimento</div>
+        <div class="plan-desc">Conteúdo + anúncios pra chegar em mais gente que valoriza o que você faz.</div>
+        <div class="plan-price">
+          <div class="plan-value">R$5.500 <small>/mês</small></div>
+          <div class="plan-obs">+ budget de anúncios (você define o valor)</div>
+        </div>
+        <ul class="plan-items">
+          <li>Tudo do plano Conteúdo</li>
+          <li>Gestão de anúncios para o perfil</li>
+          <li>Gerenciamento de publicação</li>
+          <li>Relatório mensal de resultados</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- NOTAS -->
+  <section style="padding-top: 0;">
+    <div class="note reveal">
+      <p><strong>Sobre a Fazenda Atalaia:</strong> A ideia de usar produtos da Atalaia nas receitas pode virar um diferencial de conteúdo pra ambas as marcas. Se a parceria entre vocês avançar, consigo integrar isso à produção sem custo adicional de diária, já que a gravação acontece no mesmo dia.</p>
+    </div>
+    <div class="note reveal" style="margin-top: 12px;">
+      <p><strong>Fase 2 — O Eriksen como referência:</strong> Quando a Trighum estiver posicionada, tem um segundo passo: estruturar o Eriksen como referência nacional em panificação artesanal e montar o sistema de vendas dos cursos. Não precisa decidir agora, mas vale saber que esse caminho existe.</p>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-left">
+      <h3>Próximo passo</h3>
+      <p>Me fale qual caminho faz mais sentido.<br>A gente acerta os detalhes e começa.</p>
+      <p style="margin-top: 12px; font-size: 14px; color: var(--text-muted);">Primeiros conteúdos entregues em até 15 dias após o início.</p>
+      <p style="margin-top: 16px; font-size: 14px; color: var(--text-muted);">
+        Igor S. Harada &nbsp;·&nbsp; (11) 94793-3300 &nbsp;·&nbsp; @IgorSHarada
+      </p>
+    </div>
+    <div class="footer-right">
+      <p>Igor S. Harada<br>CNPJ 48.797.893/0001-74<br>Julho 2026</p>
+    </div>
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
