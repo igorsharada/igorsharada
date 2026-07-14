@@ -37,20 +37,23 @@
   }
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Sora:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700;9..144,900&family=Instrument+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
-      --bg: #0A0A0A;
-      --bg-card: #111111;
-      --bg-hover: #1A1A1A;
+      --bg: #0D0C0A;
+      --bg-card: #17140F;
+      --bg-hover: #1F1B15;
+      --bg-verde: #12291C;
       --text: #F5F0EB;
-      --text-muted: #5A5A5A;
+      --text-muted: #8A857D;
       --accent: #2ECC71;
       --accent-glow: rgba(46, 204, 113, 0.12);
-      --heading: 'Sora', sans-serif;
-      --body: 'Space Grotesk', sans-serif;
+      --heading: 'Fraunces', serif;
+      --body: 'Instrument Sans', sans-serif;
+      --mono: 'IBM Plex Mono', monospace;
     }
 
     html { scroll-behavior: smooth; }
@@ -62,43 +65,6 @@
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
       overflow-x: hidden;
-      cursor: none;
-    }
-
-    /* ── CUSTOM CURSOR ── */
-    .cursor {
-      width: 20px;
-      height: 20px;
-      border: 2px solid var(--accent);
-      border-radius: 50%;
-      position: fixed;
-      pointer-events: none;
-      z-index: 9999;
-      transition: transform 0.15s ease, background 0.2s, width 0.2s, height 0.2s, margin 0.2s;
-      margin-left: -10px;
-      margin-top: -10px;
-    }
-
-    .cursor.hover {
-      width: 48px;
-      height: 48px;
-      margin-left: -24px;
-      margin-top: -24px;
-      background: var(--accent-glow);
-      border-color: transparent;
-    }
-
-    .cursor-dot {
-      width: 5px;
-      height: 5px;
-      background: var(--accent);
-      border-radius: 50%;
-      position: fixed;
-      pointer-events: none;
-      z-index: 9999;
-      margin-left: -2.5px;
-      margin-top: -2.5px;
-      transition: opacity 0.2s;
     }
 
     /* ── SCROLL PROGRESS ── */
@@ -113,13 +79,41 @@
       transition: none;
     }
 
-    /* ── GRAIN OVERLAY ── */
-    .grain {
-      position: fixed;
+    /* ── REC / STATUS DOT ── */
+    .rec-dot {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+    }
+    .rec-dot::before {
+      content: '';
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 0 0 rgba(46, 204, 113, 0.6);
+      animation: pulseDot 1.8s ease-out infinite;
+      flex-shrink: 0;
+    }
+    @keyframes pulseDot {
+      0% { box-shadow: 0 0 0 0 rgba(46, 204, 113, 0.5); }
+      70% { box-shadow: 0 0 0 8px rgba(46, 204, 113, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(46, 204, 113, 0); }
+    }
+
+    /* ── FILM GRAIN (scoped to photos only) ── */
+    .photo-grain { position: relative; }
+    .photo-grain::after {
+      content: '';
+      position: absolute;
       inset: 0;
       pointer-events: none;
-      z-index: 150;
-      opacity: 0.03;
+      opacity: 0.15;
+      mix-blend-mode: overlay;
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
       background-repeat: repeat;
     }
@@ -183,7 +177,7 @@
     }
 
     nav.scrolled {
-      background: rgba(10, 10, 10, 0.85);
+      background: rgba(13, 12, 10, 0.85);
       backdrop-filter: blur(24px);
       padding: 14px 40px;
       border-bottom: 1px solid rgba(255,255,255,0.04);
@@ -200,17 +194,17 @@
     .nav-name span { color: var(--accent); }
 
     .nav-cta {
+      font-family: var(--mono);
       color: var(--text);
       text-decoration: none;
       font-size: 12px;
-      font-weight: 600;
-      letter-spacing: 1.5px;
+      font-weight: 500;
+      letter-spacing: 1px;
       text-transform: uppercase;
-      padding: 12px 28px;
+      padding: 12px 26px;
       border: 1px solid rgba(255,255,255,0.15);
-      border-radius: 100px;
+      border-radius: 6px;
       transition: all 0.4s;
-      cursor: none;
     }
 
     .nav-cta:hover {
@@ -238,14 +232,21 @@
     }
 
     .hero-label {
+      font-family: var(--mono);
       font-size: 12px;
-      font-weight: 600;
-      letter-spacing: 5px;
+      font-weight: 500;
+      letter-spacing: 3px;
       text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 28px;
+      color: var(--text-muted);
+      margin-bottom: 16px;
       opacity: 0;
       animation: fadeIn 0.8s ease 0.2s forwards;
+    }
+
+    .hero-status {
+      margin-bottom: 28px;
+      opacity: 0;
+      animation: fadeIn 0.8s ease 0.35s forwards;
     }
 
     .hero h1 {
@@ -270,11 +271,10 @@
     @keyframes fadeIn { to { opacity: 1; } }
 
     .hero h1 .outline {
-      -webkit-text-stroke: 1.5px var(--text);
-      color: transparent;
-      transition: color 0.5s;
+      font-style: italic;
+      font-weight: 400;
+      color: var(--text-muted);
     }
-    .hero h1 .outline:hover { color: var(--text); }
 
     .hero h1 .highlight {
       color: var(--accent);
@@ -318,7 +318,7 @@
       color: var(--bg);
       text-decoration: none;
       padding: 18px 40px;
-      border-radius: 100px;
+      border-radius: 6px;
       font-size: 13px;
       font-weight: 700;
       letter-spacing: 1.5px;
@@ -326,7 +326,6 @@
       transition: transform 0.4s, box-shadow 0.4s;
       opacity: 0;
       animation: fadeSlide 0.8s ease 0.8s forwards;
-      cursor: none;
     }
 
     .hero-cta:hover {
@@ -336,7 +335,7 @@
 
     .hero-img-wrap {
       position: relative;
-      border-radius: 20px;
+      border-radius: 8px;
       overflow: hidden;
       opacity: 0;
       animation: imgReveal 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
@@ -372,9 +371,10 @@
       position: absolute;
       bottom: 24px;
       left: 24px;
+      font-family: var(--mono);
       font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 2px;
+      font-weight: 500;
+      letter-spacing: 1px;
       text-transform: uppercase;
       color: var(--text-muted);
       z-index: 2;
@@ -384,11 +384,12 @@
     section { padding: 140px 40px; }
 
     .section-label {
+      font-family: var(--mono);
       font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 5px;
+      font-weight: 500;
+      letter-spacing: 3px;
       text-transform: uppercase;
-      color: var(--accent);
+      color: var(--text-muted);
       margin-bottom: 20px;
     }
 
@@ -409,10 +410,9 @@
     .case-card {
       background: var(--bg-card);
       border: 1px solid rgba(255,255,255,0.04);
-      border-radius: 24px;
+      border-radius: 8px;
       padding: 52px 44px;
       transition: border-color 0.5s, transform 0.5s, box-shadow 0.5s;
-      cursor: none;
       position: relative;
       overflow: hidden;
     }
@@ -445,20 +445,22 @@
     }
 
     .case-badge {
+      font-family: var(--mono);
       font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 2.5px;
+      font-weight: 500;
+      letter-spacing: 1.5px;
       text-transform: uppercase;
-      color: var(--accent);
-      background: var(--accent-glow);
-      padding: 8px 18px;
-      border-radius: 100px;
+      color: var(--text-muted);
+      border: 1px solid rgba(255,255,255,0.12);
+      padding: 8px 16px;
+      border-radius: 4px;
     }
 
     .case-period {
+      font-family: var(--mono);
       font-size: 12px;
       color: var(--text-muted);
-      font-weight: 500;
+      font-weight: 400;
     }
 
     .case-name {
@@ -486,20 +488,136 @@
     }
 
     .stat-number {
-      font-family: var(--heading);
-      font-size: 40px;
-      font-weight: 800;
+      font-family: var(--mono);
+      font-size: 36px;
+      font-weight: 600;
       letter-spacing: -1px;
     }
 
     .stat-number.done { color: var(--accent); transition: color 0.3s; }
 
     .stat-label {
+      font-family: var(--mono);
       font-size: 11px;
       color: var(--text-muted);
       margin-top: 6px;
       letter-spacing: 0.5px;
     }
+
+    /* ── COMPARE (antes/depois) ── */
+    .compare { max-width: 1100px; margin: 0 auto; }
+
+    .compare-case { margin-bottom: 100px; }
+    .compare-case:last-child { margin-bottom: 0; }
+
+    .compare-head {
+      text-align: center;
+      margin-bottom: 44px;
+    }
+
+    .compare-name {
+      font-family: var(--heading);
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .compare-stat-row {
+      display: inline-flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--accent);
+      letter-spacing: 0.5px;
+    }
+
+    .compare-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 36px;
+      flex-wrap: wrap;
+    }
+
+    .phone-mock {
+      width: 200px;
+      aspect-ratio: 9 / 19.5;
+      background: #000;
+      border-radius: 26px;
+      padding: 8px;
+      box-shadow: 0 30px 70px rgba(0,0,0,0.5);
+      position: relative;
+    }
+
+    .phone-mock::before {
+      content: '';
+      position: absolute;
+      top: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 16px;
+      background: #000;
+      border-radius: 10px;
+      z-index: 2;
+    }
+
+    .phone-screen {
+      width: 100%;
+      height: 100%;
+      border-radius: 18px;
+      overflow: hidden;
+      position: relative;
+      background: var(--bg-card);
+    }
+
+    .phone-screen img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top;
+      filter: saturate(0.7) brightness(0.85);
+    }
+
+    .compare-after .phone-screen img { filter: none; }
+
+    .phone-empty {
+      display: none;
+      position: absolute;
+      inset: 0;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 1px;
+      line-height: 1.7;
+      color: var(--accent);
+      background: var(--bg-verde);
+      padding: 20px;
+    }
+
+    .compare-tag {
+      text-align: center;
+      margin-top: 16px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .compare-arrow {
+      font-family: var(--mono);
+      color: var(--text-muted);
+      font-size: 22px;
+    }
+
+    /* ── SUBSECTION (um degrau abaixo: services, esteira, nichos) ── */
+    .subsection { padding: 90px 40px !important; }
+    .subsection .section-title { font-size: clamp(22px, 3vw, 32px) !important; margin-bottom: 40px !important; }
 
     /* ── SERVICES ── */
     .services { max-width: 1300px; margin: 0 auto; }
@@ -513,10 +631,9 @@
     .service-card {
       background: var(--bg-card);
       border: 1px solid rgba(255,255,255,0.04);
-      border-radius: 20px;
+      border-radius: 8px;
       padding: 40px 28px;
       transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-      cursor: none;
     }
 
     .service-card:hover {
@@ -528,8 +645,8 @@
     .service-icon {
       width: 52px;
       height: 52px;
-      border-radius: 14px;
-      background: var(--accent-glow);
+      border-radius: 6px;
+      background: rgba(255,255,255,0.04);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -573,16 +690,15 @@
       background: var(--bg-card);
       border: 1px solid rgba(255,255,255,0.06);
       padding: 16px 28px;
-      border-radius: 100px;
+      border-radius: 6px;
       font-size: 14px;
       font-weight: 600;
       transition: all 0.4s;
-      cursor: none;
     }
 
     .funil-step:hover {
-      border-color: var(--accent);
-      background: var(--accent-glow);
+      border-color: rgba(255,255,255,0.2);
+      background: var(--bg-hover);
       transform: translateY(-4px);
     }
 
@@ -650,19 +766,6 @@
       overflow: visible;
     }
 
-    .cta-glow {
-      position: absolute;
-      width: 600px;
-      height: 600px;
-      background: radial-gradient(ellipse, rgba(46, 204, 113, 0.15) 0%, rgba(46, 204, 113, 0.05) 40%, transparent 70%);
-      pointer-events: none;
-      border-radius: 50%;
-      transform: translate(-50%, -50%);
-      transition: left 0.4s cubic-bezier(0.16, 1, 0.3, 1), top 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s;
-      opacity: 0;
-      z-index: 0;
-    }
-    .cta-section:hover .cta-glow { opacity: 1; }
     .cta-section .cta-title, .cta-section .cta-sub, .cta-section .cta-whatsapp { position: relative; z-index: 1; }
 
     .cta-title {
@@ -690,14 +793,13 @@
       color: var(--bg);
       text-decoration: none;
       padding: 22px 48px;
-      border-radius: 100px;
+      border-radius: 6px;
       font-size: 14px;
       font-weight: 700;
       letter-spacing: 1.5px;
       text-transform: uppercase;
       transition: transform 0.4s, box-shadow 0.4s;
       position: relative;
-      cursor: none;
     }
 
     .cta-whatsapp:hover {
@@ -730,15 +832,12 @@
       color: var(--text-muted);
       text-decoration: none;
       transition: color 0.3s;
-      cursor: none;
     }
 
     .footer-links a:hover { color: var(--accent); }
 
     /* ── MOBILE ── */
     @media (max-width: 768px) {
-      body { cursor: auto; }
-      .cursor, .cursor-dot { display: none; }
       .hero { min-height: auto; padding: 140px 20px 80px; }
       .hero-grid { grid-template-columns: 1fr; gap: 40px; }
       .hero h1 { font-size: clamp(34px, 9vw, 48px); }
@@ -753,7 +852,6 @@
       .photo-break-grid > div { height: 280px !important; }
       nav { padding: 16px 20px; }
       .quote-section::before { font-size: 120px; }
-      a, button, .nav-cta, .hero-cta, .cta-whatsapp, .service-card, .case-card, .funil-step { cursor: auto; }
     }
 
     @media (min-width: 769px) {
@@ -763,15 +861,8 @@
 </head>
 <body>
 
-  <!-- CURSOR -->
-  <div class="cursor"></div>
-  <div class="cursor-dot"></div>
-
   <!-- SCROLL PROGRESS -->
   <div class="scroll-progress"></div>
-
-  <!-- GRAIN -->
-  <div class="grain"></div>
 
   <!-- NAV -->
   <nav>
@@ -789,10 +880,11 @@
           <span class="line"><span class="line-inner"><span class="outline">melhor</span> do que</span></span>
           <span class="line"><span class="line-inner">parece na <span class="highlight">internet.</span></span></span>
         </h1>
+        <div class="hero-status rec-dot">AGENDA ABERTA — RESPONDENDO HOJE</div>
         <p class="hero-sub">Pra restaurantes, clínicas, hotéis e negócios premium que merecem aparecer do jeito certo, pro público certo. Foto, vídeo, conteúdo, anúncios e sites.</p>
         <a href="#contato" class="hero-cta">Quero conversar →</a>
       </div>
-      <div class="hero-img-wrap parallax-wrap" style="height:100%;">
+      <div class="hero-img-wrap parallax-wrap photo-grain" style="height:100%;">
         <img src="img/igor-hero.jpg" alt="Igor SHarada" class="parallax-img" data-speed="0.3">
       </div>
     </div>
@@ -853,15 +945,75 @@
     </div>
   </section>
 
+  <!-- COMPARE (antes/depois) -->
+  <section class="compare">
+    <div class="section-label reveal" style="text-align:center;">O feed, antes e depois</div>
+    <div class="section-title reveal" style="text-align:center;">O que muda quando a marca<br>aparece do tamanho que ela é.</div>
+
+    <div class="compare-case">
+      <div class="compare-head reveal">
+        <div class="compare-name">P+E Digital</div>
+        <div class="compare-stat-row"><span class="rec-dot">66x mais views</span><span>·</span><span>R$60k+ em contratos</span></div>
+      </div>
+      <div class="compare-row reveal">
+        <div>
+          <div class="phone-mock compare-before">
+            <div class="phone-screen">
+              <img src="img/case-pe-antes.jpg" alt="Feed da P+E Digital antes da direção criativa do Igor">
+            </div>
+          </div>
+          <div class="compare-tag">Antes</div>
+        </div>
+        <div class="compare-arrow">→</div>
+        <div>
+          <div class="phone-mock compare-after">
+            <div class="phone-screen">
+              <img src="img/case-pe-depois.jpg" alt="Feed da P+E Digital depois da direção criativa do Igor" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+              <div class="phone-empty">PRINT ATUAL<br>EM BREVE</div>
+            </div>
+          </div>
+          <div class="compare-tag">Depois</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="compare-case">
+      <div class="compare-head reveal">
+        <div class="compare-name">Nilson Diniz</div>
+        <div class="compare-stat-row"><span class="rec-dot">812k views</span><span>·</span><span>+1600% cliques pro link</span></div>
+      </div>
+      <div class="compare-row reveal">
+        <div>
+          <div class="phone-mock compare-before">
+            <div class="phone-screen">
+              <img src="img/case-nilson-antes.jpg" alt="Feed do Nilson Diniz antes da direção criativa do Igor">
+            </div>
+          </div>
+          <div class="compare-tag">Antes</div>
+        </div>
+        <div class="compare-arrow">→</div>
+        <div>
+          <div class="phone-mock compare-after">
+            <div class="phone-screen">
+              <img src="img/case-nilson-depois.jpg" alt="Feed do Nilson Diniz depois da direção criativa do Igor" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+              <div class="phone-empty">PRINT ATUAL<br>EM BREVE</div>
+            </div>
+          </div>
+          <div class="compare-tag">Depois</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- PHOTO BREAK -->
   <section style="padding:60px 40px;max-width:1300px;margin:0 auto;">
     <div class="section-label reveal" style="text-align:center;">Bastidores</div>
     <div class="section-title reveal" style="text-align:center;margin-bottom:40px;">Do bastidor ao resultado.</div>
     <div class="reveal photo-break-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
-      <div class="parallax-wrap" style="border-radius:20px;height:400px;">
+      <div class="parallax-wrap photo-grain" style="border-radius:8px;height:400px;">
         <img src="img/setup-studio.jpg" alt="Setup profissional" class="parallax-img" data-speed="0.12" style="filter:grayscale(20%);transition:filter 0.5s;" onmouseover="this.style.filter='grayscale(0%)'" onmouseout="this.style.filter='grayscale(20%)'">
       </div>
-      <div class="parallax-wrap" style="border-radius:20px;height:400px;">
+      <div class="parallax-wrap photo-grain" style="border-radius:8px;height:400px;">
         <img src="img/igor-kitchen.jpg" alt="Igor SHarada filmando na cozinha" class="parallax-img" data-speed="0.28" style="filter:grayscale(20%);transition:filter 0.5s;" onmouseover="this.style.filter='grayscale(0%)'" onmouseout="this.style.filter='grayscale(20%)'">
       </div>
     </div>
@@ -881,38 +1033,38 @@
   </div>
 
   <!-- SERVICES -->
-  <section class="services">
+  <section class="services subsection">
     <div class="section-label reveal">O que eu faço</div>
     <div class="section-title reveal">Uma pessoa. Uma visão.<br>Resultado integrado.</div>
 
     <div class="service-grid">
       <div class="service-card reveal">
-        <div class="service-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2ECC71" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></div>
+        <div class="service-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#8A857D" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></div>
         <div class="service-name">Sistema de Vendas</div>
         <div class="service-desc">WhatsApp automatizado, painel de pedidos, CRM de clientes e migração do iFood pro canal direto. Seu cliente compra de você, sem intermediário.</div>
       </div>
       <div class="service-card reveal reveal-delay-1">
-        <div class="service-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2ECC71" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></div>
+        <div class="service-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#8A857D" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></div>
         <div class="service-name">Foto & Vídeo</div>
         <div class="service-desc">Vou até seu negócio e capto o produto, o bastidor e a atmosfera como realmente são. Equipamento profissional, sem filtro forçado.</div>
       </div>
       <div class="service-card reveal reveal-delay-2">
-        <div class="service-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2ECC71" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg></div>
+        <div class="service-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#8A857D" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg></div>
         <div class="service-name">Conteúdo</div>
         <div class="service-desc">Reels, carrosséis e stories que mostram o que seu negócio realmente faz. Não é postagem genérica. É o que faz as pessoas quererem ir até você.</div>
       </div>
       <div class="service-card reveal reveal-delay-3">
-        <div class="service-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2ECC71" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
+        <div class="service-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#8A857D" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
         <div class="service-name">Anúncios Online</div>
         <div class="service-desc">Coloco seu negócio na frente de quem realmente compra. Você sabe de onde veio cada cliente novo.</div>
       </div>
       <div class="service-card reveal reveal-delay-4">
-        <div class="service-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2ECC71" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg></div>
+        <div class="service-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#8A857D" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg></div>
         <div class="service-name">Estratégia</div>
         <div class="service-desc">Planejo o que postar, quando postar e por quê. Cada conteúdo tem um objetivo claro. Nada é aleatório.</div>
       </div>
       <div class="service-card reveal reveal-delay-5">
-        <div class="service-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2ECC71" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
+        <div class="service-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#8A857D" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
         <div class="service-name">Sites</div>
         <div class="service-desc">Páginas profissionais pro seu negócio. Quando alguém clica no seu link, precisa chegar num lugar que convence. Não no Instagram de novo.</div>
       </div>
@@ -941,7 +1093,7 @@
   </section>
 
   <!-- ESTEIRA -->
-  <section style="max-width:1100px; margin:0 auto;">
+  <section class="subsection" style="max-width:1100px; margin:0 auto;">
     <div class="section-label reveal">Como trabalhar comigo</div>
     <div class="section-title reveal">Três formas, um objetivo:<br><span style="color:var(--accent);">sua marca vendendo mais.</span></div>
 
@@ -1037,14 +1189,14 @@
   </section>
 
   <!-- NICHOS -->
-  <section style="max-width:1100px; margin:0 auto;">
+  <section class="subsection" style="max-width:1100px; margin:0 auto;">
     <div class="section-label reveal">Pra quem é</div>
     <div class="section-title reveal">Mesmo sistema, adaptado<br>pro <span style="color:var(--accent)">seu mercado.</span></div>
 
     <div class="esteira-carousel" style="margin-top:48px;">
 
       <a href="canal-direto.html" class="service-card reveal esteira-card" style="position:relative; overflow:hidden; text-decoration:none; color:inherit;">
-        <div style="width:48px;height:48px;display:flex;align-items:center;justify-content:center;background:var(--accent-glow);border-radius:12px;margin-bottom:16px;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2ECC71" stroke-width="1.5"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg></div>
+        <div style="width:48px;height:48px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.04);border-radius:6px;margin-bottom:16px;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#8A857D" stroke-width="1.5"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg></div>
         <div class="service-name" style="font-size:18px; margin-bottom:8px;">Gastronomia</div>
         <div style="font-size:12px; color:var(--text-muted); margin-bottom:16px;">Padarias, restaurantes, confeitarias, hamburguerias, pizzarias</div>
         <div style="border-top:1px solid #222; padding-top:16px; font-size:12px; color:var(--text-muted);">
@@ -1059,7 +1211,7 @@
       </a>
 
       <div class="service-card reveal reveal-delay-1 esteira-card" style="position:relative; overflow:hidden;">
-        <div style="width:48px;height:48px;display:flex;align-items:center;justify-content:center;background:var(--accent-glow);border-radius:12px;margin-bottom:16px;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2ECC71" stroke-width="1.5"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+        <div style="width:48px;height:48px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.04);border-radius:6px;margin-bottom:16px;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#8A857D" stroke-width="1.5"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
         <div class="service-name" style="font-size:18px; margin-bottom:8px;">Saúde</div>
         <div style="font-size:12px; color:var(--text-muted); margin-bottom:16px;">Clínicas, dentistas, médicos, estéticas, nutricionistas, psicólogos</div>
         <div style="border-top:1px solid #222; padding-top:16px; font-size:12px; color:var(--text-muted);">
@@ -1073,7 +1225,7 @@
       </div>
 
       <div class="service-card reveal reveal-delay-2 esteira-card" style="position:relative; overflow:hidden;">
-        <div style="width:48px;height:48px;display:flex;align-items:center;justify-content:center;background:var(--accent-glow);border-radius:12px;margin-bottom:16px;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2ECC71" stroke-width="1.5"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></div>
+        <div style="width:48px;height:48px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.04);border-radius:6px;margin-bottom:16px;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#8A857D" stroke-width="1.5"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></div>
         <div class="service-name" style="font-size:18px; margin-bottom:8px;">Serviços e Indústria</div>
         <div style="font-size:12px; color:var(--text-muted); margin-bottom:16px;">Gráficas, hotéis, estúdios, lojas, prestadores de serviço</div>
         <div style="border-top:1px solid #222; padding-top:16px; font-size:12px; color:var(--text-muted);">
@@ -1103,7 +1255,6 @@
 
   <!-- CTA -->
   <section class="cta-section" id="contato">
-    <div class="cta-glow" id="ctaGlow"></div>
     <div class="cta-title reveal">Quer ver o que eu<br>faria com a <span style="color:var(--accent)">sua marca?</span></div>
     <p class="cta-sub reveal reveal-delay-1">Sem compromisso, sem formulário. Me manda uma mensagem.</p>
     <a href="https://wa.me/5511947933300?text=Oi%20Igor%2C%20vi%20seu%20trabalho%20e%20quero%20conversar" class="cta-whatsapp reveal reveal-delay-2">Chamar no WhatsApp</a>
@@ -1121,32 +1272,6 @@
 
   <!-- SCRIPTS -->
   <script>
-    // Custom cursor
-    const cursor = document.querySelector('.cursor');
-    const cursorDot = document.querySelector('.cursor-dot');
-    let mouseX = 0, mouseY = 0, cursorX = 0, cursorY = 0;
-
-    document.addEventListener('mousemove', (e) => {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
-      cursorDot.style.left = mouseX + 'px';
-      cursorDot.style.top = mouseY + 'px';
-    });
-
-    function animateCursor() {
-      cursorX += (mouseX - cursorX) * 0.12;
-      cursorY += (mouseY - cursorY) * 0.12;
-      cursor.style.left = cursorX + 'px';
-      cursor.style.top = cursorY + 'px';
-      requestAnimationFrame(animateCursor);
-    }
-    animateCursor();
-
-    document.querySelectorAll('a, button, .case-card, .service-card, .funil-step').forEach(el => {
-      el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
-      el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
-    });
-
     // Scroll progress
     const progressBar = document.querySelector('.scroll-progress');
 
@@ -1173,33 +1298,6 @@
         bg.style.transform = 'translate3d(0,' + yPos + 'px, 0)';
       });
     });
-
-    // CTA glow follow cursor (smooth lerp)
-    const ctaSection = document.querySelector('.cta-section');
-    const ctaGlow = document.getElementById('ctaGlow');
-    let glowX = 0, glowY = 0, targetX = 0, targetY = 0, glowActive = false;
-
-    if (ctaSection && ctaGlow) {
-      ctaGlow.style.transition = 'none';
-
-      ctaSection.addEventListener('mouseenter', () => { glowActive = true; ctaGlow.style.opacity = '1'; });
-      ctaSection.addEventListener('mouseleave', () => { glowActive = false; ctaGlow.style.opacity = '0'; });
-
-      ctaSection.addEventListener('mousemove', (e) => {
-        const rect = ctaSection.getBoundingClientRect();
-        targetX = e.clientX - rect.left;
-        targetY = e.clientY - rect.top;
-      });
-
-      function animateGlow() {
-        glowX += (targetX - glowX) * 0.05;
-        glowY += (targetY - glowY) * 0.05;
-        ctaGlow.style.left = glowX + 'px';
-        ctaGlow.style.top = glowY + 'px';
-        requestAnimationFrame(animateGlow);
-      }
-      animateGlow();
-    }
 
     // Carousel
     const carousel = document.querySelector('.esteira-carousel');
